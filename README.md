@@ -36,6 +36,14 @@ and is awkward to use with your fingers.
 codec selection, background playback…) and **replaces the whole interface** with one designed for touch screens,
 following the official [Android adaptive design guidelines](https://github.com/android/skills).
 
+## What's new in 1.2
+
+- 🌍 **20 languages**: the whole SuperTube interface is now translated into English, Spanish, French, German, Italian,
+  Portuguese, Russian, Ukrainian, Polish, Turkish, Dutch, Arabic, Hindi, Japanese, Korean, Chinese (Simplified and
+  Traditional), Indonesian, Vietnamese and Thai (SmartTube's settings were already translated into 40+ languages).
+- ℹ️ **New About screen** with the authors, credits, links (source code, releases, issues) and the open source licenses.
+- 📶 **Wi‑Fi only downloads** switch also in **Settings › SuperTube** (1.1.1).
+
 ## What's new in 1.1
 
 | | |
@@ -105,7 +113,9 @@ following the official [Android adaptive design guidelines](https://github.com/a
 ### 🔎 Search, navigation and settings
 - **Recent searches** stored locally (YouTube suggestions appear while typing), voice search, filters, hardware keyboard Enter.
 - The **"More" sections can be reordered** by dragging them or with up/down buttons (news, music and channels first by default).
-- Menus and settings as **bottom sheets**; TV-only settings are hidden; a **SuperTube** settings block for updates and backups.
+- Menus and settings as **bottom sheets**; TV-only settings are hidden; a **SuperTube** settings block for updates, Wi‑Fi only downloads and backups.
+- **About** screen with authors, credits and open source licenses.
+- Available in **20 languages** (follows the system language).
 
 | Search | Recent searches | Reorder sections | Settings | Player settings |
 |:---:|:---:|:---:|:---:|:---:|
@@ -193,6 +203,7 @@ TV). Mantiene todo su motor y sustituye la interfaz por una táctil con Material
 - Gestor de descargas de audio y vídeo con **selector de calidad**, modo **solo Wi‑Fi**, pausa/reanudación, filtros,
   reproductor sin conexión e indicador flotante.
 - Búsquedas recientes, secciones reordenables, ajustes en hojas inferiores y **actualizaciones desde este repositorio**.
+- Disponible en **20 idiomas** y pantalla **Acerca de** con autores, créditos y licencias.
 
 Descarga la última versión en la [página de Releases](https://github.com/jgestal/SuperTube/releases/latest)
 (requiere Android 8.0 o superior).

@@ -35,6 +35,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.material.icons.outlined.SwapVert
 import androidx.compose.material.icons.filled.Check
 import com.liskovsoft.smartyoutubetv2.common.R as CommonR
+import com.liskovsoft.smartyoutubetv2.mobile.ui.about.AboutSheet
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Backup
 import androidx.compose.material.icons.outlined.TextFields
@@ -330,6 +331,8 @@ private fun ChannelsStrip(content: SectionContent, presenter: BrowsePresenter) {
 @Composable
 private fun SettingsList(items: List<SettingsItem>) {
     val activity = LocalContext.current as? BrowseActivity
+    var showAbout by remember { mutableStateOf(false) }
+    if (showAbout) AboutSheet(onDismiss = { showAbout = false })
     LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(vertical = 8.dp)) {
         // SuperTube-only options: backup of favorites/settings and updates from the SuperTube releases
         if (activity != null) {
@@ -354,7 +357,8 @@ private fun SettingsList(items: List<SettingsItem>) {
         items(items.size) { index ->
             val item = items[index]
             ListItem(
-                modifier = Modifier.combinedClickableCompat { item.onClick?.run() },
+                // SmartTube's About dialog is empty in this fork (its updater is disabled): show the SuperTube one
+                modifier = Modifier.combinedClickableCompat { if (item.imageResId == CommonR.drawable.settings_about) showAbout = true else item.onClick?.run() },
                 headlineContent = { Text(item.title ?: "") },
                 leadingContent = {
                     val vector = settingsIcon(item.imageResId)

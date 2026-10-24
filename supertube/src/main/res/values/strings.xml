@@ -118,4 +118,15 @@
     <string name="mobile_download_status_waiting_wifi">Waiting for Wi‑Fi…</string>
     <string name="mobile_widget_title">SuperTube · Favorites</string>
     <string name="mobile_widget_description">Your favorite videos, one tap away</string>
+    <string name="mobile_about_tagline">Ad-free YouTube client for phones and tablets</string>
+    <string name="mobile_about_authors">Authors</string>
+    <string name="mobile_about_supertube_role">SuperTube: mobile app, interface and new features</string>
+    <string name="mobile_about_smarttube_role">SmartTube: original app and YouTube engine</string>
+    <string name="mobile_about_links">Links</string>
+    <string name="mobile_about_source">Source code</string>
+    <string name="mobile_about_releases">Releases</string>
+    <string name="mobile_about_issues">Report a problem</string>
+    <string name="mobile_about_licenses">Open source licenses</string>
+    <string name="mobile_about_disclaimer">SuperTube is not affiliated with YouTube, Google or the SmartTube project.</string>
+    <string name="mobile_close">Close</string>
 </resources>
