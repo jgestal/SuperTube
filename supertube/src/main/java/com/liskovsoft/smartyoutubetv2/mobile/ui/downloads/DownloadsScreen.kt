@@ -219,7 +219,7 @@ private fun statusText(context: Context, item: DownloadItem): String {
         DownloadStatus.PAUSED -> context.getString(R.string.mobile_download_status_paused) + " · ${(item.progress * 100).toInt()}%"
         DownloadStatus.PROCESSING -> context.getString(R.string.mobile_download_status_processing)
         DownloadStatus.FAILED -> context.getString(R.string.mobile_download_status_failed) + (item.error?.let { " · $it" } ?: "")
-        DownloadStatus.COMPLETED -> listOfNotNull(type, item.quality, item.totalBytes.takeIf { it > 0 }?.let(size)).joinToString(" · ")
+        DownloadStatus.COMPLETED -> listOfNotNull(type, item.quality, (item.outputBytes.takeIf { it > 0 } ?: item.totalBytes.takeIf { it > 0 })?.let(size)).joinToString(" · ")
     }
 }
 

@@ -38,6 +38,8 @@ data class DownloadItem(
     val quality: String? = null,
     val error: String? = null,
     val createdAt: Long = System.currentTimeMillis(),
+    /** Size of the final file (can differ from the downloaded streams, e.g. audio extracted from a video) */
+    val outputBytes: Long = -1,
 ) {
     val totalBytes: Long get() = parts.sumOf { it.totalBytes.coerceAtLeast(0) }
     val downloadedBytes: Long get() = parts.sumOf { it.downloadedBytes }
@@ -138,7 +140,7 @@ class DownloadStore private constructor(private val context: Context) {
     private fun toJson(item: DownloadItem) = JSONObject().apply {
         put("id", item.id); put("videoId", item.videoId); put("title", item.title); put("author", item.author)
         put("thumb", item.thumbnail); put("kind", item.kind.name); put("status", item.status.name)
-        put("out", item.outputUri); put("name", item.outputName); put("quality", item.quality); put("error", item.error); put("created", item.createdAt)
+        put("out", item.outputUri); put("name", item.outputName); put("quality", item.quality); put("error", item.error); put("created", item.createdAt); put("size", item.outputBytes)
         put("parts", JSONArray().apply {
             item.parts.forEach { p ->
                 put(JSONObject().put("itag", p.itag).put("url", p.url).put("file", p.tempFile).put("mime", p.mimeType).put("total", p.totalBytes).put("done", p.downloadedBytes))
@@ -165,6 +167,7 @@ class DownloadStore private constructor(private val context: Context) {
             quality = o.optNullable("quality"),
             error = o.optNullable("error"),
             createdAt = o.optLong("created"),
+            outputBytes = o.optLong("size", -1),
         )
     }
 

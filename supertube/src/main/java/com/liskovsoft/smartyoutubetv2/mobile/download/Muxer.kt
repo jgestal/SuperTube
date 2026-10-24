@@ -36,6 +36,23 @@ object Muxer {
         }
     }
 
+    /** Copies only the audio track of a video file into an m4a (stream copy) */
+    @SuppressLint("WrongConstant")
+    fun extractAudio(input: File, output: File) {
+        val muxer = MediaMuxer(output.absolutePath, MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4)
+        val extractor = MediaExtractor().apply { setDataSource(input.absolutePath) }
+        try {
+            val track = selectTrack(extractor, "audio/")
+            val outTrack = muxer.addTrack(extractor.getTrackFormat(track))
+            muxer.start()
+            copy(extractor, muxer, outTrack)
+            muxer.stop()
+        } finally {
+            muxer.release()
+            extractor.release()
+        }
+    }
+
     private fun selectTrack(extractor: MediaExtractor, prefix: String): Int {
         for (i in 0 until extractor.trackCount) {
             if (extractor.getTrackFormat(i).getString(android.media.MediaFormat.KEY_MIME)?.startsWith(prefix) == true) {

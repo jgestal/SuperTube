@@ -183,7 +183,9 @@ fun SearchScreen(
                             },
                         )
                     }
-                    items(state.suggestions.filter { tag -> recents.none { it.equals(tag.tag, ignoreCase = true) } }) { tag ->
+                    // Empty field: only the local recent searches. YouTube suggestions appear while typing.
+                    val suggestions = if (query.isEmpty()) emptyList() else state.suggestions.filter { tag -> recents.none { it.equals(tag.tag, ignoreCase = true) } }
+                    items(suggestions) { tag ->
                         ListItem(
                             modifier = Modifier.combinedClickable(
                                 onClick = { onSubmit(tag.tag ?: "") },

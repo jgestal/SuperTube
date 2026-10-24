@@ -92,8 +92,8 @@ class DownloadService : Service() {
             if (item.status != DownloadStatus.DOWNLOADING) return // paused or removed meanwhile
 
             store.update(id) { it.copy(status = DownloadStatus.PROCESSING) }
-            val uri = finish(item)
-            store.update(id) { it.copy(status = DownloadStatus.COMPLETED, outputUri = uri) }
+            val (uri, size) = finish(item)
+            store.update(id) { it.copy(status = DownloadStatus.COMPLETED, outputUri = uri, outputBytes = size) }
             item.parts.forEach { File(DownloadStore.tempDir(this), it.tempFile).delete() }
         } catch (e: kotlinx.coroutines.CancellationException) {
             // Paused/cancelled by the user: keep the temp files to resume later
@@ -181,18 +181,27 @@ class DownloadService : Service() {
     }
 
     /** Joins the tracks (video) or copies the single stream, publishes it in Movies/ or Music/ and returns its uri */
-    private fun finish(item: DownloadItem): String {
+    private fun finish(item: DownloadItem): Pair<String, Long> {
         val files = item.parts.map { File(DownloadStore.tempDir(this), it.tempFile) }
         return if (item.kind == DownloadKind.VIDEO && files.size == 2) {
             val output = File(cacheDir, "mux_${item.id}.mp4")
             try {
                 Muxer.mux(files[0], files[1], output)
-                Muxer.publish(this, output, item.outputName, item.kind).toString()
+                Muxer.publish(this, output, item.outputName, item.kind).toString() to output.length()
+            } finally {
+                output.delete()
+            }
+        } else if (item.kind == DownloadKind.AUDIO && item.parts[0].mimeType?.startsWith("video/") == true) {
+            // Audio taken from a single-file video stream
+            val output = File(cacheDir, "audio_${item.id}.m4a")
+            try {
+                Muxer.extractAudio(files[0], output)
+                Muxer.publish(this, output, item.outputName, item.kind).toString() to output.length()
             } finally {
                 output.delete()
             }
         } else {
-            Muxer.publish(this, files[0], item.outputName, item.kind).toString()
+            Muxer.publish(this, files[0], item.outputName, item.kind).toString() to files[0].length()
         }
     }
 

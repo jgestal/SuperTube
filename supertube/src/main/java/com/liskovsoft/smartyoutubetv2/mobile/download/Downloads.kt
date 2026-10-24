@@ -79,10 +79,18 @@ object Downloads {
         val quality: String?
         val extension: String
         if (kind == DownloadKind.AUDIO) {
-            val audio = pickAudio(formats) ?: return unavailable(context)
-            extension = if (audio.mimeType?.contains("webm") == true) "webm" else "m4a"
-            parts = listOf(audio.toPart("${base}_audio.$extension"))
-            quality = audio.bitrate?.toLongOrNull()?.let { "${it / 1000} kbps" }
+            val audio = pickAudio(formats)
+            if (audio != null) {
+                extension = if (audio.mimeType?.contains("webm") == true) "webm" else "m4a"
+                parts = listOf(audio.toPart("${base}_audio.$extension"))
+                quality = audio.bitrate?.toLongOrNull()?.let { "${it / 1000} kbps" }
+            } else {
+                // No separate audio stream (e.g. signed out): download the single-file stream, the audio is extracted on the device
+                val progressive = pickProgressive(info) ?: return unavailable(context)
+                extension = "m4a"
+                parts = listOf(progressive.toPart("${base}_full.mp4"))
+                quality = "AAC"
+            }
         } else {
             val videoTrack = formats
                 .filter { it.mimeType?.startsWith("video/mp4") == true && it.mimeType?.contains("avc1") == true && !it.url.isNullOrEmpty() && it.height in 1..1080 }
@@ -95,8 +103,7 @@ object Downloads {
                 parts = listOf(videoTrack.toPart("${base}_video.mp4"), audioTrack.toPart("${base}_audio.m4a"))
                 quality = videoTrack.qualityLabel ?: "${videoTrack.height}p"
             } else {
-                val progressive = info.urlFormats.orEmpty().filter { it.mimeType?.startsWith("video/mp4") == true && !it.url.isNullOrEmpty() }.maxByOrNull { it.height }
-                    ?: return unavailable(context)
+                val progressive = pickProgressive(info) ?: return unavailable(context)
                 parts = listOf(progressive.toPart("${base}_full.mp4"))
                 quality = progressive.qualityLabel ?: "${progressive.height}p"
             }
@@ -126,6 +133,10 @@ object Downloads {
     private fun unavailable(context: Context) = MessageHelpers.showMessage(context, context.getString(R.string.mobile_download_unavailable))
 
     private fun MediaFormat.toPart(file: String) = DownloadPart(iTag, url, file, mimeType, clen?.toLongOrNull() ?: -1L, 0L)
+
+    /** Highest resolution stream that already contains audio and video */
+    private fun pickProgressive(info: MediaItemFormatInfo): MediaFormat? =
+        info.urlFormats.orEmpty().filter { it.mimeType?.startsWith("video/mp4") == true && !it.url.isNullOrEmpty() }.maxByOrNull { it.height }
 
     /** Highest bitrate audio, m4a first (plays everywhere) */
     private fun pickAudio(formats: List<MediaFormat>): MediaFormat? =
