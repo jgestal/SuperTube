@@ -84,9 +84,9 @@ following the official [Android adaptive design guidelines](https://github.com/a
 - **Play all** or **shuffle** a folder as a continuous queue.
 - **Home screen widget**, **export/import** to a JSON file. Stored only on your device.
 
-| Folder | Search | Save to… |
-|:---:|:---:|:---:|
-| <img src="docs/screenshots/favorites.jpg" width="180"> | <img src="docs/screenshots/favorites_search.jpg" width="180"> | <img src="docs/screenshots/favorite_sheet.jpg" width="180"> |
+| Folder | Search | Save to… | Home screen widget |
+|:---:|:---:|:---:|:---:|
+| <img src="docs/screenshots/favorites.jpg" width="170"> | <img src="docs/screenshots/favorites_search.jpg" width="170"> | <img src="docs/screenshots/favorite_sheet.jpg" width="170"> | <img src="docs/screenshots/widget.png" width="230"> |
 
 ### ⬇️ Downloads manager
 - Download the **audio** or the **video** (up to 1080p H.264, audio and video joined on the device, no re-encoding), choosing the **quality** and seeing the size first.
