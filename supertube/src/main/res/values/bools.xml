@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- This fork doesn't install the original SmartTube (TV) updates -->
+    <bool name="app_update_check_enabled">false</bool>
+</resources>

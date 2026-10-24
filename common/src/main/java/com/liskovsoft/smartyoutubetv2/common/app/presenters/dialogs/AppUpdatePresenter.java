@@ -49,6 +49,11 @@ public class AppUpdatePresenter extends BasePresenter<Void> implements AppUpdate
     }
 
     public void start(boolean forceCheck) {
+        // Forks (e.g. the mobile app) don't receive updates from the original project
+        if (getContext() == null || !getContext().getResources().getBoolean(R.bool.app_update_check_enabled)) {
+            return;
+        }
+
         mIsForceCheck = forceCheck;
 
         if (forceCheck) {

@@ -76,11 +76,13 @@ public class MotherActivity extends FragmentActivity {
         mIsOculusQuestFixEnabled = PlayerTweaksData.instance(this).isOculusQuestFixEnabled();
         mIsFullscreenModeEnabled = GeneralData.instance(this).isFullscreenModeEnabled();
 
-        initDpi();
+        if (isTvUi()) {
+            initDpi();
+        }
         initTheme();
 
         // Search Fullscreen routine inside onPause() method
-        if (!mIsFullscreenModeEnabled) {
+        if (isTvUi() && !mIsFullscreenModeEnabled) {
             // There's no way to do this programmatically!
             setTheme(R.style.FitSystemWindows);
 
@@ -91,7 +93,7 @@ public class MotherActivity extends FragmentActivity {
             //}
         }
 
-        if (mIsOculusQuestFixEnabled && VERSION.SDK_INT != 26) {
+        if (isTvUi() && mIsOculusQuestFixEnabled && VERSION.SDK_INT != 26) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         }
 
@@ -99,7 +101,9 @@ public class MotherActivity extends FragmentActivity {
 
         //Helpers.addFullscreenListener(this);
 
-        initEdgeSlide();
+        if (isTvUi()) {
+            initEdgeSlide();
+        }
     }
 
     @Override
@@ -198,7 +202,7 @@ public class MotherActivity extends FragmentActivity {
 
         if (context != null) {
             // NOTE: Use only cached metrics. Because metrics creation involves using WindowManager, which isn't available at this stage.
-            contextWrapper = LocaleContextWrapper.wrap(context, LocaleUpdater.getSavedLocale(context), sCachedDisplayMetrics);
+            contextWrapper = LocaleContextWrapper.wrap(context, LocaleUpdater.getSavedLocale(context), isTvUi() ? sCachedDisplayMetrics : null);
         }
 
         super.attachBaseContext(contextWrapper);
@@ -250,6 +254,14 @@ public class MotherActivity extends FragmentActivity {
         return mScreensaverManager;
     }
 
+    /**
+     * The TV UI emulates a fixed 1080p screen (custom dpi, Leanback themes, fullscreen tweaks).<br/>
+     * Touch UIs (phones, tablets) should return false to keep the native screen density and their own themes.
+     */
+    protected boolean isTvUi() {
+        return true;
+    }
+
     protected void initTheme() {
         int rootThemeResId = MainUIData.instance(this).getColorScheme().browseThemeResId;
         if (rootThemeResId > 0) {
@@ -290,11 +302,13 @@ public class MotherActivity extends FragmentActivity {
 
         // Fix sudden dpi change.
         // Could happen when screen goes off or after PIP mode.
-        initDpi();
+        if (isTvUi()) {
+            initDpi();
+        }
     }
 
     private void applyFullscreenModeIfNeeded() {
-        if (mIsFullscreenModeEnabled) {
+        if (isTvUi() && mIsFullscreenModeEnabled) {
             // Most of the fullscreen tweaks could be performed in styles but not all.
             // E.g. Hide bottom navigation bar (couldn't be done in styles).
             Helpers.makeActivityFullscreen2(this);

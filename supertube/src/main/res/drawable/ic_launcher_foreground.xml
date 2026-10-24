@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SuperTube launcher foreground: rounded play button with a small spark -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Rounded screen -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M38,36h32a8,8 0 0 1 8,8v20a8,8 0 0 1 -8,8h-32a8,8 0 0 1 -8,-8v-20a8,8 0 0 1 8,-8z" />
+    <!-- Play triangle -->
+    <path
+        android:fillColor="#FFE53935"
+        android:pathData="M49,46.5L61,54L49,61.5Z" />
+    <!-- Spark -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M76,26l1.8,4.2l4.2,1.8l-4.2,1.8l-1.8,4.2l-1.8,-4.2l-4.2,-1.8l4.2,-1.8z" />
+</vector>

@@ -1,0 +1,139 @@
+apply from: gradle.ext.sharedModulesConstants
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+// SuperTube: phone/tablet fork of SmartTube (https://github.com/yuliskov/SmartTube, MIT).
+// Reuses all the business logic from the 'common' module (presenters, player engine, settings)
+// and replaces the Leanback (D-pad) UI with a touch-first Jetpack Compose + Material 3 UI.
+
+def composeBomVersion = '2024.09.03'
+def composeCompilerVersion = '1.5.14' // matches Kotlin 1.9.24
+
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+android {
+    namespace 'com.liskovsoft.smartyoutubetv2.mobile'
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+
+    compileSdkVersion project.properties.compileSdkVersion
+    buildToolsVersion project.properties.buildToolsVersion
+
+    defaultConfig {
+        applicationId "app.supertube"
+        minSdkVersion 26
+        targetSdkVersion project.properties.compileSdkVersion
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled = true
+        vectorDrawables.useSupportLibrary = true
+
+        ndk {
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
+        }
+    }
+
+    buildFeatures {
+        compose true
+        buildConfig true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion composeCompilerVersion
+    }
+
+    signingConfigs {
+        release {
+            if (keystorePropertiesFile.exists()) {
+                storeFile = file(keystoreProperties['storeFile'])
+                storePassword = keystoreProperties['storePassword']
+                keyAlias = keystoreProperties['keyAlias']
+                keyPassword = keystoreProperties['keyPassword']
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
+            if (keystorePropertiesFile.exists()) {
+                signingConfig signingConfigs.release
+            }
+        }
+        debug {
+            if (keystorePropertiesFile.exists()) {
+                signingConfig signingConfigs.release
+            }
+        }
+    }
+
+    // Reuse the 'common' module flavors (only the beta one matters here)
+    flavorDimensions "default"
+    productFlavors {
+        stbeta {
+            dimension "default"
+        }
+    }
+
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/AL2.0', 'META-INF/LGPL2.1', 'META-INF/*.kotlin_module']
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            output.outputFileName = new File(sprintf("SuperTube_%s_%s.apk", [variant.versionName, variant.buildType.name]))
+        }
+    }
+}
+
+dependencies {
+    implementation project(':common')
+    implementation project(':sharedutils')
+    implementation project(':mediaserviceinterfaces')
+    implementation project(':youtubeapi')
+    implementation project(':fragment-1.1.0')
+
+    implementation project(':exoplayer-library-core')
+    implementation project(':exoplayer-library-ui')
+    implementation project(':exoplayer-extension-mediasession')
+    implementation 'androidx.media:media:' + mediaXVersion
+
+    implementation 'io.reactivex.rxjava2:rxandroid:' + rxAndroidVersion
+    implementation 'io.reactivex.rxjava2:rxjava:' + rxJavaVersion
+    implementation 'com.github.bumptech.glide:glide:' + glideVersion
+    implementation 'androidx.multidex:multidex:' + multiDexVersion
+    implementation 'androidx.work:work-runtime:' + workVersion
+    implementation 'org.conscrypt:conscrypt-android:' + conscryptVersion
+
+    // Jetpack Compose + Material 3 (adaptive navigation suite = bottom bar on phones, rail on tablets)
+    implementation platform("androidx.compose:compose-bom:$composeBomVersion")
+    implementation 'androidx.compose.ui:ui'
+    implementation 'androidx.compose.foundation:foundation'
+    implementation 'androidx.compose.material3:material3'
+    implementation 'androidx.compose.material3:material3-window-size-class'
+    implementation 'androidx.compose.material3:material3-adaptive-navigation-suite'
+    implementation 'androidx.compose.material:material-icons-extended'
+    implementation 'androidx.compose.ui:ui-tooling-preview'
+    debugImplementation 'androidx.compose.ui:ui-tooling'
+    implementation 'androidx.activity:activity-compose:1.9.2'
+    implementation 'androidx.lifecycle:lifecycle-runtime-compose:2.8.6'
+    implementation 'androidx.core:core-ktx:1.13.1'
+}

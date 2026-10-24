@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mobile_app_name" translatable="false">SuperTube</string>
+    <!-- Overrides the name used by the shared modules (about dialog, notifications) -->
+    <string name="app_name" translatable="false">SuperTube</string>
+    <string name="mobile_more">More</string>
+    <string name="mobile_more_options">More options</string>
+    <string name="mobile_search_hint">Search YouTube</string>
+    <string name="mobile_retry">Retry</string>
+    <string name="mobile_nothing_here">Nothing here yet</string>
+    <string name="mobile_back">Back</string>
+    <string name="mobile_clear">Clear</string>
+    <string name="mobile_voice_search">Voice search</string>
+    <string name="mobile_open_browser">Open in browser</string>
+    <string name="mobile_copy_code">Copy code</string>
+    <string name="mobile_code_copied">Code copied</string>
+    <string name="mobile_sign_in_steps">On any device, open the address below and enter the code.</string>
+    <string name="mobile_play">Play</string>
+    <string name="mobile_pause">Pause</string>
+    <string name="mobile_next">Next</string>
+    <string name="mobile_previous">Previous</string>
+    <string name="mobile_fullscreen">Fullscreen</string>
+    <string name="mobile_exit_fullscreen">Exit fullscreen</string>
+    <string name="mobile_quality">Quality</string>
+    <string name="mobile_up_next">Up next</string>
+    <string name="mobile_load_more">Load more</string>
+    <string name="mobile_comments_empty">No comments</string>
+</resources>
