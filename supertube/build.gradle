@@ -10,7 +10,7 @@ apply plugin: 'kotlin-android'
 def composeBomVersion = '2024.09.03'
 def composeCompilerVersion = '1.5.14' // matches Kotlin 1.9.24
 
-def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystorePropertiesFile = file("keystore.properties") // supertube/keystore.properties (not in git)
 def keystoreProperties = new Properties()
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
@@ -72,11 +72,7 @@ android {
                 signingConfig signingConfigs.release
             }
         }
-        debug {
-            if (keystorePropertiesFile.exists()) {
-                signingConfig signingConfigs.release
-            }
-        }
+        // Debug builds keep the default debug key (development installs)
     }
 
     // Reuse the 'common' module flavors (only the beta one matters here)

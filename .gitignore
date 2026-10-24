@@ -71,3 +71,7 @@ tmp/
 fabric.properties
 *BAK.java
 hs_err_pid*.log
+
+# SuperTube release signing (keep out of git)
+supertube/keystore.properties
+*.jks

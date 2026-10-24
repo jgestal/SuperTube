@@ -1,5 +1,10 @@
 package com.liskovsoft.smartyoutubetv2.mobile.ui.search
 
+import androidx.compose.ui.input.key.type
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.onPreviewKeyEvent
 import com.liskovsoft.smartyoutubetv2.mobile.ui.feed.FeedLayoutButton
 import com.liskovsoft.smartyoutubetv2.mobile.ui.feed.FeedView
 import com.liskovsoft.smartyoutubetv2.mobile.prefs.MobilePrefs
@@ -110,7 +115,16 @@ fun SearchScreen(
                         modifier = Modifier
                             .weight(1f)
                             .focusRequester(focusRequester)
-                            .onFocusChanged { if (it.isFocused) state.isEditing = true },
+                            .onFocusChanged { if (it.isFocused) state.isEditing = true }
+                            // Hardware keyboards (Bluetooth, Chromebooks): Enter searches too
+                            .onPreviewKeyEvent { event ->
+                                if (event.key == Key.Enter || event.key == Key.NumPadEnter) {
+                                    if (event.type == KeyEventType.KeyUp) onSubmit(state.query)
+                                    true
+                                } else {
+                                    false
+                                }
+                            },
                         placeholder = { Text(stringResource(R.string.mobile_search_hint)) },
                         singleLine = true,
                         shape = RoundedCornerShape(28.dp),
