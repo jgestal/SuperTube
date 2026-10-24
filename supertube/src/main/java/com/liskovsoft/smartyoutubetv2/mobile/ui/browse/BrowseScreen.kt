@@ -5,6 +5,8 @@ import com.liskovsoft.smartyoutubetv2.mobile.BuildConfig
 import androidx.compose.material.icons.outlined.FileDownload
 import androidx.compose.material.icons.outlined.FileUpload
 import androidx.compose.material.icons.outlined.SystemUpdate
+import androidx.compose.material.icons.outlined.Wifi
+import androidx.compose.material3.Switch
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.only
@@ -335,6 +337,16 @@ private fun SettingsList(items: List<SettingsItem>) {
                 Text(stringResource(R.string.mobile_supertube), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(start = 16.dp, top = 8.dp, bottom = 4.dp))
             }
             item { ListItem(modifier = Modifier.clickable { activity.checkForUpdates() }, headlineContent = { Text(stringResource(R.string.mobile_check_updates)) }, supportingContent = { Text(BuildConfig.VERSION_NAME) }, leadingContent = { Icon(Icons.Outlined.SystemUpdate, null) }) }
+            item {
+                val prefs = MobilePrefs.instance(activity)
+                ListItem(
+                    modifier = Modifier.clickable { prefs.updateWifiOnlyDownloads(!prefs.wifiOnlyDownloads) },
+                    headlineContent = { Text(stringResource(R.string.mobile_wifi_only)) },
+                    supportingContent = { Text(stringResource(R.string.mobile_wifi_only_desc)) },
+                    leadingContent = { Icon(Icons.Outlined.Wifi, null) },
+                    trailingContent = { Switch(checked = prefs.wifiOnlyDownloads, onCheckedChange = { prefs.updateWifiOnlyDownloads(it) }) },
+                )
+            }
             item { ListItem(modifier = Modifier.clickable { activity.exportData() }, headlineContent = { Text(stringResource(R.string.mobile_export)) }, leadingContent = { Icon(Icons.Outlined.FileUpload, null) }) }
             item { ListItem(modifier = Modifier.clickable { activity.importData() }, headlineContent = { Text(stringResource(R.string.mobile_import)) }, leadingContent = { Icon(Icons.Outlined.FileDownload, null) }) }
             item { HorizontalDivider(Modifier.padding(vertical = 8.dp)) }

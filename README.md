@@ -91,7 +91,7 @@ following the official [Android adaptive design guidelines](https://github.com/a
 ### ⬇️ Downloads manager
 - Download the **audio** or the **video** (up to 1080p H.264, audio and video joined on the device, no re-encoding), choosing the **quality** and seeing the size first.
 - **Pause, resume and cancel**: transfers continue where they stopped, even after closing the app; expired links are refreshed automatically.
-- **Wi‑Fi only** mode, filters by **video / audio**, offline player, share or delete files.
+- **Wi‑Fi only** mode (in the download sheet and in **Settings › SuperTube**), filters by **video / audio**, offline player, share or delete files.
 - Detects files that were **moved or deleted** outside the app and offers to download them again.
 - A **floating indicator** shows the progress from any screen; tap it to open the manager.
 - Files are saved in `Movies/SuperTube` and `Music/SuperTube`.
