@@ -1,3 +1,5 @@
+<p align="center"><img src="images/supertube_icon.png" width="128" alt="SuperTube icon"></p>
+
 # SuperTube
 
 **SuperTube** is a phone and tablet focused fork of [SmartTube](https://github.com/yuliskov/SmartTube),

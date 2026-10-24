@@ -1,5 +1,8 @@
 package com.liskovsoft.smartyoutubetv2.mobile.ui.splash
 
+import com.liskovsoft.smartyoutubetv2.mobile.ui.browse.BrowseActivity
+import com.liskovsoft.smartyoutubetv2.mobile.download.DownloadStore
+import com.liskovsoft.smartyoutubetv2.mobile.download.DownloadService
 import android.content.Intent
 import android.os.Bundle
 import com.liskovsoft.smartyoutubetv2.common.app.presenters.SplashPresenter
@@ -15,6 +18,7 @@ class SplashActivity : MobileActivity(), SplashView {
         super.onCreate(savedInstanceState)
 
         newIntent = intent
+        if (intent?.getBooleanExtra(DownloadService.EXTRA_OPEN_DOWNLOADS, false) == true) BrowseActivity.requestSection(DownloadStore.SECTION_ID)
 
         presenter = SplashPresenter.instance(this)
         presenter.setView(this)
@@ -24,6 +28,7 @@ class SplashActivity : MobileActivity(), SplashView {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         newIntent = intent
+        if (intent.getBooleanExtra(DownloadService.EXTRA_OPEN_DOWNLOADS, false)) BrowseActivity.requestSection(DownloadStore.SECTION_ID)
         presenter.onViewInitialized()
     }
 

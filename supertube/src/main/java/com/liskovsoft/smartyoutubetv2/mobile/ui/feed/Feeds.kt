@@ -106,7 +106,10 @@ fun VideoShelves(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     onLastRowReached: (() -> Unit)? = null,
     header: (@Composable () -> Unit)? = null,
+    scrollToTop: ScrollToTopRequest? = null,
 ) {
+    ScrollToTopEffect(scrollToTop, isAtTop = { state.firstVisibleItemIndex == 0 && state.firstVisibleItemScrollOffset == 0 }) { state.animateScrollToItem(0) }
+
     if (onLastRowReached != null) {
         EndReachedEffect(state = { state.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0 }, total = { state.layoutInfo.totalItemsCount }, distance = 2) {
             onLastRowReached()
@@ -162,6 +165,20 @@ private fun Shelf(row: VideoRowState, actions: VideoActions) {
                 if (revision >= 0) VideoItem(video, actions, Modifier.width(width), compact = true)
             }
         }
+    }
+}
+
+/**
+ * Re-tapping the current tab: scrolls the feed to the top, or calls [onAtTop] (refresh) when it's already there.
+ * [count] changes on every tap.
+ */
+class ScrollToTopRequest(val count: Int, val onAtTop: () -> Unit)
+
+@Composable
+fun ScrollToTopEffect(request: ScrollToTopRequest?, isAtTop: () -> Boolean, scroll: suspend () -> Unit) {
+    LaunchedEffect(request?.count) {
+        if (request == null || request.count == 0) return@LaunchedEffect
+        if (isAtTop()) request.onAtTop() else scroll()
     }
 }
 

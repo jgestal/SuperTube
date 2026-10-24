@@ -1,5 +1,8 @@
 package com.liskovsoft.smartyoutubetv2.mobile.ui.browse
 
+import com.liskovsoft.smartyoutubetv2.mobile.download.DownloadStore
+import com.liskovsoft.smartyoutubetv2.mobile.R
+import com.liskovsoft.smartyoutubetv2.mobile.prefs.FavoritesStore
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.getValue
@@ -53,8 +56,11 @@ class BrowseUiState {
     /** "More" destination is open but no secondary section has been picked yet */
     var isMoreListShown by mutableStateOf(false)
     var isLoading by mutableStateOf(false)
+    /** Local sections (not provided by the presenter): favorites and downloads saved on this device */
+    var localSections: List<BrowseSection> = emptyList()
 
-    val selectedSection: BrowseSection? get() = sections.firstOrNull { it.id == selectedSectionId }
+    val selectedSection: BrowseSection?
+        get() = sections.firstOrNull { it.id == selectedSectionId } ?: localSections.firstOrNull { it.id == selectedSectionId }
 
     fun contentOf(section: BrowseSection): SectionContent = contents.getOrPut(section.id) { SectionContent(section) }
 
@@ -65,7 +71,7 @@ class BrowseUiState {
             return primaries.ifEmpty { sections.take(3) }
         }
 
-    val secondarySections: List<BrowseSection> get() = sections.filter { it !in primarySections }
+    val secondarySections: List<BrowseSection> get() = sections.filter { it !in primarySections } + localSections
 
     fun isPrimary(sectionId: Int): Boolean = primarySections.any { it.id == sectionId }
 }
@@ -83,6 +89,10 @@ class BrowseActivity : ScreenActivity(), BrowseView {
 
         presenter = BrowsePresenter.instance(this)
         presenter.setView(this)
+        state.localSections = listOf(
+            BrowseSection(FavoritesStore.SECTION_ID, getString(R.string.mobile_favorites), BrowseSection.TYPE_GRID, -1),
+            BrowseSection(DownloadStore.SECTION_ID, getString(R.string.mobile_downloads), BrowseSection.TYPE_GRID, -1),
+        )
 
         setContent {
             SmartTubeTheme {
@@ -102,6 +112,25 @@ class BrowseActivity : ScreenActivity(), BrowseView {
         super.onResume()
         presenter.setView(this)
         presenter.onViewResumed()
+        // Opened from the downloads notification or the floating indicator of another screen
+        if (pendingSectionId != 0) {
+            openSection(pendingSectionId)
+            pendingSectionId = 0
+        }
+    }
+
+    companion object {
+        private var pendingSectionId = 0
+
+        /** Shows the downloads management from any screen */
+        fun openDownloads(context: android.content.Context) {
+            pendingSectionId = DownloadStore.SECTION_ID
+            com.liskovsoft.smartyoutubetv2.common.app.views.ViewManager.instance(context).startView(BrowseView::class.java)
+        }
+
+        fun requestSection(sectionId: Int) {
+            pendingSectionId = sectionId
+        }
     }
 
     override fun onPause() {
@@ -117,6 +146,12 @@ class BrowseActivity : ScreenActivity(), BrowseView {
     }
 
     private fun openSection(sectionId: Int) {
+        if (state.localSections.any { it.id == sectionId }) {
+            // Handled locally, the presenter doesn't know this section
+            state.isMoreListShown = false
+            state.selectedSectionId = sectionId
+            return
+        }
         val section = state.sections.firstOrNull { it.id == sectionId } ?: return
         state.isMoreListShown = false
         state.selectedSectionId = sectionId

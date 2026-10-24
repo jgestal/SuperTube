@@ -1,5 +1,7 @@
 package com.liskovsoft.smartyoutubetv2.mobile.ui.channel
 
+import com.liskovsoft.smartyoutubetv2.mobile.ui.feed.FeedLayoutButton
+import com.liskovsoft.smartyoutubetv2.mobile.ui.feed.FeedView
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import com.liskovsoft.smartyoutubetv2.common.app.models.data.VideoGroup
@@ -32,9 +34,9 @@ class ChannelUploadsActivity : ScreenActivity(), ChannelUploadsView {
                     onScrollEnd = { presenter.onScrollEnd(it) },
                 )
                 val channel = presenter.channel
-                ScreenScaffold(title = channel?.getTitle() ?: channel?.getAuthor() ?: "", onBack = { finish() }) {
+                ScreenScaffold(title = channel?.getTitle() ?: channel?.getAuthor() ?: "", onBack = { finish() }, actions = { FeedLayoutButton() }) {
                     FeedContainer(isLoading = feed.isLoading, isEmpty = feed.isEmpty, onRefresh = { presenter.refresh() }) {
-                        feed.rows.firstOrNull()?.let { VideoGrid(it, actions) }
+                        FeedView(feed, actions)
                     }
                 }
             }

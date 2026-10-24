@@ -1,5 +1,6 @@
 package com.liskovsoft.smartyoutubetv2.mobile.ui.search
 
+import com.liskovsoft.smartyoutubetv2.mobile.prefs.MobilePrefs
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
@@ -99,6 +100,7 @@ class SearchActivity : ScreenActivity(), SearchView {
         if (text.isEmpty()) return
         state.query = text
         state.isEditing = false
+        MobilePrefs.instance(this).addRecentSearch(text)
         if (text != state.submittedQuery) {
             state.submittedQuery = text
             state.results.clear()
@@ -113,7 +115,7 @@ class SearchActivity : ScreenActivity(), SearchView {
     }
 
     override fun clearSearch() {
-        state.submittedQuery = null
+        // Called by the presenter right before loading new results: keep the submitted query (results screen)
         state.results.clear()
     }
 

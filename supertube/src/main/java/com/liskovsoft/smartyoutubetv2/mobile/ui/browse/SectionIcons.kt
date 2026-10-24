@@ -1,5 +1,10 @@
 package com.liskovsoft.smartyoutubetv2.mobile.ui.browse
 
+import androidx.compose.material.icons.outlined.Download
+import com.liskovsoft.smartyoutubetv2.mobile.download.DownloadStore
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.filled.Favorite
+import com.liskovsoft.smartyoutubetv2.mobile.prefs.FavoritesStore
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.PlaylistPlay
 import androidx.compose.material.icons.automirrored.outlined.QueueMusic
@@ -46,6 +51,8 @@ fun sectionIcon(sectionId: Int, selected: Boolean = false): ImageVector = when (
     MediaGroup.TYPE_NOTIFICATIONS -> Icons.Outlined.Notifications
     MediaGroup.TYPE_PLAYBACK_QUEUE -> Icons.AutoMirrored.Outlined.QueueMusic
     MediaGroup.TYPE_SETTINGS -> Icons.Outlined.Settings
+    DownloadStore.SECTION_ID -> Icons.Outlined.Download
+    FavoritesStore.SECTION_ID -> if (selected) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder
     else -> Icons.Outlined.Folder
 }
 

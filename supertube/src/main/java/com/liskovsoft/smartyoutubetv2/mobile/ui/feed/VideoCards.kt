@@ -1,5 +1,6 @@
 package com.liskovsoft.smartyoutubetv2.mobile.ui.feed
 
+import com.liskovsoft.smartyoutubetv2.mobile.ui.favorites.FavoriteBadgeButton
 import com.liskovsoft.smartyoutubetv2.mobile.ui.components.LimitFontScale
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -116,6 +117,7 @@ fun VideoCard(video: Video, actions: VideoActions, modifier: Modifier = Modifier
 private fun Thumbnail(video: Video, modifier: Modifier = Modifier) {
     Box(modifier.aspectRatio(16f / 9f).clip(ThumbShape)) {
         RemoteImage(video.getCardImageUrl(), Modifier.fillMaxSize())
+        FavoriteBadgeButton(video, Modifier.align(Alignment.TopEnd))
 
         val badge = when {
             video.isLive -> "LIVE"

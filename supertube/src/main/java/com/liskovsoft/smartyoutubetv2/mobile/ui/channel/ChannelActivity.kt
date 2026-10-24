@@ -1,5 +1,7 @@
 package com.liskovsoft.smartyoutubetv2.mobile.ui.channel
 
+import com.liskovsoft.smartyoutubetv2.mobile.ui.feed.FeedLayoutButton
+import com.liskovsoft.smartyoutubetv2.mobile.ui.feed.FeedView
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -68,9 +70,9 @@ class ChannelActivity : ScreenActivity(), ChannelView {
                     onLongClick = { presenter.onVideoItemSelected(it); presenter.onVideoItemLongClicked(it) },
                     onScrollEnd = { presenter.onScrollEnd(it) },
                 )
-                ScreenScaffold(title = channelTitle(revision), onBack = { finish() }) {
+                ScreenScaffold(title = "", onBack = { finish() }, actions = { FeedLayoutButton() }) {
                     FeedContainer(isLoading = feed.isLoading, isEmpty = feed.isEmpty, onRefresh = null) {
-                        VideoShelves(feed, actions, header = { ChannelHeader(revision) })
+                        FeedView(feed, actions, header = { ChannelHeader(revision) })
                     }
                 }
             }

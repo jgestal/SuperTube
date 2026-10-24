@@ -1,5 +1,11 @@
 package com.liskovsoft.smartyoutubetv2.mobile.ui.search
 
+import com.liskovsoft.smartyoutubetv2.mobile.ui.feed.FeedLayoutButton
+import com.liskovsoft.smartyoutubetv2.mobile.ui.feed.FeedView
+import com.liskovsoft.smartyoutubetv2.mobile.prefs.MobilePrefs
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.material3.TextButton
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
@@ -64,6 +70,7 @@ fun SearchScreen(
     onBack: () -> Unit,
 ) {
     val focusRequester = remember { FocusRequester() }
+    val prefs = MobilePrefs.instance(LocalContext.current)
     val keyboard = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
 
@@ -125,8 +132,12 @@ fun SearchScreen(
                     IconButton(onClick = onVoice) {
                         Icon(Icons.Default.Mic, contentDescription = stringResource(R.string.mobile_voice_search))
                     }
-                    IconButton(onClick = { presenter.onSearchSettingsClicked() }) {
-                        Icon(Icons.Outlined.Tune, contentDescription = null)
+                    if (state.isEditing || state.submittedQuery == null) {
+                        IconButton(onClick = { presenter.onSearchSettingsClicked() }) {
+                            Icon(Icons.Outlined.Tune, contentDescription = null)
+                        }
+                    } else {
+                        FeedLayoutButton()
                     }
                 }
             }
@@ -135,14 +146,37 @@ fun SearchScreen(
         Box(Modifier.padding(padding).fillMaxSize()) {
             if (state.isEditing || state.submittedQuery == null) {
                 LazyColumn(Modifier.fillMaxSize().imePadding()) {
-                    items(state.suggestions) { tag ->
+                    // Recent searches (stored on this device) first, filtered by what's being typed
+                    val query = state.query.trim()
+                    val recents = prefs.recentSearches.filter { query.isEmpty() || it.contains(query, ignoreCase = true) }
+                    if (recents.isNotEmpty() && query.isEmpty()) {
+                        item {
+                            Row(Modifier.fillMaxWidth().padding(start = 16.dp, end = 4.dp, top = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+                                Text(stringResource(R.string.mobile_recent_searches), style = MaterialTheme.typography.titleSmall, modifier = Modifier.weight(1f))
+                                TextButton(onClick = { prefs.clearRecentSearches() }) { Text(stringResource(R.string.mobile_clear_history)) }
+                            }
+                        }
+                    }
+                    items(recents, key = { "recent_$it" }) { recent ->
+                        ListItem(
+                            modifier = Modifier.clickable { onSubmit(recent) },
+                            leadingContent = { Icon(Icons.Outlined.History, null) },
+                            headlineContent = { Text(recent, maxLines = 1) },
+                            trailingContent = {
+                                IconButton(onClick = { prefs.removeRecentSearch(recent) }) {
+                                    Icon(Icons.Default.Close, contentDescription = stringResource(R.string.mobile_remove))
+                                }
+                            },
+                        )
+                    }
+                    items(state.suggestions.filter { tag -> recents.none { it.equals(tag.tag, ignoreCase = true) } }) { tag ->
                         ListItem(
                             modifier = Modifier.combinedClickable(
                                 onClick = { onSubmit(tag.tag ?: "") },
                                 onLongClick = { presenter.onTagLongClicked(tag) },
                             ),
                             leadingContent = {
-                                Icon(if (state.query.isEmpty()) Icons.Outlined.History else Icons.Outlined.Search, null)
+                                Icon(Icons.Outlined.Search, null)
                             },
                             headlineContent = { Text(tag.tag ?: "", maxLines = 1) },
                             trailingContent = {
@@ -155,7 +189,7 @@ fun SearchScreen(
                 }
             } else {
                 FeedContainer(isLoading = state.results.isLoading, isEmpty = state.results.isEmpty, onRefresh = null) {
-                    MultiRowGrid(state.results, actions)
+                    FeedView(state.results, actions)
                 }
             }
         }

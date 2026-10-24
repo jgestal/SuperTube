@@ -1,5 +1,19 @@
 package com.liskovsoft.smartyoutubetv2.mobile.ui.playback
 
+import com.liskovsoft.smartyoutubetv2.mobile.download.Downloads
+import com.liskovsoft.smartyoutubetv2.mobile.download.DownloadKind
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material.icons.outlined.Movie
+import androidx.compose.material.icons.outlined.MusicNote
+import androidx.compose.material.icons.outlined.Download
+import com.liskovsoft.smartyoutubetv2.mobile.ui.feed.CompactVideoCard
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Favorite
+import com.liskovsoft.smartyoutubetv2.mobile.ui.favorites.FavoriteChipState
 import com.liskovsoft.smartyoutubetv2.mobile.ui.components.LimitFontScale
 import android.graphics.Color as AndroidColor
 import androidx.activity.compose.BackHandler
@@ -93,6 +107,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.DpSize
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.ui.viewinterop.AndroidView
 import com.google.android.exoplayer2.ui.PlayerView as ExoPlayerView
 import com.liskovsoft.smartyoutubetv2.common.app.models.data.Video
@@ -108,7 +125,6 @@ import com.liskovsoft.smartyoutubetv2.mobile.ui.theme.YouTubeRed
 import kotlinx.coroutines.delay
 import com.liskovsoft.smartyoutubetv2.common.R as CommonR
 
-private const val SEEK_STEP_MS = 10_000L
 
 @Composable
 fun PlaybackScreen(
@@ -144,13 +160,14 @@ fun PlaybackScreen(
                 FullscreenSuggestions(state, suggestionActions, Modifier.align(Alignment.BottomCenter))
             }
         } else {
-            Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+            // Surface (not a plain background) so the text gets the right content color
+            Surface(color = MaterialTheme.colorScheme.background, modifier = Modifier.fillMaxSize()) { Column(Modifier.fillMaxSize()) {
                 Spacer(Modifier.windowInsetsPadding(WindowInsets.statusBars).background(Color.Black).fillMaxWidth())
                 // Vertical videos get more room, but never more than a square
                 val aspect = state.videoAspect.coerceIn(1f, 16f / 9f)
                 PlayerArea(state, presenter, engine, onCreateExoView, onToggleFullscreen, onBack, isFullscreen = false, Modifier.fillMaxWidth().aspectRatio(aspect))
                 WatchDetails(state, presenter, suggestionActions)
-            }
+            } }
         }
     }
 }
@@ -166,6 +183,18 @@ private fun PlayerArea(
     isFullscreen: Boolean,
     modifier: Modifier,
 ) {
+    val context = LocalContext.current
+    val feedback = remember { GestureFeedback() }
+    val haptic = rememberGestureHaptic()
+    val gestures = Modifier.playerGestures(context, state, presenter, engine, feedback, isFullscreen, haptic, onToggleFullscreen, onClose = onBack)
+
+    // Keep the screen on while a video is playing
+    val view = LocalView.current
+    DisposableEffect(state.isPlaying) {
+        view.keepScreenOn = state.isPlaying
+        onDispose { view.keepScreenOn = false }
+    }
+
     Box(modifier.background(Color.Black)) {
         state.backgroundUrl?.let { RemoteImage(it, Modifier.fillMaxSize(), width = 1280, height = 720) }
 
@@ -181,33 +210,18 @@ private fun PlayerArea(
             },
         )
 
-        // Gestures: tap toggles the controls, double tap on the sides seeks
-        Box(
-            Modifier
-                .fillMaxSize()
-                .pointerInput(Unit) {
-                    detectTapGestures(
-                        onTap = {
-                            engine.showOverlay(!state.isOverlayShown)
-                            presenter.onKeyDown(-1) // reset the auto hide timer
-                        },
-                        onDoubleTap = { offset ->
-                            val forward = offset.x > size.width / 2
-                            val target = (engine.positionMs + if (forward) SEEK_STEP_MS else -SEEK_STEP_MS).coerceAtLeast(0)
-                            engine.positionMs = target
-                            presenter.onSeekEnd()
-                        },
-                    )
-                }
-        )
+        // Tap, double tap, long press and vertical swipes (see PlayerGestures.kt)
+        Box(Modifier.fillMaxSize().then(gestures))
 
         if (state.isBuffering || state.isProgressShown) {
             CircularProgressIndicator(Modifier.align(Alignment.Center).size(48.dp), color = Color.White)
         }
 
         AnimatedVisibility(visible = state.isOverlayShown && !state.isInPip, enter = fadeIn(), exit = fadeOut(), modifier = Modifier.fillMaxSize()) {
-            PlayerControls(state, presenter, engine, onToggleFullscreen, onBack, isFullscreen)
+            PlayerControls(state, presenter, engine, onToggleFullscreen, onBack, isFullscreen, gestures)
         }
+
+        GestureFeedbackOverlay(feedback)
     }
 }
 
@@ -219,10 +233,12 @@ private fun PlayerControls(
     onToggleFullscreen: () -> Unit,
     onBack: () -> Unit,
     isFullscreen: Boolean,
+    gestures: Modifier,
 ) {
     val insets = if (isFullscreen) Modifier.windowInsetsPadding(WindowInsets.safeDrawing) else Modifier
 
-    Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.45f))) {
+    // The dimmed layer keeps the same gestures: tap hides the controls, double tap seeks...
+    Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.45f)).then(gestures)) {
         // Top bar
         Row(insets.fillMaxWidth().align(Alignment.TopCenter).padding(4.dp), verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onBack) {
@@ -309,11 +325,19 @@ private fun PlayerControls(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SeekBar(state: PlayerUiState, presenter: PlaybackPresenter, engine: PlaybackActivity) {
     val duration = state.durationMs.coerceAtLeast(1)
     var dragValue by remember { mutableStateOf<Float?>(null) }
     val value = dragValue ?: (state.positionMs.toFloat() / duration).coerceIn(0f, 1f)
+
+    val interaction = remember { MutableInteractionSource() }
+    val colors = SliderDefaults.colors(
+        thumbColor = YouTubeRed,
+        activeTrackColor = YouTubeRed,
+        inactiveTrackColor = Color.White.copy(alpha = 0.3f),
+    )
 
     Box(Modifier.fillMaxWidth().height(36.dp), contentAlignment = Alignment.Center) {
         // SponsorBlock and other segments
@@ -339,11 +363,21 @@ private fun SeekBar(state: PlayerUiState, presenter: PlaybackPresenter, engine: 
                 presenter.onSeekEnd()
                 dragValue = null
             },
-            colors = SliderDefaults.colors(
-                thumbColor = YouTubeRed,
-                activeTrackColor = YouTubeRed,
-                inactiveTrackColor = Color.White.copy(alpha = 0.3f),
-            ),
+            colors = colors,
+            interactionSource = interaction,
+            // Thin YouTube-like seek bar with a small round thumb
+            thumb = {
+                SliderDefaults.Thumb(interactionSource = interaction, colors = colors, thumbSize = DpSize(14.dp, 14.dp))
+            },
+            track = { sliderState ->
+                SliderDefaults.Track(
+                    sliderState = sliderState,
+                    colors = colors,
+                    modifier = Modifier.height(3.dp),
+                    thumbTrackGapSize = 0.dp,
+                    drawStopIndicator = null,
+                )
+            },
         )
     }
 }
@@ -371,7 +405,9 @@ private fun WatchDetails(state: PlayerUiState, presenter: PlaybackPresenter, act
                 }
             }
         }
-        rows.filter { it !== mainRow }.forEach { row ->
+        // Groups titled like the main one are continuations ("Suggestions" pages): one vertical list
+        val listRows = rows.filter { mainRow != null && (it === mainRow || it.title == mainRow.title) }
+        rows.filter { it !in listRows }.forEach { row ->
             item(key = "shelf${row.id}") { SuggestionShelf(row, actions) }
         }
         if (mainRow != null) {
@@ -383,9 +419,11 @@ private fun WatchDetails(state: PlayerUiState, presenter: PlaybackPresenter, act
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 4.dp),
                 )
             }
-            itemsIndexed(mainRow.items) { index, video ->
-                if (mainRow.revision >= 0) CompactSuggestion(video, actions)
-                if (index == mainRow.items.size - 4) LaunchedEffect(mainRow.items.size) { actions.onScrollEnd(mainRow.items.last()) }
+            listRows.forEach { row ->
+                itemsIndexed(row.items) { index, video ->
+                    if (row.revision >= 0) CompactVideoCard(video, actions, Modifier.padding(horizontal = 12.dp))
+                    if (row === listRows.last() && index == row.items.size - 4) LaunchedEffect(row.items.size) { actions.onScrollEnd(row.items.last()) }
+                }
             }
         }
         item { Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.navigationBars)) }
@@ -397,8 +435,8 @@ private fun VideoHeader(state: PlayerUiState, presenter: PlaybackPresenter) {
     val video = state.video
     val infoId = CommonR.id.action_info
 
-    Column(Modifier.padding(horizontal = 16.dp, vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-        Column(Modifier.clickable { presenter.onButtonClicked(infoId, state.buttonState(infoId)) }) {
+    Column(Modifier.padding(vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        Column(Modifier.padding(horizontal = 16.dp).clickable { presenter.onButtonClicked(infoId, state.buttonState(infoId)) }) {
             Text(state.title ?: "", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, maxLines = 3, overflow = TextOverflow.Ellipsis)
             val subtitle = state.subtitle
             if (!subtitle.isNullOrBlank()) {
@@ -409,7 +447,7 @@ private fun VideoHeader(state: PlayerUiState, presenter: PlaybackPresenter) {
         // Channel row
         val channelId = CommonR.id.action_channel
         val subscribeId = CommonR.id.action_subscribe
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(Modifier.padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
             Row(
                 Modifier.weight(1f).clip(RoundedCornerShape(24.dp)).clickable { presenter.onButtonClicked(channelId, state.buttonState(channelId)) },
                 verticalAlignment = Alignment.CenterVertically,
@@ -447,7 +485,19 @@ private fun ActionChips(state: PlayerUiState, presenter: PlaybackPresenter) {
         PlayerAction(CommonR.id.action_playback_queue, stringResource(CommonR.string.action_playback_queue), Icons.AutoMirrored.Outlined.QueueMusic),
     )
 
-    LimitFontScale(1.15f) { LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+    val (isFavorite, onFavorite) = FavoriteChipState(state.video)
+
+    LimitFontScale(1.15f) { LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp), contentPadding = PaddingValues(horizontal = 16.dp)) {
+        item {
+            FilterChip(
+                selected = isFavorite,
+                onClick = onFavorite,
+                label = { Text(stringResource(R.string.mobile_favorite), maxLines = 1) },
+                leadingIcon = { Icon(if (isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder, null, Modifier.size(FilterChipDefaults.IconSize)) },
+                shape = RoundedCornerShape(18.dp),
+            )
+        }
+        item { DownloadChip(state.video) }
         items(actions) { action ->
             val buttonState = state.buttonState(action.id)
             val active = buttonState == PlayerUI.BUTTON_ON
@@ -477,42 +527,6 @@ private fun SuggestionShelf(row: VideoRowState, actions: VideoActions) {
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-private fun CompactSuggestion(video: Video, actions: VideoActions) {
-    Row(
-        Modifier
-            .fillMaxWidth()
-            .combinedClickable(onClick = { actions.onClick(video) }, onLongClick = { actions.onLongClick(video) })
-            .padding(start = 12.dp, top = 6.dp, bottom = 6.dp),
-        verticalAlignment = Alignment.Top,
-    ) {
-        Box(Modifier.width(168.dp).aspectRatio(16f / 9f).clip(RoundedCornerShape(8.dp))) {
-            RemoteImage(video.getCardImageUrl(), Modifier.fillMaxSize(), width = 336, height = 189)
-            val badge = if (video.isLive) "LIVE" else video.badge
-            if (!badge.isNullOrBlank()) {
-                Text(
-                    badge,
-                    color = Color.White,
-                    style = MaterialTheme.typography.labelSmall,
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(4.dp)
-                        .background(if (video.isLive) YouTubeRed else Color.Black.copy(alpha = 0.78f), RoundedCornerShape(4.dp))
-                        .padding(horizontal = 4.dp, vertical = 1.dp),
-                )
-            }
-        }
-        Column(Modifier.weight(1f).padding(start = 12.dp)) {
-            Text(video.getTitle() ?: "", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium, maxLines = 2, overflow = TextOverflow.Ellipsis)
-            Text(video.getSecondTitle()?.toString() ?: "", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 2, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 2.dp))
-        }
-        IconButton(onClick = { actions.onLongClick(video) }) {
-            Icon(Icons.Default.MoreVert, stringResource(R.string.mobile_more_options), tint = MaterialTheme.colorScheme.onSurfaceVariant)
-        }
-    }
-}
-
 @Composable
 private fun FullscreenSuggestions(state: PlayerUiState, actions: VideoActions, modifier: Modifier) {
     val row = state.suggestions.rows.maxByOrNull { it.items.size } ?: return
@@ -535,4 +549,33 @@ private fun formatTime(ms: Long): String {
     val minutes = (totalSeconds % 3600) / 60
     val seconds = totalSeconds % 60
     return if (hours > 0) "%d:%02d:%02d".format(hours, minutes, seconds) else "%d:%02d".format(minutes, seconds)
+}
+
+/** "Download" chip: audio (m4a) or video (mp4, progressive) saved through the system DownloadManager */
+@Composable
+private fun DownloadChip(video: Video?) {
+    val context = LocalContext.current
+    var menu by remember { mutableStateOf(false) }
+    Box {
+        FilterChip(
+            selected = false,
+            enabled = video?.videoId != null && video.isLive != true,
+            onClick = { menu = true },
+            label = { Text(stringResource(R.string.mobile_download), maxLines = 1) },
+            leadingIcon = { Icon(Icons.Outlined.Download, null, Modifier.size(FilterChipDefaults.IconSize)) },
+            shape = RoundedCornerShape(18.dp),
+        )
+        DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
+            DropdownMenuItem(
+                text = { Text(stringResource(R.string.mobile_download_audio)) },
+                leadingIcon = { Icon(Icons.Outlined.MusicNote, null) },
+                onClick = { menu = false; video?.let { Downloads.download(context, it, DownloadKind.AUDIO) } },
+            )
+            DropdownMenuItem(
+                text = { Text(stringResource(R.string.mobile_download_video)) },
+                leadingIcon = { Icon(Icons.Outlined.Movie, null) },
+                onClick = { menu = false; video?.let { Downloads.download(context, it, DownloadKind.VIDEO) } },
+            )
+        }
+    }
 }

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="18 18 72 72"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF3D2E"/><stop offset="1" stop-color="#C2185B"/></linearGradient>
+<clipPath id="c"><rect x="18" y="18" width="72" height="72"/></clipPath></defs>
+<g clip-path="url(#c)"><rect x="0" y="0" width="108" height="108" fill="url(#g)"/><g transform="translate(54 54) scale(0.88) translate(-54 -54)"><path d="M45,25 L54,35 L63,25" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="45" cy="25" r="2.2" fill="#FFFFFF"/><circle cx="63" cy="25" r="2.2" fill="#FFFFFF"/>
+<path d="M38,78 L36,83 M70,78 L72,83" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+<path d="M33,36 H75 A7,7 0 0 1 82,43 V71 A7,7 0 0 1 75,78 H33 A7,7 0 0 1 26,71 V43 A7,7 0 0 1 33,36 Z" fill="#FFFFFF"/>
+<path d="M36,41 H72 A4,4 0 0 1 76,45 V69 A4,4 0 0 1 72,73 H36 A4,4 0 0 1 32,69 V45 A4,4 0 0 1 36,41 Z" fill="#1C1B22"/>
+<path d="M51.3,50.2 C50,48.3 48,47.6 45.9,47.6 C42.9,47.6 40.8,49.4 40.8,51.8 C40.8,54.6 43.3,55.5 46,56.3 C48.9,57.1 51.5,58.3 51.5,61.2 C51.5,63.9 49.2,65.6 46,65.6 C43.5,65.6 41.4,64.6 40.1,62.6" fill="none" stroke="#FFFFFF" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M55.5,48.4 H67.5 M61.5,48.4 V65.4" fill="none" stroke="#FFFFFF" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/></g></g></svg>

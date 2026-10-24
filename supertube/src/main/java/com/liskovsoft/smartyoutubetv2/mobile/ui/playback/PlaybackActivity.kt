@@ -491,8 +491,8 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
     override fun setTitle(title: String?) { state.title = title }
 
     override fun showProgressBar(show: Boolean) {
-        // The engine shows its own buffering state
-        if (controller.isLoading || controller.isBuffering) return
+        // Hiding is always allowed. Showing is skipped while the engine reports its own buffering state.
+        if (show && controller.isBuffering) return
         state.isProgressShown = show
     }
 
@@ -504,7 +504,8 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
     fun pollEngine() {
         val p = player
         state.isPlaying = controller.isPlaying
-        state.isBuffering = controller.isLoading || controller.isBuffering
+        // NOTE: player.isLoading() is true while prefetching ahead during normal playback. Only real buffering stalls count.
+        state.isBuffering = controller.isBuffering
         state.positionMs = controller.positionMs.coerceAtLeast(0)
         state.durationMs = durationMs.coerceAtLeast(0)
         state.bufferedMs = p?.bufferedPosition ?: 0

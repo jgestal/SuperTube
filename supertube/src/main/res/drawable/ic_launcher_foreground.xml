@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- SuperTube launcher foreground: rounded play button with a small spark -->
+<!-- SuperTube icon: TV with "ST" on the screen (generated from the SVG master) -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="108dp"
-    android:height="108dp"
-    android:viewportWidth="108"
-    android:viewportHeight="108">
-    <!-- Rounded screen -->
-    <path
-        android:fillColor="#FFFFFFFF"
-        android:pathData="M38,36h32a8,8 0 0 1 8,8v20a8,8 0 0 1 -8,8h-32a8,8 0 0 1 -8,-8v-20a8,8 0 0 1 8,-8z" />
-    <!-- Play triangle -->
-    <path
-        android:fillColor="#FFE53935"
-        android:pathData="M49,46.5L61,54L49,61.5Z" />
-    <!-- Spark -->
-    <path
-        android:fillColor="#FFFFFFFF"
-        android:pathData="M76,26l1.8,4.2l4.2,1.8l-4.2,1.8l-1.8,4.2l-1.8,-4.2l-4.2,-1.8l4.2,-1.8z" />
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <group android:pivotX="54" android:pivotY="54" android:scaleX="0.88" android:scaleY="0.88">
+        <path android:pathData="M45,25 L54,35 L63,25" android:strokeColor="#FFFFFFFF" android:strokeWidth="3"
+            android:strokeLineCap="round" android:strokeLineJoin="round" android:fillColor="#00000000" />
+        <path android:pathData="M42.8,25 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0" android:fillColor="#FFFFFFFF" />
+        <path android:pathData="M60.8,25 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0" android:fillColor="#FFFFFFFF" />
+        <path android:pathData="M38,78 L36,83 M70,78 L72,83" android:strokeColor="#FFFFFFFF" android:strokeWidth="3"
+            android:strokeLineCap="round" android:strokeLineJoin="round" android:fillColor="#00000000" />
+        <path android:pathData="M33,36 H75 A7,7 0 0 1 82,43 V71 A7,7 0 0 1 75,78 H33 A7,7 0 0 1 26,71 V43 A7,7 0 0 1 33,36 Z" android:fillColor="#FFFFFFFF" />
+        <path android:pathData="M36,41 H72 A4,4 0 0 1 76,45 V69 A4,4 0 0 1 72,73 H36 A4,4 0 0 1 32,69 V45 A4,4 0 0 1 36,41 Z" android:fillColor="#FF1C1B22" />
+        <path android:pathData="M51.3,50.2 C50,48.3 48,47.6 45.9,47.6 C42.9,47.6 40.8,49.4 40.8,51.8 C40.8,54.6 43.3,55.5 46,56.3 C48.9,57.1 51.5,58.3 51.5,61.2 C51.5,63.9 49.2,65.6 46,65.6 C43.5,65.6 41.4,64.6 40.1,62.6" android:strokeColor="#FFFFFFFF" android:strokeWidth="4.2"
+            android:strokeLineCap="round" android:strokeLineJoin="round" android:fillColor="#00000000" />
+        <path android:pathData="M55.5,48.4 H67.5 M61.5,48.4 V65.4" android:strokeColor="#FFFFFFFF" android:strokeWidth="4.2"
+            android:strokeLineCap="round" android:strokeLineJoin="round" android:fillColor="#00000000" />
+    </group>
 </vector>

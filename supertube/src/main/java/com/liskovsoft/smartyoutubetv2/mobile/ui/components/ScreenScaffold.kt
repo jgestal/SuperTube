@@ -1,5 +1,10 @@
 package com.liskovsoft.smartyoutubetv2.mobile.ui.components
 
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.Alignment
+import com.liskovsoft.smartyoutubetv2.mobile.ui.browse.BrowseActivity
+import com.liskovsoft.smartyoutubetv2.mobile.ui.downloads.DownloadIndicator
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
@@ -36,6 +41,7 @@ fun ScreenScaffold(
     content: @Composable () -> Unit,
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val context = LocalContext.current
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -60,6 +66,10 @@ fun ScreenScaffold(
                 .fillMaxSize()
         ) {
             content()
+            DownloadIndicator(
+                onClick = { BrowseActivity.openDownloads(context) },
+                modifier = Modifier.align(Alignment.BottomEnd).windowInsetsPadding(WindowInsets.navigationBars).padding(16.dp),
+            )
         }
     }
 }
