@@ -1,5 +1,8 @@
 package com.liskovsoft.smartyoutubetv2.mobile.ui.components
 
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Column
+import com.liskovsoft.smartyoutubetv2.mobile.ui.playback.MiniPlayerBar
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.Alignment
@@ -66,10 +69,10 @@ fun ScreenScaffold(
                 .fillMaxSize()
         ) {
             content()
-            DownloadIndicator(
-                onClick = { BrowseActivity.openDownloads(context) },
-                modifier = Modifier.align(Alignment.BottomEnd).windowInsetsPadding(WindowInsets.navigationBars).padding(16.dp),
-            )
+            Column(Modifier.align(Alignment.BottomCenter).fillMaxWidth().windowInsetsPadding(WindowInsets.navigationBars), horizontalAlignment = Alignment.End) {
+                DownloadIndicator(onClick = { BrowseActivity.openDownloads(context) }, modifier = Modifier.padding(16.dp))
+                MiniPlayerBar()
+            }
         }
     }
 }

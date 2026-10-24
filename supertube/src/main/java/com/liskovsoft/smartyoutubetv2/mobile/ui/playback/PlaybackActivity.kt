@@ -1,5 +1,6 @@
 package com.liskovsoft.smartyoutubetv2.mobile.ui.playback
 
+import com.liskovsoft.sharedutils.helpers.MessageHelpers
 import android.app.PictureInPictureParams
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
@@ -62,6 +63,8 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
     private var mediaSession: MediaSessionCompat? = null
     private var mediaSessionConnector: MediaSessionConnector? = null
     private var isEngineBlocked = false
+    /** Collapsed into the mini player (still playing in its own task) */
+    private var isMinimized = false
     private var orientationListener: OrientationEventListener? = null
     /** Orientation requested by the fullscreen button. Released when the device physically matches it. */
     private var lockedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
@@ -96,7 +99,7 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
                     engine = this,
                     onCreateExoView = { view -> exoView = view; view.player = player },
                     onToggleFullscreen = ::toggleFullscreen,
-                    onBack = { onBackPressed() },
+                    onBack = ::minimize,
                 )
             }
         }
@@ -133,6 +136,7 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
 
     override fun onResume() {
         super.onResume()
+        isMinimized = false
         if (player == null) initializePlayer()
         // NOTE: multiple components rely on it
         presenter.onViewResumed()
@@ -171,6 +175,21 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
         } else {
             controller.show(WindowInsetsCompat.Type.systemBars())
         }
+    }
+
+    /**
+     * Collapses the player into the mini player: the engine keeps playing (this activity lives in its own task)
+     * and the parent screen comes to the front.
+     */
+    fun minimize() {
+        if (player == null || !controller.containsMedia()) {
+            finish()
+            return
+        }
+        isMinimized = true
+        blockEngine(true)
+        showOverlay(false)
+        viewManager.startParentView(this)
     }
 
     private fun toggleFullscreen() {
@@ -272,7 +291,16 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
     }
 
     override fun finishReally() {
-        super.finishReally()
+        SleepTimer.cancel()
+        if (isMinimized) {
+            // Closed from the mini player: the parent screen is already in front, just stop and close
+            isMinimized = false
+            viewManager.removeTop(this)
+            blockEngine(false)
+            superFinishReally()
+        } else {
+            super.finishReally()
+        }
         maybeReleasePlayer()
         presenter.onFinish()
     }
@@ -509,5 +537,11 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
         state.positionMs = controller.positionMs.coerceAtLeast(0)
         state.durationMs = durationMs.coerceAtLeast(0)
         state.bufferedMs = p?.bufferedPosition ?: 0
+
+        if (SleepTimer.isActive && SleepTimer.shouldStop(state.positionMs, state.durationMs)) {
+            presenter.onPauseClicked()
+            playWhenReady = false
+            MessageHelpers.showMessage(this, getString(R.string.mobile_sleep_stopped))
+        }
     }
 }

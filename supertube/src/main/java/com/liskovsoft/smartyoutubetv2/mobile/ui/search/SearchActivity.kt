@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import androidx.activity.compose.setContent
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -37,8 +36,11 @@ class SearchActivity : ScreenActivity(), SearchView {
     private val state = SearchUiState()
     private var tagsProvider: MediaServiceSearchTagProvider? = null
 
-    private val voiceLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        val text = result.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)?.firstOrNull()
+    // Plain request codes: the androidx.fragment version used by the project rejects the codes of registerForActivityResult
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode != REQUEST_VOICE) return
+        val text = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)?.firstOrNull()
         if (!text.isNullOrBlank()) submit(text)
     }
 
@@ -152,7 +154,7 @@ class SearchActivity : ScreenActivity(), SearchView {
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
             .putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
         try {
-            voiceLauncher.launch(intent)
+            startActivityForResult(intent, REQUEST_VOICE)
         } catch (e: ActivityNotFoundException) {
             MessageHelpers.showMessage(this, e.message)
         }
@@ -160,5 +162,9 @@ class SearchActivity : ScreenActivity(), SearchView {
 
     override fun finishReally() {
         super.finishReally()
+    }
+
+    private companion object {
+        const val REQUEST_VOICE = 701
     }
 }

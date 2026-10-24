@@ -1,5 +1,7 @@
 package com.liskovsoft.smartyoutubetv2.mobile
 
+import com.liskovsoft.smartyoutubetv2.mobile.widget.FavoritesWidgetProvider
+import com.liskovsoft.smartyoutubetv2.mobile.prefs.FavoritesStore
 import androidx.multidex.MultiDexApplication
 import androidx.work.Configuration
 import com.liskovsoft.sharedutils.helpers.Helpers
@@ -57,6 +59,8 @@ class MobileApplication : MultiDexApplication(), Configuration.Provider {
 
         setupGlobalExceptionHandler()
         setupViewManager()
+        // Keep the home screen widget in sync with the favorites
+        FavoritesStore.onChanged = { FavoritesWidgetProvider.refresh(this) }
     }
 
     // Lazy WorkManager init (auto-init is removed in the manifest)

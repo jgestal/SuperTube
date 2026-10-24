@@ -1,5 +1,7 @@
 package com.liskovsoft.smartyoutubetv2.mobile.ui.downloads
 
+import com.liskovsoft.smartyoutubetv2.mobile.prefs.MobilePrefs
+import android.net.ConnectivityManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -214,7 +216,10 @@ private fun statusText(context: Context, item: DownloadItem): String {
     val size = { bytes: Long -> Formatter.formatShortFileSize(context, bytes) }
     val type = context.getString(if (item.kind == DownloadKind.AUDIO) R.string.mobile_filter_audio else R.string.mobile_filter_video)
     return when (item.status) {
-        DownloadStatus.QUEUED -> context.getString(R.string.mobile_download_status_queued)
+        DownloadStatus.QUEUED -> context.getString(
+            if (MobilePrefs.instance(context).wifiOnlyDownloads && context.getSystemService(ConnectivityManager::class.java).isActiveNetworkMetered)
+                R.string.mobile_download_status_waiting_wifi else R.string.mobile_download_status_queued
+        )
         DownloadStatus.DOWNLOADING -> "${(item.progress * 100).toInt()}% · ${size(item.downloadedBytes)}" + (if (item.totalBytes > 0) " / ${size(item.totalBytes)}" else "")
         DownloadStatus.PAUSED -> context.getString(R.string.mobile_download_status_paused) + " · ${(item.progress * 100).toInt()}%"
         DownloadStatus.PROCESSING -> context.getString(R.string.mobile_download_status_processing)

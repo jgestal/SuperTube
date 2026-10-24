@@ -1,5 +1,9 @@
 package com.liskovsoft.smartyoutubetv2.mobile.download
 
+import com.liskovsoft.smartyoutubetv2.mobile.prefs.MobilePrefs
+import android.net.NetworkCapabilities
+import android.net.Network
+import android.net.ConnectivityManager
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -45,11 +49,24 @@ class DownloadService : Service() {
 
     override fun onBind(intent: Intent?): IBinder? = null
 
+    private var networkCallback: ConnectivityManager.NetworkCallback? = null
+
     override fun onCreate() {
         super.onCreate()
         store = DownloadStore.instance(this)
         createChannel()
+        // "Wi‑Fi only": start the waiting downloads as soon as an unmetered network is available
+        val connectivity = getSystemService(ConnectivityManager::class.java)
+        networkCallback = object : ConnectivityManager.NetworkCallback() {
+            override fun onCapabilitiesChanged(network: Network, capabilities: NetworkCapabilities) {
+                if (capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED)) scope.launch { schedule() }
+            }
+        }.also { runCatching { connectivity.registerDefaultNetworkCallback(it) } }
     }
+
+    /** Downloads must wait: "Wi‑Fi only" is on and the current network is metered (mobile data) */
+    private fun mustWaitForWifi(): Boolean =
+        MobilePrefs.instance(this).wifiOnlyDownloads && getSystemService(ConnectivityManager::class.java).isActiveNetworkMetered
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val notification = buildNotification()
@@ -69,6 +86,11 @@ class DownloadService : Service() {
     /** Starts queued items while there are free slots, stops the service when nothing is left */
     private suspend fun schedule() {
         withContext(Dispatchers.Main) {
+            if (mustWaitForWifi()) {
+                // Keep the service (and its notification) while waiting for Wi‑Fi
+                updateNotification()
+                return@withContext
+            }
             val queued = store.items.filter { it.status == DownloadStatus.QUEUED && it.id !in running.keys }.sortedBy { it.createdAt }
             for (item in queued) {
                 if (running.size >= MAX_PARALLEL) break
@@ -95,6 +117,9 @@ class DownloadService : Service() {
             val (uri, size) = finish(item)
             store.update(id) { it.copy(status = DownloadStatus.COMPLETED, outputUri = uri, outputBytes = size) }
             item.parts.forEach { File(DownloadStore.tempDir(this), it.tempFile).delete() }
+        } catch (e: WaitForWifi) {
+            // Back to the queue, the progress is kept
+            store.update(id) { it.copy(status = DownloadStatus.QUEUED) }
         } catch (e: kotlinx.coroutines.CancellationException) {
             // Paused/cancelled by the user: keep the temp files to resume later
         } catch (e: Exception) {
@@ -110,6 +135,7 @@ class DownloadService : Service() {
         while (currentCoroutineContext().isActive) {
             val item = withContext(Dispatchers.Main) { store.get(id) } ?: return
             if (item.status != DownloadStatus.DOWNLOADING) return
+            if (mustWaitForWifi()) throw WaitForWifi()
             val part = item.parts[index]
             if (part.totalBytes > 0 && part.downloadedBytes >= part.totalBytes) return
 
@@ -224,7 +250,10 @@ class DownloadService : Service() {
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(android.R.drawable.stat_sys_download)
             .setContentTitle(active.firstOrNull()?.title ?: getString(R.string.mobile_downloads))
-            .setContentText(resources.getQuantityString(R.plurals.mobile_active_downloads, active.size, active.size))
+            .setContentText(
+                if (mustWaitForWifi()) getString(R.string.mobile_download_status_waiting_wifi)
+                else resources.getQuantityString(R.plurals.mobile_active_downloads, active.size, active.size)
+            )
             .setProgress(100, if (total > 0) (done * 100 / total).toInt() else 0, total <= 0)
             .setOngoing(true)
             .setOnlyAlertOnce(true)
@@ -237,6 +266,7 @@ class DownloadService : Service() {
     }
 
     override fun onDestroy() {
+        networkCallback?.let { runCatching { getSystemService(ConnectivityManager::class.java).unregisterNetworkCallback(it) } }
         scope.cancel()
         super.onDestroy()
     }
@@ -259,5 +289,7 @@ class DownloadService : Service() {
         }
     }
 }
+
+private class WaitForWifi : Exception()
 
 private fun <T> List<T>.replaceAt(index: Int, transform: (T) -> T): List<T> = mapIndexed { i, v -> if (i == index) transform(v) else v }

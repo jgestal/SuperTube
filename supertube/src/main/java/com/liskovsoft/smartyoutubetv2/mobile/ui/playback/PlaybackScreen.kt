@@ -1,5 +1,7 @@
 package com.liskovsoft.smartyoutubetv2.mobile.ui.playback
 
+import com.liskovsoft.smartyoutubetv2.mobile.ui.downloads.DownloadOptionsSheet
+import com.liskovsoft.mediaserviceinterfaces.data.MediaItemFormatInfo
 import com.liskovsoft.smartyoutubetv2.mobile.download.Downloads
 import com.liskovsoft.smartyoutubetv2.mobile.download.DownloadKind
 import androidx.compose.material3.DropdownMenuItem
@@ -153,6 +155,8 @@ fun PlaybackScreen(
 
         // Back in fullscreen returns to the portrait layout first
         BackHandler(enabled = isFullscreen && !state.isInPip) { onToggleFullscreen() }
+        // Portrait: back collapses the player into the mini player (like YouTube)
+        BackHandler(enabled = !isFullscreen && !state.isInPip) { onBack() }
 
         if (isFullscreen) {
             PlayerArea(state, presenter, engine, onCreateExoView, onToggleFullscreen, onBack, isFullscreen = true, Modifier.fillMaxSize())
@@ -498,6 +502,7 @@ private fun ActionChips(state: PlayerUiState, presenter: PlaybackPresenter) {
             )
         }
         item { DownloadChip(state.video) }
+        item { SleepTimerChip() }
         items(actions) { action ->
             val buttonState = state.buttonState(action.id)
             val active = buttonState == PlayerUI.BUTTON_ON
@@ -551,31 +556,36 @@ private fun formatTime(ms: Long): String {
     return if (hours > 0) "%d:%02d:%02d".format(hours, minutes, seconds) else "%d:%02d".format(minutes, seconds)
 }
 
-/** "Download" chip: audio (m4a) or video (mp4, progressive) saved through the system DownloadManager */
+/** "Download" chip: loads the available qualities and shows them in a sheet */
 @Composable
 private fun DownloadChip(video: Video?) {
     val context = LocalContext.current
-    var menu by remember { mutableStateOf(false) }
-    Box {
-        FilterChip(
-            selected = false,
-            enabled = video?.videoId != null && video.isLive != true,
-            onClick = { menu = true },
-            label = { Text(stringResource(R.string.mobile_download), maxLines = 1) },
-            leadingIcon = { Icon(Icons.Outlined.Download, null, Modifier.size(FilterChipDefaults.IconSize)) },
-            shape = RoundedCornerShape(18.dp),
+    var loading by remember { mutableStateOf(false) }
+    var options by remember { mutableStateOf<Pair<MediaItemFormatInfo, List<Downloads.Option>>?>(null) }
+    FilterChip(
+        selected = false,
+        enabled = video?.videoId != null && video.isLive != true && !loading,
+        onClick = {
+            val target = video ?: return@FilterChip
+            loading = true
+            Downloads.loadOptions(context, target) { info, list -> options = info to list; loading = false }
+        },
+        label = { Text(stringResource(R.string.mobile_download), maxLines = 1) },
+        leadingIcon = {
+            if (loading) CircularProgressIndicator(Modifier.size(FilterChipDefaults.IconSize), strokeWidth = 2.dp)
+            else Icon(Icons.Outlined.Download, null, Modifier.size(FilterChipDefaults.IconSize))
+        },
+        shape = RoundedCornerShape(18.dp),
+    )
+    // The request may fail silently (toast shown by Downloads): don't keep the spinner forever
+    LaunchedEffect(loading) { if (loading) { kotlinx.coroutines.delay(15_000); loading = false } }
+
+    val current = options
+    if (current != null && video != null) {
+        DownloadOptionsSheet(
+            options = current.second,
+            onPick = { option -> Downloads.download(context, video, current.first, option); options = null },
+            onDismiss = { options = null },
         )
-        DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
-            DropdownMenuItem(
-                text = { Text(stringResource(R.string.mobile_download_audio)) },
-                leadingIcon = { Icon(Icons.Outlined.MusicNote, null) },
-                onClick = { menu = false; video?.let { Downloads.download(context, it, DownloadKind.AUDIO) } },
-            )
-            DropdownMenuItem(
-                text = { Text(stringResource(R.string.mobile_download_video)) },
-                leadingIcon = { Icon(Icons.Outlined.Movie, null) },
-                onClick = { menu = false; video?.let { Downloads.download(context, it, DownloadKind.VIDEO) } },
-            )
-        }
     }
 }

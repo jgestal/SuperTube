@@ -113,8 +113,38 @@ class FavoritesStore private constructor(context: Context) {
     }
 
     private fun save() {
+        prefs.edit().putString(KEY_FOLDERS, toJson(folders).toString()).apply()
+        onChanged?.invoke()
+    }
+
+    /** All folders as JSON (also used by the export) */
+    fun exportJson(): JSONArray = toJson(folders)
+
+    /**
+     * Merges an exported list: folders are matched by name, videos already present are skipped.
+     * Returns the number of videos added.
+     */
+    fun importJson(json: JSONArray): Int {
+        var added = 0
+        for (incoming in parse(json)) {
+            val index = folders.indexOfFirst { it.name.equals(incoming.name, ignoreCase = true) }
+            if (index == -1) {
+                folders.add(incoming.copy(id = System.currentTimeMillis() + folders.size))
+                added += incoming.videos.size
+            } else {
+                val existing = folders[index]
+                val fresh = incoming.videos.filter { v -> existing.videos.none { it.videoId == v.videoId } }
+                folders[index] = existing.copy(videos = existing.videos + fresh)
+                added += fresh.size
+            }
+        }
+        save()
+        return added
+    }
+
+    private fun toJson(list: List<FavoriteFolder>): JSONArray {
         val json = JSONArray()
-        folders.forEach { folder ->
+        list.forEach { folder ->
             val videos = JSONArray()
             folder.videos.forEach { v ->
                 videos.put(JSONObject().apply {
@@ -124,11 +154,16 @@ class FavoritesStore private constructor(context: Context) {
             }
             json.put(JSONObject().apply { put("id", folder.id); put("name", folder.name); put("videos", videos) })
         }
-        prefs.edit().putString(KEY_FOLDERS, json.toString()).apply()
+        return json
     }
 
     private fun load(): List<FavoriteFolder> = try {
-        val json = JSONArray(prefs.getString(KEY_FOLDERS, "[]"))
+        parse(JSONArray(prefs.getString(KEY_FOLDERS, "[]")))
+    } catch (e: Exception) {
+        emptyList()
+    }
+
+    private fun parse(json: JSONArray): List<FavoriteFolder> =
         (0 until json.length()).map { i ->
             val folder = json.getJSONObject(i)
             val videos = folder.getJSONArray("videos")
@@ -144,14 +179,14 @@ class FavoritesStore private constructor(context: Context) {
                 },
             )
         }
-    } catch (e: Exception) {
-        emptyList()
-    }
 
     private fun JSONObject.optStringOrNull(key: String): String? = if (isNull(key)) null else optString(key)
 
     companion object {
         private const val KEY_FOLDERS = "folders"
+
+        /** Called after every change (home screen widget refresh) */
+        var onChanged: (() -> Unit)? = null
 
         /** Local section id for "Favorites" in the navigation (YouTube section ids are positive) */
         const val SECTION_ID = -1000

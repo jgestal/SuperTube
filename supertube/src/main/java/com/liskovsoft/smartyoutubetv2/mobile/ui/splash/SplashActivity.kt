@@ -1,5 +1,6 @@
 package com.liskovsoft.smartyoutubetv2.mobile.ui.splash
 
+import com.liskovsoft.smartyoutubetv2.mobile.widget.FavoritesWidgetProvider
 import com.liskovsoft.smartyoutubetv2.mobile.ui.browse.BrowseActivity
 import com.liskovsoft.smartyoutubetv2.mobile.download.DownloadStore
 import com.liskovsoft.smartyoutubetv2.mobile.download.DownloadService
@@ -19,6 +20,7 @@ class SplashActivity : MobileActivity(), SplashView {
 
         newIntent = intent
         if (intent?.getBooleanExtra(DownloadService.EXTRA_OPEN_DOWNLOADS, false) == true) BrowseActivity.requestSection(DownloadStore.SECTION_ID)
+        intent?.getIntExtra(FavoritesWidgetProvider.EXTRA_OPEN_SECTION, 0)?.takeIf { it != 0 }?.let(BrowseActivity::requestSection)
 
         presenter = SplashPresenter.instance(this)
         presenter.setView(this)
@@ -29,6 +31,7 @@ class SplashActivity : MobileActivity(), SplashView {
         super.onNewIntent(intent)
         newIntent = intent
         if (intent.getBooleanExtra(DownloadService.EXTRA_OPEN_DOWNLOADS, false)) BrowseActivity.requestSection(DownloadStore.SECTION_ID)
+        intent.getIntExtra(FavoritesWidgetProvider.EXTRA_OPEN_SECTION, 0).takeIf { it != 0 }?.let(BrowseActivity::requestSection)
         presenter.onViewInitialized()
     }
 

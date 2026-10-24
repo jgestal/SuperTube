@@ -1,5 +1,9 @@
 package com.liskovsoft.smartyoutubetv2.mobile.ui.browse
 
+import com.liskovsoft.smartyoutubetv2.mobile.update.UpdateChecker
+import com.liskovsoft.smartyoutubetv2.mobile.prefs.BackupManager
+import com.liskovsoft.sharedutils.helpers.MessageHelpers
+import android.content.Intent
 import com.liskovsoft.smartyoutubetv2.mobile.download.DownloadStore
 import com.liskovsoft.smartyoutubetv2.mobile.R
 import com.liskovsoft.smartyoutubetv2.mobile.prefs.FavoritesStore
@@ -84,6 +88,35 @@ class BrowseActivity : ScreenActivity(), BrowseView {
     private lateinit var presenter: BrowsePresenter
     private val state = BrowseUiState()
 
+    // Plain request codes: the androidx.fragment version used by the project rejects the codes of registerForActivityResult
+    fun exportData() = startActivityForResult(
+        Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("application/json")
+            .putExtra(Intent.EXTRA_TITLE, "supertube-backup.json"),
+        REQUEST_EXPORT,
+    )
+
+    fun importData() = startActivityForResult(
+        Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("*/*")
+            .putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("application/json", "application/octet-stream", "text/plain")),
+        REQUEST_IMPORT,
+    )
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val uri = data?.data?.takeIf { resultCode == RESULT_OK } ?: return
+        when (requestCode) {
+            REQUEST_EXPORT -> runCatching { BackupManager.export(this, uri) }
+                .onSuccess { MessageHelpers.showMessage(this, getString(R.string.mobile_export_done)) }
+                .onFailure { MessageHelpers.showMessage(this, it.message) }
+            REQUEST_IMPORT -> {
+                val added = runCatching { BackupManager.import(this, uri) }.getOrDefault(-1)
+                MessageHelpers.showMessage(this, if (added < 0) getString(R.string.mobile_import_error) else getString(R.string.mobile_import_done, added))
+            }
+        }
+    }
+
+    fun checkForUpdates() = UpdateChecker.check(this, manual = true)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -106,6 +139,7 @@ class BrowseActivity : ScreenActivity(), BrowseView {
         }
 
         presenter.onViewInitialized()
+        UpdateChecker.checkOnStart(this)
     }
 
     override fun onResume() {
@@ -120,6 +154,9 @@ class BrowseActivity : ScreenActivity(), BrowseView {
     }
 
     companion object {
+        private const val REQUEST_EXPORT = 702
+        private const val REQUEST_IMPORT = 703
+
         private var pendingSectionId = 0
 
         /** Shows the downloads management from any screen */

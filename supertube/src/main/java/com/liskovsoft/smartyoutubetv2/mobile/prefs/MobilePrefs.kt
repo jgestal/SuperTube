@@ -78,6 +78,31 @@ class MobilePrefs private constructor(context: Context) {
         saveRecentSearches()
     }
 
+    /** Settings included in the SuperTube backup */
+    fun exportJson(): org.json.JSONObject = org.json.JSONObject().apply {
+        put("layout", feedLayout.name)
+        put("sectionOrder", org.json.JSONArray(sectionOrder.toList()))
+        put("recentSearches", org.json.JSONArray(recentSearches.toList()))
+        put("wifiOnlyDownloads", wifiOnlyDownloads)
+    }
+
+    fun importJson(json: org.json.JSONObject) {
+        json.optString("layout").let { name -> FeedLayout.values().firstOrNull { it.name == name }?.let(::updateFeedLayout) }
+        json.optJSONArray("sectionOrder")?.let { a -> setSectionOrder((0 until a.length()).map { a.getInt(it) }) }
+        json.optJSONArray("recentSearches")?.let { a ->
+            (0 until a.length()).map { a.getString(it) }.reversed().forEach(::addRecentSearch)
+        }
+        if (json.has("wifiOnlyDownloads")) updateWifiOnlyDownloads(json.getBoolean("wifiOnlyDownloads"))
+    }
+
+    var wifiOnlyDownloads by mutableStateOf(prefs.getBoolean(KEY_WIFI_ONLY, false))
+        private set
+
+    fun updateWifiOnlyDownloads(enabled: Boolean) {
+        wifiOnlyDownloads = enabled
+        prefs.edit().putBoolean(KEY_WIFI_ONLY, enabled).apply()
+    }
+
     private fun saveRecentSearches() {
         // Unit separator: search queries never contain it
         prefs.edit().putString(KEY_RECENT_SEARCHES, recentSearches.joinToString(SEPARATOR)).apply()
@@ -96,6 +121,7 @@ class MobilePrefs private constructor(context: Context) {
         private const val KEY_FEED_LAYOUT = "feed_layout"
         private const val KEY_SECTION_ORDER = "section_order"
         private const val KEY_RECENT_SEARCHES = "recent_searches"
+        private const val KEY_WIFI_ONLY = "wifi_only_downloads"
         private const val SEPARATOR = "\u001F"
         private const val MAX_RECENT_SEARCHES = 20
 

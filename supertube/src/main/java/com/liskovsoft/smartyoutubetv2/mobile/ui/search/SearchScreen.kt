@@ -1,5 +1,7 @@
 package com.liskovsoft.smartyoutubetv2.mobile.ui.search
 
+import androidx.compose.foundation.layout.navigationBars
+import com.liskovsoft.smartyoutubetv2.mobile.ui.playback.MiniPlayerBar
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
@@ -208,6 +210,7 @@ fun SearchScreen(
                     FeedView(state.results, actions)
                 }
             }
+            MiniPlayerBar(Modifier.align(Alignment.BottomCenter).windowInsetsPadding(WindowInsets.navigationBars))
         }
     }
 }

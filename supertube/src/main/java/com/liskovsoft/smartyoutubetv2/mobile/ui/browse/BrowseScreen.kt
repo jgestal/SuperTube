@@ -1,5 +1,11 @@
 package com.liskovsoft.smartyoutubetv2.mobile.ui.browse
 
+import com.liskovsoft.smartyoutubetv2.mobile.ui.playback.MiniPlayerBar
+import com.liskovsoft.smartyoutubetv2.mobile.BuildConfig
+import androidx.compose.material.icons.outlined.FileDownload
+import androidx.compose.material.icons.outlined.FileUpload
+import androidx.compose.material.icons.outlined.SystemUpdate
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.safeDrawing
@@ -229,11 +235,12 @@ fun BrowseScreen(
                 } else {
                     SectionBody(state.contentOf(selected), state.isLoading, actions, presenter, scrollToTop)
                 }
-                if (selected?.id != DownloadStore.SECTION_ID) {
-                    DownloadIndicator(
-                        onClick = { onSelectSection(DownloadStore.SECTION_ID) },
-                        modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp),
-                    )
+                // Bottom overlays: downloads progress pill and the mini player
+                Column(Modifier.align(Alignment.BottomCenter).fillMaxWidth(), horizontalAlignment = Alignment.End) {
+                    if (selected?.id != DownloadStore.SECTION_ID) {
+                        DownloadIndicator(onClick = { onSelectSection(DownloadStore.SECTION_ID) }, modifier = Modifier.padding(16.dp))
+                    }
+                    MiniPlayerBar()
                 }
             }
         }
@@ -320,7 +327,18 @@ private fun ChannelsStrip(content: SectionContent, presenter: BrowsePresenter) {
 
 @Composable
 private fun SettingsList(items: List<SettingsItem>) {
+    val activity = LocalContext.current as? BrowseActivity
     LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(vertical = 8.dp)) {
+        // SuperTube-only options: backup of favorites/settings and updates from the SuperTube releases
+        if (activity != null) {
+            item {
+                Text(stringResource(R.string.mobile_supertube), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(start = 16.dp, top = 8.dp, bottom = 4.dp))
+            }
+            item { ListItem(modifier = Modifier.clickable { activity.checkForUpdates() }, headlineContent = { Text(stringResource(R.string.mobile_check_updates)) }, supportingContent = { Text(BuildConfig.VERSION_NAME) }, leadingContent = { Icon(Icons.Outlined.SystemUpdate, null) }) }
+            item { ListItem(modifier = Modifier.clickable { activity.exportData() }, headlineContent = { Text(stringResource(R.string.mobile_export)) }, leadingContent = { Icon(Icons.Outlined.FileUpload, null) }) }
+            item { ListItem(modifier = Modifier.clickable { activity.importData() }, headlineContent = { Text(stringResource(R.string.mobile_import)) }, leadingContent = { Icon(Icons.Outlined.FileDownload, null) }) }
+            item { HorizontalDivider(Modifier.padding(vertical = 8.dp)) }
+        }
         items(items.size) { index ->
             val item = items[index]
             ListItem(
