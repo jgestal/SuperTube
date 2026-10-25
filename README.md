@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="images/supertube_icon.png" width="120" alt="SuperTube icon">
+  <img src="images/supertube_icon.png" width="112" alt="SuperTube icon">
 </p>
 
 <h1 align="center">SuperTube</h1>
@@ -17,127 +17,117 @@
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/layout_list.jpg" width="190" alt="Feed">
-  <img src="docs/screenshots/player.jpg" width="190" alt="Player">
-  <img src="docs/screenshots/mini_player.jpg" width="190" alt="Mini player">
-  <img src="docs/screenshots/favorites.jpg" width="190" alt="Favorites">
-  <img src="docs/screenshots/downloads_progress.jpg" width="190" alt="Downloads">
+  <img src="docs/screenshots/hero.webp" width="820" alt="SuperTube: home feed with the mini player, search and favorites">
 </p>
 
----
+<p align="center">
+  <a href="#features">Features</a> ·
+  <a href="#download">Download</a> ·
+  <a href="#building">Building</a> ·
+  <a href="#architecture">Architecture</a> ·
+  <a href="CHANGELOG.md">Changelog</a> ·
+  <a href="#en-español">Español</a>
+</p>
 
 ## Why SuperTube?
 
-[SmartTube](https://github.com/yuliskov/SmartTube) is an excellent YouTube client, but it is built for **TV remotes**:
-a fixed 1080p "10-foot" interface, D-pad focus navigation and Leanback screens. On a phone it looks tiny, wastes space
-and is awkward to use with your fingers.
+[SmartTube](https://github.com/yuliskov/SmartTube) is an excellent YouTube client, but it is built for TV remotes: a
+fixed 1080p "10-foot" interface, D-pad focus navigation and Leanback screens. On a phone it looks tiny and is awkward to
+use with your fingers.
 
-**SuperTube keeps SmartTube's engine** (no ads, SponsorBlock, DeArrow, accounts, history, playlists, quality and
-codec selection, background playback…) and **replaces the whole interface** with one designed for touch screens,
-following the official [Android adaptive design guidelines](https://github.com/android/skills).
-
-## What's new in 1.2
-
-- 🌍 **20 languages**: the whole SuperTube interface is now translated into English, Spanish, French, German, Italian,
-  Portuguese, Russian, Ukrainian, Polish, Turkish, Dutch, Arabic, Hindi, Japanese, Korean, Chinese (Simplified and
-  Traditional), Indonesian, Vietnamese and Thai (SmartTube's settings were already translated into 40+ languages).
-- ℹ️ **New About screen** with the authors, credits, links (source code, releases, issues) and the open source licenses.
-- 📶 **Wi‑Fi only downloads** switch also in **Settings › SuperTube** (1.1.1).
-
-## What's new in 1.1
-
-| | |
-|---|---|
-| 🎵 **Mini player** | Back or swipe down collapses the video into a bar while you keep browsing; tap to expand, ✕ to stop. |
-| 🌙 **Sleep timer** | 15 / 30 / 45 / 60 / 90 minutes or at the end of the video. |
-| ⬇️ **Quality picker** | Choose the video resolution or audio bitrate (with sizes) before downloading. |
-| 📶 **Wi‑Fi only downloads** | Downloads wait for Wi‑Fi and resume automatically; a running one goes back to the queue on mobile data. |
-| 🏠 **Home screen widget** | Your favorites on the home screen: tap to play, tap the header to open them in the app. |
-| 💾 **Export / import** | Back up favorites and SuperTube settings to a JSON file and restore them on any device. |
-| 🔄 **Updates from this repo** | SuperTube checks its own GitHub releases, shows the notes and installs the new APK. The upstream SmartTube updater is disabled. |
-| 🛠️ **Fixes** | Audio downloads without an account, real file sizes, private empty search (only your local recent searches), app no longer sent to the background after closing a player opened from a link. |
+**SuperTube keeps SmartTube's engine** — no ads, SponsorBlock, DeArrow, accounts, history, playlists, quality and codec
+selection — and **replaces the whole interface** with one designed for touch screens, following the
+[Android adaptive design guidelines](https://developer.android.com/develop/ui/compose/layouts/adaptive).
 
 ## Features
 
-### 📱 A real mobile interface
-- **Jetpack Compose + Material 3**, light/dark themes and dynamic colors (Android 12+).
-- **Adaptive navigation**: bottom bar on phones, **navigation rail** in landscape, on tablets and foldables.
-- **Four feed layouts**, switchable from the top bar and remembered:
-  **List** (YouTube-app style, default) · **Compact** (more videos per screen) · **Grid** (two columns) · **Carousel** (horizontal shelves).
-- Grids that add columns on wider screens, edge-to-edge drawing, native screen density.
-- Top bar that hides while scrolling; **tap the current tab again** to scroll to the top (or refresh).
+### A real mobile interface
 
-| Layout menu | List | Compact | Grid | Carousel |
-|:---:|:---:|:---:|:---:|:---:|
-| <img src="docs/screenshots/layout_menu.jpg" width="150"> | <img src="docs/screenshots/layout_list.jpg" width="150"> | <img src="docs/screenshots/layout_compact.jpg" width="150"> | <img src="docs/screenshots/layout_grid.jpg" width="150"> | <img src="docs/screenshots/layout_carousel.jpg" width="150"> |
+Jetpack Compose and Material 3 with light and dark themes and dynamic colors. Navigation adapts to the window: a bottom
+bar on phones and a navigation rail in landscape, on tablets and on foldables. Videos can be shown as a **list**, a
+**compact list**, a **grid** or **horizontal shelves**, and the choice is remembered.
 
-<p align="center"><img src="docs/screenshots/landscape_rail.jpg" width="560" alt="Navigation rail in landscape"></p>
+<p align="center">
+  <img src="docs/screenshots/layout_menu.webp" width="250" alt="Feed layout menu">
+  <img src="docs/screenshots/grid.webp" width="250" alt="Grid layout">
+</p>
+<p align="center">
+  <img src="docs/screenshots/landscape_rail.webp" width="640" alt="Navigation rail in landscape">
+</p>
 
-### ▶️ Touch player
-- **Double tap** left/right to seek ±10 s (consecutive taps add up), with on-screen feedback.
-- **Press and hold** for 2× speed, like the YouTube app.
-- **Swipe** up for fullscreen / down to collapse into the **mini player**; in fullscreen, swipe the **left side for brightness** and the **right side for volume**.
-- Rotate to go fullscreen (immersive), thin seek bar with **SponsorBlock segments**, picture-in-picture, keeps the screen on while playing.
-- Action chips: favorite, download, sleep timer, like, comments, share, save to playlist, speed, repeat, PiP, queue.
+### Touch player
 
-| Player | Double tap | Hold for 2× | Mini player | Sleep timer |
-|:---:|:---:|:---:|:---:|:---:|
-| <img src="docs/screenshots/player.jpg" width="150"> | <img src="docs/screenshots/gesture_seek.jpg" width="150"> | <img src="docs/screenshots/gesture_hold.jpg" width="150"> | <img src="docs/screenshots/mini_player_search.jpg" width="150"> | <img src="docs/screenshots/sleep_timer.jpg" width="150"> |
+| Gesture or control | Action |
+| --- | --- |
+| Double tap left / right | Seek −10 / +10 s (consecutive taps add up) |
+| Press and hold | Temporary 2× speed |
+| Speed button | 1× → 1.5× → 2×; long press for the full list |
+| Swipe up / down | Fullscreen / collapse into the mini player |
+| Swipe in fullscreen | Brightness (left side) and volume (right side) |
 
-<p align="center"><img src="docs/screenshots/player_fullscreen.jpg" width="560" alt="Fullscreen player"></p>
+The seek bar shows the **SponsorBlock** segments. Back or a swipe down collapses the video into a **mini player** that
+keeps playing while you browse. Leaving the app keeps the video in **picture-in-picture**, and audio keeps playing with
+the screen off, with **lock screen and notification controls**. There is also a **sleep timer**, and playback pauses
+when headphones are unplugged.
 
-### ❤️ Favorites with folders
-- A ♡ button on every video opens a **"Save to…"** sheet: the general *Favorites* folder plus your own folders, and a quick **Remove**.
-- **Search** across all your favorites, create, rename or delete folders.
-- **Play all** or **shuffle** a folder as a continuous queue.
-- **Home screen widget**, **export/import** to a JSON file. Stored only on your device.
+<p align="center">
+  <img src="docs/screenshots/player.webp" width="250" alt="Player controls with the speed button">
+  <img src="docs/screenshots/hold.webp" width="250" alt="Press and hold for 2x speed">
+</p>
+<p align="center">
+  <img src="docs/screenshots/fullscreen.webp" width="640" alt="Fullscreen player">
+</p>
+<p align="center">
+  <img src="docs/screenshots/media_controls.webp" width="380" alt="Media controls in the notification shade">
+</p>
 
-| Folder | Search | Save to… | Home screen widget |
-|:---:|:---:|:---:|:---:|
-| <img src="docs/screenshots/favorites.jpg" width="170"> | <img src="docs/screenshots/favorites_search.jpg" width="170"> | <img src="docs/screenshots/favorite_sheet.jpg" width="170"> | <img src="docs/screenshots/widget.png" width="230"> |
+### Favorites with folders
 
-### ⬇️ Downloads manager
-- Download the **audio** or the **video** (up to 1080p H.264, audio and video joined on the device, no re-encoding), choosing the **quality** and seeing the size first.
-- **Pause, resume and cancel**: transfers continue where they stopped, even after closing the app; expired links are refreshed automatically.
-- **Wi‑Fi only** mode (in the download sheet and in **Settings › SuperTube**), filters by **video / audio**, offline player, share or delete files.
-- Detects files that were **moved or deleted** outside the app and offers to download them again.
-- A **floating indicator** shows the progress from any screen; tap it to open the manager.
-- Files are saved in `Movies/SuperTube` and `Music/SuperTube`.
+The ♡ on every video saves it to *Favorites* or to your own folders. Folders can be searched, renamed and played in
+order or shuffled. A **home screen widget** shows them, and everything can be **exported and imported** as a JSON file.
+Favorites are stored only on your device.
 
-| Quality picker | In progress | Paused | Downloaded |
-|:---:|:---:|:---:|:---:|
-| <img src="docs/screenshots/download_sheet.jpg" width="170"> | <img src="docs/screenshots/downloads_progress.jpg" width="170"> | <img src="docs/screenshots/downloads_paused.jpg" width="170"> | <img src="docs/screenshots/downloads.jpg" width="170"> |
+<p align="center">
+  <img src="docs/screenshots/favorites.webp" width="250" alt="A favorites folder">
+  <img src="docs/screenshots/save_to.webp" width="250" alt="Save to folder sheet">
+  <img src="docs/screenshots/widget.png" width="250" alt="Home screen widget">
+</p>
+
+### Downloads manager
+
+Download the **audio** or the **video** (up to 1080p H.264, joined on the device without re-encoding) after choosing the
+quality and seeing its size. Downloads can be **paused and resumed**, even after closing the app; expired links are
+refreshed automatically. Optional **Wi‑Fi only** mode, video and audio filters, an offline player, and files saved to
+`Movies/SuperTube` and `Music/SuperTube`.
+
+<p align="center">
+  <img src="docs/screenshots/download_sheet.webp" width="250" alt="Download quality picker">
+  <img src="docs/screenshots/search_mini.webp" width="250" alt="Search with the mini player">
+</p>
 
 > Without a YouTube account, YouTube only offers single-file streams (usually 360p); sign in for up to 1080p.
 
-### 🔎 Search, navigation and settings
-- **Recent searches** stored locally (YouTube suggestions appear while typing), voice search, filters, hardware keyboard Enter.
-- The **"More" sections can be reordered** by dragging them or with up/down buttons (news, music and channels first by default).
-- Menus and settings as **bottom sheets**; TV-only settings are hidden; a **SuperTube** settings block for updates, Wi‑Fi only downloads and backups.
-- **About** screen with authors, credits and open source licenses.
-- Available in **20 languages** (follows the system language).
+### Also included
 
-| Search | Recent searches | Reorder sections | Settings | Player settings |
-|:---:|:---:|:---:|:---:|:---:|
-| <img src="docs/screenshots/search_results.jpg" width="150"> | <img src="docs/screenshots/search_recent.jpg" width="150"> | <img src="docs/screenshots/more_reorder.jpg" width="150"> | <img src="docs/screenshots/settings.jpg" width="150"> | <img src="docs/screenshots/settings_sheet.jpg" width="150"> |
-
-### 📺 Everything from SmartTube
-No ads · SponsorBlock · DeArrow · sign in with your account (subscriptions, history, playlists) · 4K/8K, HDR, 60 fps and
-codec selection · background playback · playback speed · subtitles · live chat and comments · channels and playlists.
+- **Search** with local recent searches, voice search and filters.
+- **Reorderable sections** in *More*, settings as bottom sheets, and TV-only settings hidden.
+- **Updates** from the releases of this repository (*Settings › SuperTube › Check for updates*).
+- **20 languages**, selectable per app in the Android 13+ system settings.
+- Everything from SmartTube: no ads, SponsorBlock, DeArrow, sign-in (subscriptions, history, playlists), 4K/8K, HDR,
+  60 fps, codec selection, subtitles, live chat and comments.
 
 ## Download
 
-Get the latest APK from the **[Releases page](https://github.com/jgestal/SuperTube/releases/latest)** and install it
-(you may need to allow installing apps from your browser or file manager). Next versions can be installed from
-**Settings › SuperTube › Check for updates**.
+Get the APK from the **[latest release](https://github.com/jgestal/SuperTube/releases/latest)**. Later versions can be
+installed from *Settings › SuperTube › Check for updates*.
 
-- Requires **Android 8.0** or newer (ARM 32/64-bit).
-- SuperTube is a separate app (`app.supertube`): it can be installed next to SmartTube.
+- Requires **Android 8.0** or newer (ARM 32/64-bit); ready for devices with 16 KB memory pages.
+- SuperTube is a separate app (`app.supertube`) and can be installed next to SmartTube.
 - Release signing certificate (SHA-256):
   `f6:fb:28:69:7f:24:d1:bf:21:ff:12:b8:20:e2:64:ca:4a:94:2f:3e:e8:4c:75:f2:01:6d:eb:3c:e6:07:70:41`
 
-SuperTube is distributed only through GitHub (not Google Play), so it doesn't include Google Play Services
-features such as Chromecast or Android Auto.
+SuperTube is distributed only through GitHub, so it doesn't include Google Play Services features such as Chromecast or
+Android Auto. See the [changelog](CHANGELOG.md) for what changed in each version.
 
 ## Building
 
@@ -148,63 +138,66 @@ cd SuperTube
 JAVA_HOME=/path/to/jdk-17 ./gradlew :supertube:assembleStbetaDebug
 ```
 
-The APK is generated in `supertube/build/outputs/apk/stbeta/debug/`. For signed release builds create
+The APK is generated in `supertube/build/outputs/apk/stbeta/debug/`. For signed release builds, create
 `supertube/keystore.properties` (`storeFile`, `storePassword`, `keyAlias`, `keyPassword`) and run
-`./gradlew :supertube:assembleStbetaRelease`.
+`./gradlew :supertube:assembleStbetaRelease`. Static analysis: `./gradlew :supertube:lintStbetaDebug`.
 
 ## Architecture
 
 SuperTube reuses SmartTube's MVP architecture: every presenter in the `common` module talks to a `View` interface
 (`BrowseView`, `PlaybackView`, `SearchView`, `AppDialogView`…). The TV app implements those views with Leanback
-fragments; **SuperTube implements them with Compose activities**, so all the business logic is shared unchanged.
+fragments; **SuperTube implements them with Compose activities**, so the business logic is shared unchanged.
 
 | Module | Description |
 | --- | --- |
-| `supertube` | The mobile app: Compose UI, favorites, downloads manager, widget, updater, preferences |
+| `supertube` | The mobile app: Compose UI, playback service, favorites, downloads, widget, updater |
 | `common` | SmartTube business logic: presenters, player engine (ExoPlayer), settings |
-| `smarttubetv` | Original SmartTube TV app (kept to make merging upstream changes easy) |
+| `smarttubetv` | Original SmartTube TV app, kept to make merging upstream changes easy |
 | `MediaServiceCore`, `SharedModules` | SmartTube submodules (YouTube API, utilities) |
 
-Notable mobile-only pieces: `ui/feed/FeedView.kt` (layouts), `ui/playback/PlayerGestures.kt`, `ui/playback/MiniPlayerBar.kt`,
-`download/DownloadService.kt` (resumable downloads, track joining, Wi‑Fi only), `prefs/FavoritesStore.kt`,
-`widget/FavoritesWidgetProvider.kt`, `update/UpdateChecker.kt`.
+Notable mobile-only pieces in `supertube/src/main/java/.../mobile/`:
+
+| Path | Purpose |
+| --- | --- |
+| `ui/playback/` | Player screen, controls, gestures and mini player |
+| `playback/` | Media session, notification and `mediaPlayback` foreground service |
+| `ui/feed/` | Feed layouts shared by every screen |
+| `download/` | Resumable downloads, track joining and Wi‑Fi only mode |
+| `prefs/`, `widget/`, `update/` | Favorites and settings, home screen widget, updater |
 
 ## Downloads notice
 
-Downloading content may be against YouTube's Terms of Service. The download feature is provided for **personal use**
-of content you have the right to save (for example Creative Commons videos like the Blender open movies shown above).
-Do not redistribute copyrighted content.
+Downloading content may be against YouTube's Terms of Service. The download feature is provided for **personal use** of
+content you have the right to save (for example the Creative Commons Blender open movies shown above). Do not
+redistribute copyrighted content.
 
 ## Credits and license
 
 SuperTube is based on **[SmartTube](https://github.com/yuliskov/SmartTube)** by **yuliskov** and its modules
 [MediaServiceCore](https://github.com/yuliskov/MediaServiceCore) and [SharedModules](https://github.com/yuliskov/SharedModules),
-released under the MIT License. All the credit for the YouTube engine and the original features goes to them.
-The original README is kept in [README_SmartTube.md](README_SmartTube.md).
+released under the MIT License. All the credit for the YouTube engine and the original features goes to them. The
+original README is kept in [README_SmartTube.md](README_SmartTube.md).
 
 SuperTube is released under the [MIT License](LICENSE). ExoPlayer (`exoplayer-amzn-2.10.6`) is licensed under Apache 2.0.
-Screenshots show Creative Commons content by the Blender Foundation and public YouTube music charts (no account signed in).
+Screenshots show Creative Commons films by the Blender Foundation, without a signed-in account.
 
 SuperTube is not affiliated with, endorsed by or connected to YouTube, Google or the SmartTube project.
 
 ---
 
-<details>
-<summary><b>🇪🇸 En español</b></summary>
+## En español
 
 **SuperTube** es un cliente de YouTube sin anuncios para móviles y tablets Android, basado en SmartTube (diseñado para
 TV). Mantiene todo su motor y sustituye la interfaz por una táctil con Material 3:
 
-- Navegación adaptativa (barra inferior / barra lateral) y cuatro vistas de vídeos (lista, compacta, cuadrícula, carrusel).
-- Reproductor táctil: doble toque para avanzar/retroceder, mantener pulsado para 2×, gestos de brillo y volumen,
-  **mini reproductor** mientras navegas y **temporizador de apagado**.
-- Favoritos con carpetas, búsqueda, reproducción continua o aleatoria, **widget** de pantalla de inicio y
-  **exportar/importar** (guardados en el móvil).
-- Gestor de descargas de audio y vídeo con **selector de calidad**, modo **solo Wi‑Fi**, pausa/reanudación, filtros,
-  reproductor sin conexión e indicador flotante.
-- Búsquedas recientes, secciones reordenables, ajustes en hojas inferiores y **actualizaciones desde este repositorio**.
-- Disponible en **20 idiomas** y pantalla **Acerca de** con autores, créditos y licencias.
+- **Navegación adaptativa**: barra inferior o lateral, y cuatro vistas de vídeos (lista, compacta, cuadrícula y carrusel).
+- **Reproductor táctil**:
+  - Doble toque para avanzar o retroceder, mantener pulsado para 2× y **botón de velocidad** (1× · 1,5× · 2×).
+  - Gestos de brillo y volumen, **mini reproductor**, imagen en imagen y **temporizador de apagado**.
+  - Reproducción en segundo plano con **controles en la pantalla de bloqueo** y en las notificaciones.
+- **Favoritos con carpetas**, búsqueda, reproducción continua o aleatoria, **widget** y exportación/importación.
+- **Gestor de descargas** de audio y vídeo con selector de calidad, modo solo Wi‑Fi y pausa/reanudación.
+- **20 idiomas** y actualizaciones desde este repositorio.
 
 Descarga la última versión en la [página de Releases](https://github.com/jgestal/SuperTube/releases/latest)
-(requiere Android 8.0 o superior).
-</details>
+(requiere Android 8.0 o superior). Los cambios de cada versión están en el [CHANGELOG](CHANGELOG.md).
