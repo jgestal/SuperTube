@@ -3,7 +3,6 @@
     <string name="mobile_more">Thêm</string>
     <string name="mobile_more_options">Tùy chọn khác</string>
     <string name="mobile_search_hint">Tìm kiếm trên YouTube</string>
-    <string name="mobile_retry">Thử lại</string>
     <string name="mobile_nothing_here">Chưa có gì ở đây</string>
     <string name="mobile_back">Quay lại</string>
     <string name="mobile_clear">Xóa</string>
@@ -20,8 +19,6 @@
     <string name="mobile_exit_fullscreen">Thoát toàn màn hình</string>
     <string name="mobile_quality">Chất lượng</string>
     <string name="mobile_up_next">Tiếp theo</string>
-    <string name="mobile_load_more">Tải thêm</string>
-    <string name="mobile_comments_empty">Không có bình luận</string>
     <string name="mobile_layout">Chế độ xem</string>
     <string name="mobile_layout_list">Danh sách</string>
     <string name="mobile_layout_compact">Thu gọn</string>
@@ -35,7 +32,6 @@
     <string name="mobile_recent_searches">Tìm kiếm gần đây</string>
     <string name="mobile_clear_history">Xóa tất cả</string>
     <string name="mobile_remove">Xóa</string>
-    <string name="mobile_section_options">Tùy chọn mục</string>
     <string name="mobile_favorites">Yêu thích</string>
     <string name="mobile_save_to_favorites">Lưu vào yêu thích</string>
     <string name="mobile_new_folder">Thư mục mới</string>
@@ -56,11 +52,8 @@
     <string name="mobile_no_results">Không có mục yêu thích nào khớp</string>
     <string name="mobile_delete_folder_confirm">Xóa \"%1$s\" và các video đã lưu trong đó?</string>
     <string name="mobile_download">Tải xuống</string>
-    <string name="mobile_download_audio">Âm thanh (m4a)</string>
-    <string name="mobile_download_video">Video (mp4)</string>
     <string name="mobile_download_preparing">Đang chuẩn bị tải xuống…</string>
     <string name="mobile_download_unavailable">Không thể tải xuống video này</string>
-    <string name="mobile_download_started">Đang tải xuống vào %1$s</string>
     <string name="mobile_downloads">Tải xuống</string>
     <string name="mobile_download_already">Đang được tải xuống</string>
     <string name="mobile_download_queued">Đã thêm vào tải xuống</string>
@@ -92,7 +85,9 @@
     <string name="mobile_export">Xuất dữ liệu SuperTube</string>
     <string name="mobile_import">Nhập dữ liệu SuperTube</string>
     <string name="mobile_export_done">Đã xuất dữ liệu</string>
-    <string name="mobile_import_done">Đã nhập dữ liệu: %1$d mục yêu thích</string>
+    <plurals name="mobile_import_done">
+        <item quantity="other">Đã nhập dữ liệu: %1$d mục yêu thích</item>
+    </plurals>
     <string name="mobile_import_error">Tệp này không phải bản sao lưu SuperTube</string>
     <string name="mobile_sleep_timer">Hẹn giờ tắt</string>
     <string name="mobile_sleep_off">Tắt</string>
@@ -101,6 +96,9 @@
     <string name="mobile_sleep_end_short">Cuối video</string>
     <string name="mobile_sleep_stopped">Hẹn giờ tắt: đã tạm dừng phát</string>
     <string name="mobile_close_player">Đóng trình phát</string>
+    <string name="mobile_subscribe">Đăng ký</string>
+    <string name="mobile_subscribed">Đã đăng ký</string>
+    <string name="mobile_playback_channel">Phát lại</string>
     <string name="mobile_wifi_only">Chỉ qua Wi-Fi</string>
     <string name="mobile_wifi_only_desc">Chờ kết nối Wi-Fi để tải xuống</string>
     <string name="mobile_download_status_waiting_wifi">Đang chờ Wi-Fi…</string>

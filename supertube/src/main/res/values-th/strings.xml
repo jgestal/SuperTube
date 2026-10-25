@@ -3,7 +3,6 @@
     <string name="mobile_more">เพิ่มเติม</string>
     <string name="mobile_more_options">ตัวเลือกเพิ่มเติม</string>
     <string name="mobile_search_hint">ค้นหาใน YouTube</string>
-    <string name="mobile_retry">ลองอีกครั้ง</string>
     <string name="mobile_nothing_here">ยังไม่มีอะไรที่นี่</string>
     <string name="mobile_back">กลับ</string>
     <string name="mobile_clear">ล้าง</string>
@@ -20,8 +19,6 @@
     <string name="mobile_exit_fullscreen">ออกจากโหมดเต็มหน้าจอ</string>
     <string name="mobile_quality">คุณภาพ</string>
     <string name="mobile_up_next">รายการถัดไป</string>
-    <string name="mobile_load_more">โหลดเพิ่ม</string>
-    <string name="mobile_comments_empty">ไม่มีความคิดเห็น</string>
     <string name="mobile_layout">มุมมอง</string>
     <string name="mobile_layout_list">รายการ</string>
     <string name="mobile_layout_compact">กะทัดรัด</string>
@@ -35,7 +32,6 @@
     <string name="mobile_recent_searches">การค้นหาล่าสุด</string>
     <string name="mobile_clear_history">ล้างทั้งหมด</string>
     <string name="mobile_remove">นำออก</string>
-    <string name="mobile_section_options">ตัวเลือกส่วน</string>
     <string name="mobile_favorites">รายการโปรด</string>
     <string name="mobile_save_to_favorites">บันทึกในรายการโปรด</string>
     <string name="mobile_new_folder">โฟลเดอร์ใหม่</string>
@@ -56,11 +52,8 @@
     <string name="mobile_no_results">ไม่มีรายการโปรดที่ตรงกับการค้นหา</string>
     <string name="mobile_delete_folder_confirm">ลบ \"%1$s\" และวิดีโอที่บันทึกไว้ในนั้นใช่ไหม</string>
     <string name="mobile_download">ดาวน์โหลด</string>
-    <string name="mobile_download_audio">เสียง (m4a)</string>
-    <string name="mobile_download_video">วิดีโอ (mp4)</string>
     <string name="mobile_download_preparing">กำลังเตรียมดาวน์โหลด…</string>
     <string name="mobile_download_unavailable">ดาวน์โหลดวิดีโอนี้ไม่ได้</string>
-    <string name="mobile_download_started">กำลังดาวน์โหลดไปที่ %1$s</string>
     <string name="mobile_downloads">ดาวน์โหลด</string>
     <string name="mobile_download_already">กำลังดาวน์โหลดอยู่แล้ว</string>
     <string name="mobile_download_queued">เพิ่มในการดาวน์โหลดแล้ว</string>
@@ -92,7 +85,9 @@
     <string name="mobile_export">ส่งออกข้อมูล SuperTube</string>
     <string name="mobile_import">นำเข้าข้อมูล SuperTube</string>
     <string name="mobile_export_done">ส่งออกข้อมูลแล้ว</string>
-    <string name="mobile_import_done">นำเข้าข้อมูลแล้ว: รายการโปรด %1$d รายการ</string>
+    <plurals name="mobile_import_done">
+        <item quantity="other">นำเข้าข้อมูลแล้ว: รายการโปรด %1$d รายการ</item>
+    </plurals>
     <string name="mobile_import_error">ไฟล์นี้ไม่ใช่ข้อมูลสำรองของ SuperTube</string>
     <string name="mobile_sleep_timer">ตั้งเวลาปิด</string>
     <string name="mobile_sleep_off">ปิด</string>
@@ -101,6 +96,9 @@
     <string name="mobile_sleep_end_short">วิดีโอจบ</string>
     <string name="mobile_sleep_stopped">ตั้งเวลาปิด: หยุดเล่นชั่วคราวแล้ว</string>
     <string name="mobile_close_player">ปิดเพลเยอร์</string>
+    <string name="mobile_subscribe">ติดตาม</string>
+    <string name="mobile_subscribed">ติดตามแล้ว</string>
+    <string name="mobile_playback_channel">การเล่น</string>
     <string name="mobile_wifi_only">ใช้ Wi-Fi เท่านั้น</string>
     <string name="mobile_wifi_only_desc">รอการเชื่อมต่อ Wi-Fi เพื่อดาวน์โหลด</string>
     <string name="mobile_download_status_waiting_wifi">กำลังรอ Wi-Fi…</string>

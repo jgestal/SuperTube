@@ -59,8 +59,17 @@ allprojects {
             resolutionStrategy.force 'androidx.core:core:' + coreXVersion
             resolutionStrategy.force 'androidx.annotation:annotation:' + annotationXVersion
         }
-        // Downgrade Cronet version for cronet-okhttp
-        resolutionStrategy.force 'org.chromium.net:cronet-api:' + cronetApiVersion
+        if (project.name == 'supertube') {
+            // Android 15+ devices with 16 KB memory pages: these are the oldest native libraries built for them
+            // (Cronet 105 is kept by SmartTube only for Android 4.4, SuperTube requires Android 8).
+            resolutionStrategy.force 'org.chromium.net:cronet-api:' + superTubeCronetVersion
+            resolutionStrategy.force 'org.chromium.net:cronet-common:' + superTubeCronetVersion
+            resolutionStrategy.force 'org.chromium.net:cronet-embedded:' + superTubeCronetVersion
+            resolutionStrategy.force 'org.conscrypt:conscrypt-android:' + superTubeConscryptVersion
+        } else {
+            // Downgrade Cronet version for cronet-okhttp
+            resolutionStrategy.force 'org.chromium.net:cronet-api:' + cronetApiVersion
+        }
         resolutionStrategy.force 'androidx.multidex:multidex:' + multiDexVersion
 
         // Replace with modded library (leanback-1.0.0)

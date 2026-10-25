@@ -3,7 +3,6 @@
     <string name="mobile_more">Mehr</string>
     <string name="mobile_more_options">Weitere Optionen</string>
     <string name="mobile_search_hint">Auf YouTube suchen</string>
-    <string name="mobile_retry">Erneut versuchen</string>
     <string name="mobile_nothing_here">Hier ist noch nichts</string>
     <string name="mobile_back">Zurück</string>
     <string name="mobile_clear">Löschen</string>
@@ -20,8 +19,6 @@
     <string name="mobile_exit_fullscreen">Vollbild beenden</string>
     <string name="mobile_quality">Qualität</string>
     <string name="mobile_up_next">Als Nächstes</string>
-    <string name="mobile_load_more">Mehr laden</string>
-    <string name="mobile_comments_empty">Keine Kommentare</string>
     <string name="mobile_layout">Ansicht</string>
     <string name="mobile_layout_list">Liste</string>
     <string name="mobile_layout_compact">Kompakt</string>
@@ -35,7 +32,6 @@
     <string name="mobile_recent_searches">Letzte Suchanfragen</string>
     <string name="mobile_clear_history">Alle löschen</string>
     <string name="mobile_remove">Entfernen</string>
-    <string name="mobile_section_options">Abschnittsoptionen</string>
     <string name="mobile_favorites">Favoriten</string>
     <string name="mobile_save_to_favorites">Zu Favoriten hinzufügen</string>
     <string name="mobile_new_folder">Neuer Ordner</string>
@@ -56,11 +52,8 @@
     <string name="mobile_no_results">Keine Favoriten passen zur Suche</string>
     <string name="mobile_delete_folder_confirm">„%1$s“ und die darin gespeicherten Videos löschen?</string>
     <string name="mobile_download">Herunterladen</string>
-    <string name="mobile_download_audio">Audio (m4a)</string>
-    <string name="mobile_download_video">Video (mp4)</string>
     <string name="mobile_download_preparing">Download wird vorbereitet…</string>
     <string name="mobile_download_unavailable">Download für dieses Video nicht verfügbar</string>
-    <string name="mobile_download_started">Wird heruntergeladen nach %1$s</string>
     <string name="mobile_downloads">Downloads</string>
     <string name="mobile_download_already">Wird bereits heruntergeladen</string>
     <string name="mobile_download_queued">Zu den Downloads hinzugefügt</string>
@@ -92,7 +85,10 @@
     <string name="mobile_export">SuperTube-Daten exportieren</string>
     <string name="mobile_import">SuperTube-Daten importieren</string>
     <string name="mobile_export_done">Daten exportiert</string>
-    <string name="mobile_import_done">Daten importiert: %1$d Favoriten</string>
+    <plurals name="mobile_import_done">
+        <item quantity="one">Daten importiert: %1$d Favorit</item>
+        <item quantity="other">Daten importiert: %1$d Favoriten</item>
+    </plurals>
     <string name="mobile_import_error">Die Datei ist keine SuperTube-Sicherung</string>
     <string name="mobile_sleep_timer">Sleep-Timer</string>
     <string name="mobile_sleep_off">Aus</string>
@@ -101,6 +97,9 @@
     <string name="mobile_sleep_end_short">Videoende</string>
     <string name="mobile_sleep_stopped">Sleep-Timer: Wiedergabe pausiert</string>
     <string name="mobile_close_player">Player schließen</string>
+    <string name="mobile_subscribe">Abonnieren</string>
+    <string name="mobile_subscribed">Abonniert</string>
+    <string name="mobile_playback_channel">Wiedergabe</string>
     <string name="mobile_wifi_only">Nur über WLAN</string>
     <string name="mobile_wifi_only_desc">Zum Herunterladen auf eine WLAN-Verbindung warten</string>
     <string name="mobile_download_status_waiting_wifi">Warten auf WLAN…</string>

@@ -1,31 +1,25 @@
 package com.liskovsoft.smartyoutubetv2.mobile.ui.playback
 
-import com.liskovsoft.sharedutils.helpers.MessageHelpers
 import android.app.PictureInPictureParams
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
-import android.os.ResultReceiver
-import android.support.v4.media.MediaMetadataCompat
-import android.support.v4.media.session.MediaSessionCompat
-import android.support.v4.media.session.PlaybackStateCompat
 import android.view.OrientationEventListener
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import com.google.android.exoplayer2.ControlDispatcher
 import com.google.android.exoplayer2.DefaultRenderersFactory
-import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.ui.PlayerView as ExoPlayerView
 import com.google.android.exoplayer2.video.VideoListener
 import com.liskovsoft.mediaserviceinterfaces.data.MediaItemFormatInfo
 import com.liskovsoft.sharedutils.helpers.Helpers
+import com.liskovsoft.sharedutils.helpers.MessageHelpers
 import com.liskovsoft.smartyoutubetv2.common.app.models.data.Video
 import com.liskovsoft.smartyoutubetv2.common.app.models.data.VideoGroup
 import com.liskovsoft.smartyoutubetv2.common.app.models.playback.manager.PlayerEngine
@@ -44,6 +38,8 @@ import com.liskovsoft.smartyoutubetv2.common.prefs.GeneralData
 import com.liskovsoft.smartyoutubetv2.common.prefs.PlayerData
 import com.liskovsoft.smartyoutubetv2.common.utils.Utils
 import com.liskovsoft.smartyoutubetv2.mobile.R
+import com.liskovsoft.smartyoutubetv2.mobile.playback.PlaybackCommands
+import com.liskovsoft.smartyoutubetv2.mobile.playback.PlaybackMediaSession
 import com.liskovsoft.smartyoutubetv2.mobile.ui.base.ScreenActivity
 import com.liskovsoft.smartyoutubetv2.mobile.ui.theme.SmartTubeTheme
 import java.io.InputStream
@@ -60,11 +56,14 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
     private val state = PlayerUiState()
     private var player: SimpleExoPlayer? = null
     private var exoView: ExoPlayerView? = null
-    private var mediaSession: MediaSessionCompat? = null
-    private var mediaSessionConnector: MediaSessionConnector? = null
+    private var mediaSession: PlaybackMediaSession? = null
+    /** Speed to go back to when the "press and hold" 2x ends (null = not holding) */
+    private var speedBeforeHold: Float? = null
     private var isEngineBlocked = false
     /** Collapsed into the mini player (still playing in its own task) */
     private var isMinimized = false
+    private var userLeaveHintMs = 0L
+    private var pipEnteredMs = 0L
     private var orientationListener: OrientationEventListener? = null
     /** Orientation requested by the fullscreen button. Released when the device physically matches it. */
     private var lockedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
@@ -72,6 +71,14 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
     private val qualityView = object : PlayerView {
         override fun setQualityInfo(info: String?) { state.qualityInfo = info }
         override fun setVideo(video: Video?) {}
+    }
+
+    private val commands = object : PlaybackCommands {
+        override fun play() { presenter.onPlayClicked(); playWhenReady = true }
+        override fun pause() { presenter.onPauseClicked(); playWhenReady = false }
+        override fun next() { presenter.onNextClicked() }
+        override fun previous() { presenter.onPreviousClicked() }
+        override fun stop() { presenter.forceFinish() }
     }
 
     private val videoListener = object : VideoListener {
@@ -146,6 +153,7 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
     override fun onPause() {
         val isScreenOff = playerData.backgroundMode != PlayerData.BACKGROUND_MODE_DEFAULT && Utils.isHardScreenOff(this)
         if (isScreenOff) blockEngine(true)
+        if (!isScreenOff) keepPlayingOnRecents()
         super.onPause()
         presenter.onViewPaused()
     }
@@ -164,7 +172,23 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
     override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean, newConfig: Configuration) {
         super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
         state.isInPip = isInPictureInPictureMode
-        if (isInPictureInPictureMode) state.isOverlayShown = false
+        if (isInPictureInPictureMode) {
+            pipEnteredMs = System.currentTimeMillis()
+            state.isOverlayShown = false
+            // Also when the system entered PIP by itself (auto-enter on Recents): keep playing in the PIP window
+            blockEngine(true)
+            viewManager.blockTop(this)
+        }
+    }
+
+    /**
+     * An app screen came to the front while the video is in the PIP window (back to the app from Recents or a link):
+     * the PIP window would keep floating over the app. Bring the video back to the player, where the user left it.
+     * A PIP opened just before is the app's own navigation (e.g. finish() with PIP): leave it.
+     */
+    fun returnFromPip() {
+        if (!isInPictureInPictureMode || System.currentTimeMillis() - pipEnteredMs < 1_500) return
+        viewManager.startView(PlaybackView::class.java)
     }
 
     private fun applySystemBars(config: Configuration) {
@@ -212,7 +236,14 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
         controller.setPlayerView(qualityView)
         newPlayer.addVideoListener(videoListener)
         exoView?.player = newPlayer
-        createMediaSession(newPlayer)
+        mediaSession = PlaybackMediaSession(
+            activity = this,
+            player = newPlayer,
+            commands = commands,
+            video = { video },
+            durationMs = { durationMs },
+            withSession = !playerTweaksData.isPlaybackNotificationsDisabled,
+        ).also { it.onVideoChanged() }
 
         presenter.setView(this)
         presenter.onEngineInitialized()
@@ -227,53 +258,13 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
         val current = player ?: return
         presenter.onEngineReleased()
         current.removeVideoListener(videoListener)
-        mediaSessionConnector?.setPlayer(null)
-        mediaSessionConnector = null
-        mediaSession?.isActive = false
         mediaSession?.release()
         mediaSession = null
+        speedBeforeHold = null
         exoView?.player = null
         initializer.release()
         controller.release()
         player = null
-    }
-
-    private fun createMediaSession(player: SimpleExoPlayer) {
-        if (playerTweaksData.isPlaybackNotificationsDisabled) return
-
-        val session = MediaSessionCompat(applicationContext, packageName)
-        session.isActive = true
-        val connector = MediaSessionConnector(session)
-        try {
-            connector.setPlayer(player)
-        } catch (e: NoSuchMethodError) {
-            return
-        }
-        connector.setMediaMetadataProvider {
-            val video = video ?: return@setMediaMetadataProvider null
-            MediaMetadataCompat.Builder()
-                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, video.videoId)
-                .putString(MediaMetadataCompat.METADATA_KEY_TITLE, video.getTitleFull())
-                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_TITLE, video.getTitleFull())
-                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, video.getAuthor())
-                .putString(MediaMetadataCompat.METADATA_KEY_DISPLAY_SUBTITLE, Helpers.toString(video.getSecondTitleFull()))
-                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, video.getCardImageUrl())
-                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, durationMs)
-                .build()
-        }
-        connector.setQueueNavigator(object : MediaSessionConnector.QueueNavigator {
-            override fun getSupportedQueueNavigatorActions(player: Player?): Long =
-                PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS or PlaybackStateCompat.ACTION_SKIP_TO_NEXT
-            override fun onTimelineChanged(player: Player?) {}
-            override fun onCurrentWindowIndexChanged(player: Player?) {}
-            override fun getActiveQueueItemId(player: Player?): Long = 0
-            override fun onSkipToPrevious(player: Player?, controlDispatcher: ControlDispatcher?) { presenter.onPreviousClicked() }
-            override fun onSkipToQueueItem(player: Player?, controlDispatcher: ControlDispatcher?, id: Long) {}
-            override fun onSkipToNext(player: Player?, controlDispatcher: ControlDispatcher?) { presenter.onNextClicked() }
-            override fun onCommand(player: Player?, controlDispatcher: ControlDispatcher?, command: String?, extras: Bundle?, cb: ResultReceiver?): Boolean = false
-        })
-        mediaSession = session
-        mediaSessionConnector = connector
     }
 
     // Back, PIP and background playback (ported from the TV PlaybackActivity)
@@ -307,6 +298,7 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
 
     override fun onUserLeaveHint() {
         super.onUserLeaveHint()
+        userLeaveHintMs = System.currentTimeMillis()
         if (isBackPressed || isFinishing || viewManager.isNewViewPending || generalData.backgroundPlaybackShortcut == GeneralData.BACKGROUND_PLAYBACK_SHORTCUT_BACK) {
             return
         }
@@ -339,6 +331,25 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
         }
     }
 
+    /**
+     * Recents button: some launchers (HyperOS) don't call onUserLeaveHint for it and their Recents transition refuses
+     * PIP for every app, so the player was stopped and the video reloaded on return. Try PIP and, if it's refused, keep
+     * playing in the background like the Home button does: the video goes on where it was (or in the mini player).
+     * Not for the app's own navigation (mini player, channel...), configuration changes or when Home already did it.
+     */
+    private fun keepPlayingOnRecents() {
+        val isLeavingApp = !isFinishing && !isChangingConfigurations && !isInPictureInPictureMode &&
+                !viewManager.isNewViewPending && System.currentTimeMillis() - userLeaveHintMs > 1_000
+        val isBackgroundPlayback = playerData.backgroundMode == PlayerData.BACKGROUND_MODE_PIP ||
+                playerData.backgroundMode == PlayerData.BACKGROUND_MODE_SOUND
+        if (!isLeavingApp || !isBackgroundPlayback || !controller.isPlaying ||
+            generalData.backgroundPlaybackShortcut == GeneralData.BACKGROUND_PLAYBACK_SHORTCUT_BACK) return
+
+        if (playerData.backgroundMode == PlayerData.BACKGROUND_MODE_PIP) enterPipMode()
+        blockEngine(true)
+        viewManager.blockTop(this)
+    }
+
     private fun skipPip(): Boolean = isBackPressed && generalData.backgroundPlaybackShortcut == GeneralData.BACKGROUND_PLAYBACK_SHORTCUT_HOME
 
     private fun wannaEnterToPip(): Boolean {
@@ -362,6 +373,7 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
             state.subtitle = item.getSecondTitleFull()?.toString()
         }
         state.revision++
+        mediaSession?.onVideoChanged()
     }
 
     override fun getVideo(): Video? = controller.video
@@ -431,11 +443,37 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
     override fun containsMedia(): Boolean = controller.containsMedia()
 
     override fun setSpeed(speed: Float) {
-        controller.speed = speed
+        if (speedBeforeHold != null) {
+            // Applied when the hold ends
+            if (speed > 0) speedBeforeHold = speed
+        } else {
+            controller.speed = speed
+            if (speed > 0) state.speed = speed
+        }
         setButtonState(com.liskovsoft.smartyoutubetv2.common.R.id.action_video_speed, if (speed != 1.0f) PlayerUI.BUTTON_ON else PlayerUI.BUTTON_OFF)
     }
 
-    override fun getSpeed(): Float = controller.speed
+    /** While holding, the shared logic sees the real speed: the temporary 2x is never saved (channel, video state) */
+    override fun getSpeed(): Float = speedBeforeHold ?: controller.speed
+
+    /**
+     * "Press and hold" speed. Applied straight to the player, without the engine speed events, so it isn't
+     * remembered: if the app is closed while holding, the video reopens at the previous speed.
+     */
+    fun startSpeedHold(speed: Float) {
+        val current = player ?: return
+        if (speedBeforeHold == null) speedBeforeHold = controller.speed.takeIf { it > 0 } ?: 1f
+        val pitch = if (playerTweaksData.isAudioTimeStretchingEnabled) current.playbackParameters.pitch else speed
+        current.playbackParameters = PlaybackParameters(speed, pitch)
+        state.speed = speed
+    }
+
+    fun endSpeedHold() {
+        val speed = speedBeforeHold ?: return
+        speedBeforeHold = null
+        controller.speed = speed
+        state.speed = speed
+    }
     override fun setPitch(pitch: Float) { controller.pitch = pitch }
     override fun getPitch(): Float = controller.pitch
     override fun setVolume(volume: Float) { controller.volume = volume }
@@ -533,10 +571,12 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
         val p = player
         state.isPlaying = controller.isPlaying
         // NOTE: player.isLoading() is true while prefetching ahead during normal playback. Only real buffering stalls count.
-        state.isBuffering = controller.isBuffering
+        // Paused + buffering (e.g. after a seek while paused) keeps the play button available
+        state.isBuffering = controller.isBuffering && controller.playWhenReady
         state.positionMs = controller.positionMs.coerceAtLeast(0)
         state.durationMs = durationMs.coerceAtLeast(0)
         state.bufferedMs = p?.bufferedPosition ?: 0
+        p?.playbackParameters?.speed?.let { state.speed = it }
 
         if (SleepTimer.isActive && SleepTimer.shouldStop(state.positionMs, state.durationMs)) {
             presenter.onPauseClicked()

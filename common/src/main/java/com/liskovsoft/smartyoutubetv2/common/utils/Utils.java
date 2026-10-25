@@ -1349,7 +1349,11 @@ public class Utils {
         });
     }
 
-    private static void persistData(Context context) {
+    /**
+     * Writes now the settings that are saved with a delay (e.g. the speed: 10 s after the change).<br/>
+     * The mobile app calls it when it goes to the background, the last safe point before the process may be killed.
+     */
+    public static void persistData(Context context) {
         VideoStateService.instance(context).persistNow();
         PlayerData.instance(context).persistNow();
         PlayerTweaksData.instance(context).persistNow();

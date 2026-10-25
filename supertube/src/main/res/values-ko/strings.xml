@@ -3,7 +3,6 @@
     <string name="mobile_more">더보기</string>
     <string name="mobile_more_options">옵션 더보기</string>
     <string name="mobile_search_hint">YouTube 검색</string>
-    <string name="mobile_retry">다시 시도</string>
     <string name="mobile_nothing_here">아직 아무것도 없습니다</string>
     <string name="mobile_back">뒤로</string>
     <string name="mobile_clear">지우기</string>
@@ -20,8 +19,6 @@
     <string name="mobile_exit_fullscreen">전체 화면 종료</string>
     <string name="mobile_quality">화질</string>
     <string name="mobile_up_next">다음 동영상</string>
-    <string name="mobile_load_more">더 불러오기</string>
-    <string name="mobile_comments_empty">댓글 없음</string>
     <string name="mobile_layout">보기</string>
     <string name="mobile_layout_list">목록</string>
     <string name="mobile_layout_compact">간단히</string>
@@ -35,7 +32,6 @@
     <string name="mobile_recent_searches">최근 검색어</string>
     <string name="mobile_clear_history">모두 지우기</string>
     <string name="mobile_remove">삭제</string>
-    <string name="mobile_section_options">섹션 옵션</string>
     <string name="mobile_favorites">즐겨찾기</string>
     <string name="mobile_save_to_favorites">즐겨찾기에 저장</string>
     <string name="mobile_new_folder">새 폴더</string>
@@ -56,11 +52,8 @@
     <string name="mobile_no_results">검색과 일치하는 즐겨찾기가 없습니다</string>
     <string name="mobile_delete_folder_confirm">\"%1$s\" 폴더와 저장된 동영상을 삭제할까요?</string>
     <string name="mobile_download">다운로드</string>
-    <string name="mobile_download_audio">오디오 (m4a)</string>
-    <string name="mobile_download_video">동영상 (mp4)</string>
     <string name="mobile_download_preparing">다운로드 준비 중…</string>
     <string name="mobile_download_unavailable">이 동영상은 다운로드할 수 없습니다</string>
-    <string name="mobile_download_started">%1$s에 다운로드 중</string>
     <string name="mobile_downloads">다운로드</string>
     <string name="mobile_download_already">이미 다운로드 중입니다</string>
     <string name="mobile_download_queued">다운로드에 추가됨</string>
@@ -92,7 +85,9 @@
     <string name="mobile_export">SuperTube 데이터 내보내기</string>
     <string name="mobile_import">SuperTube 데이터 가져오기</string>
     <string name="mobile_export_done">데이터를 내보냈습니다</string>
-    <string name="mobile_import_done">데이터 가져옴: 즐겨찾기 %1$d개</string>
+    <plurals name="mobile_import_done">
+        <item quantity="other">데이터 가져옴: 즐겨찾기 %1$d개</item>
+    </plurals>
     <string name="mobile_import_error">SuperTube 백업 파일이 아닙니다</string>
     <string name="mobile_sleep_timer">취침 타이머</string>
     <string name="mobile_sleep_off">사용 안함</string>
@@ -101,6 +96,9 @@
     <string name="mobile_sleep_end_short">동영상 끝</string>
     <string name="mobile_sleep_stopped">취침 타이머: 재생이 일시중지됨</string>
     <string name="mobile_close_player">플레이어 닫기</string>
+    <string name="mobile_subscribe">구독</string>
+    <string name="mobile_subscribed">구독중</string>
+    <string name="mobile_playback_channel">재생</string>
     <string name="mobile_wifi_only">Wi-Fi에서만</string>
     <string name="mobile_wifi_only_desc">Wi-Fi에 연결될 때까지 다운로드 대기</string>
     <string name="mobile_download_status_waiting_wifi">Wi-Fi 대기 중…</string>

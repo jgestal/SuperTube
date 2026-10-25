@@ -2,6 +2,9 @@ package com.liskovsoft.smartyoutubetv2.mobile
 
 import com.liskovsoft.smartyoutubetv2.mobile.widget.FavoritesWidgetProvider
 import com.liskovsoft.smartyoutubetv2.mobile.prefs.FavoritesStore
+import com.liskovsoft.smartyoutubetv2.mobile.prefs.MobilePrefs
+import android.app.Activity
+import android.os.Bundle
 import androidx.multidex.MultiDexApplication
 import androidx.work.Configuration
 import com.liskovsoft.sharedutils.helpers.Helpers
@@ -18,6 +21,8 @@ import com.liskovsoft.smartyoutubetv2.common.app.views.SplashView
 import com.liskovsoft.smartyoutubetv2.common.app.views.ViewManager
 import com.liskovsoft.smartyoutubetv2.common.app.views.WebBrowserView
 import com.liskovsoft.smartyoutubetv2.common.prefs.NetworkData
+import com.liskovsoft.smartyoutubetv2.common.prefs.PlayerData
+import com.liskovsoft.smartyoutubetv2.common.utils.Utils
 import com.liskovsoft.smartyoutubetv2.mobile.ui.browse.BrowseActivity
 import com.liskovsoft.smartyoutubetv2.mobile.ui.channel.ChannelActivity
 import com.liskovsoft.smartyoutubetv2.mobile.ui.channel.ChannelUploadsActivity
@@ -59,8 +64,30 @@ class MobileApplication : MultiDexApplication(), Configuration.Provider {
 
         setupGlobalExceptionHandler()
         setupViewManager()
+        persistSettingsInBackground()
+        MobilePrefs.instance(this).applyMobileDefaults(PlayerData.instance(this))
         // Keep the home screen widget in sync with the favorites
         FavoritesStore.onChanged = { FavoritesWidgetProvider.refresh(this) }
+    }
+
+    /**
+     * SmartTube saves some settings with a delay (the speed: 10 s after the change). On phones the process is often
+     * killed right after leaving the app (swiped away from recents), so save everything when no screen is visible.
+     */
+    private fun persistSettingsInBackground() {
+        registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
+            private var startedCount = 0
+            override fun onActivityStarted(activity: Activity) { startedCount++ }
+            override fun onActivityStopped(activity: Activity) {
+                startedCount = (startedCount - 1).coerceAtLeast(0)
+                if (startedCount == 0) Utils.persistData(activity.applicationContext)
+            }
+            override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}
+            override fun onActivityResumed(activity: Activity) {}
+            override fun onActivityPaused(activity: Activity) {}
+            override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
+            override fun onActivityDestroyed(activity: Activity) {}
+        })
     }
 
     // Lazy WorkManager init (auto-init is removed in the manifest)

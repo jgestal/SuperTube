@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.liskovsoft.mediaserviceinterfaces.data.MediaGroup
+import com.liskovsoft.smartyoutubetv2.common.prefs.PlayerData
 
 /** How video lists are drawn. The user picks one from the top bar. */
 enum class FeedLayout {
@@ -103,6 +104,19 @@ class MobilePrefs private constructor(context: Context) {
         prefs.edit().putBoolean(KEY_WIFI_ONLY, enabled).apply()
     }
 
+    /**
+     * One-time switch of shared SmartTube settings to phone defaults. Runs once per [DEFAULTS_VERSION] and only
+     * replaces values the user never changed, so a later choice in the settings is kept.
+     */
+    fun applyMobileDefaults(playerData: PlayerData) {
+        if (prefs.getInt(KEY_DEFAULTS_VERSION, 0) >= DEFAULTS_VERSION) return
+        // Home keeps the video in picture-in-picture (and playing with the screen off) instead of stopping it
+        if (playerData.backgroundMode == PlayerData.BACKGROUND_MODE_DEFAULT) {
+            playerData.backgroundMode = PlayerData.BACKGROUND_MODE_PIP
+        }
+        prefs.edit().putInt(KEY_DEFAULTS_VERSION, DEFAULTS_VERSION).apply()
+    }
+
     private fun saveRecentSearches() {
         // Unit separator: search queries never contain it
         prefs.edit().putString(KEY_RECENT_SEARCHES, recentSearches.joinToString(SEPARATOR)).apply()
@@ -122,6 +136,8 @@ class MobilePrefs private constructor(context: Context) {
         private const val KEY_SECTION_ORDER = "section_order"
         private const val KEY_RECENT_SEARCHES = "recent_searches"
         private const val KEY_WIFI_ONLY = "wifi_only_downloads"
+        private const val KEY_DEFAULTS_VERSION = "mobile_defaults_version"
+        private const val DEFAULTS_VERSION = 1
         private const val SEPARATOR = "\u001F"
         private const val MAX_RECENT_SEARCHES = 20
 

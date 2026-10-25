@@ -3,7 +3,6 @@
     <string name="mobile_more">Ещё</string>
     <string name="mobile_more_options">Другие действия</string>
     <string name="mobile_search_hint">Поиск на YouTube</string>
-    <string name="mobile_retry">Повторить</string>
     <string name="mobile_nothing_here">Здесь пока пусто</string>
     <string name="mobile_back">Назад</string>
     <string name="mobile_clear">Очистить</string>
@@ -20,8 +19,6 @@
     <string name="mobile_exit_fullscreen">Выйти из полноэкранного режима</string>
     <string name="mobile_quality">Качество</string>
     <string name="mobile_up_next">Далее в очереди</string>
-    <string name="mobile_load_more">Загрузить ещё</string>
-    <string name="mobile_comments_empty">Нет комментариев</string>
     <string name="mobile_layout">Вид</string>
     <string name="mobile_layout_list">Список</string>
     <string name="mobile_layout_compact">Компактный</string>
@@ -35,7 +32,6 @@
     <string name="mobile_recent_searches">Недавние запросы</string>
     <string name="mobile_clear_history">Очистить всё</string>
     <string name="mobile_remove">Удалить</string>
-    <string name="mobile_section_options">Параметры раздела</string>
     <string name="mobile_favorites">Избранное</string>
     <string name="mobile_save_to_favorites">Добавить в избранное</string>
     <string name="mobile_new_folder">Новая папка</string>
@@ -56,11 +52,8 @@
     <string name="mobile_no_results">Ничего не найдено в избранном</string>
     <string name="mobile_delete_folder_confirm">Удалить «%1$s» и сохранённые в ней видео?</string>
     <string name="mobile_download">Скачать</string>
-    <string name="mobile_download_audio">Аудио (m4a)</string>
-    <string name="mobile_download_video">Видео (mp4)</string>
     <string name="mobile_download_preparing">Подготовка загрузки…</string>
     <string name="mobile_download_unavailable">Скачивание этого видео недоступно</string>
-    <string name="mobile_download_started">Загрузка в %1$s</string>
     <string name="mobile_downloads">Загрузки</string>
     <string name="mobile_download_already">Уже скачивается</string>
     <string name="mobile_download_queued">Добавлено в загрузки</string>
@@ -92,7 +85,12 @@
     <string name="mobile_export">Экспорт данных SuperTube</string>
     <string name="mobile_import">Импорт данных SuperTube</string>
     <string name="mobile_export_done">Данные экспортированы</string>
-    <string name="mobile_import_done">Данные импортированы: избранных — %1$d</string>
+    <plurals name="mobile_import_done">
+        <item quantity="one">Данные импортированы: избранных — %1$d</item>
+        <item quantity="few">Данные импортированы: избранных — %1$d</item>
+        <item quantity="many">Данные импортированы: избранных — %1$d</item>
+        <item quantity="other">Данные импортированы: избранных — %1$d</item>
+    </plurals>
     <string name="mobile_import_error">Файл не является резервной копией SuperTube</string>
     <string name="mobile_sleep_timer">Таймер сна</string>
     <string name="mobile_sleep_off">Выкл.</string>
@@ -101,6 +99,9 @@
     <string name="mobile_sleep_end_short">Конец видео</string>
     <string name="mobile_sleep_stopped">Таймер сна: воспроизведение приостановлено</string>
     <string name="mobile_close_player">Закрыть плеер</string>
+    <string name="mobile_subscribe">Подписаться</string>
+    <string name="mobile_subscribed">Вы подписаны</string>
+    <string name="mobile_playback_channel">Воспроизведение</string>
     <string name="mobile_wifi_only">Только по Wi-Fi</string>
     <string name="mobile_wifi_only_desc">Ждать подключения к Wi-Fi для загрузки</string>
     <string name="mobile_download_status_waiting_wifi">Ожидание Wi-Fi…</string>

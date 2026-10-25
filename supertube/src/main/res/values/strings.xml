@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="mobile_app_name" translatable="false">SuperTube</string>
     <!-- Overrides the name used by the shared modules (about dialog, notifications) -->
-    <string name="app_name" translatable="false">SuperTube</string>
+    <string name="app_name" translatable="false" tools:ignore="UnusedResources">SuperTube</string>
     <string name="mobile_more">More</string>
     <string name="mobile_more_options">More options</string>
     <string name="mobile_search_hint">Search YouTube</string>
-    <string name="mobile_retry">Retry</string>
     <string name="mobile_nothing_here">Nothing here yet</string>
     <string name="mobile_back">Back</string>
     <string name="mobile_clear">Clear</string>
@@ -23,8 +22,6 @@
     <string name="mobile_exit_fullscreen">Exit fullscreen</string>
     <string name="mobile_quality">Quality</string>
     <string name="mobile_up_next">Up next</string>
-    <string name="mobile_load_more">Load more</string>
-    <string name="mobile_comments_empty">No comments</string>
     <string name="mobile_layout">View</string>
     <string name="mobile_layout_list">List</string>
     <string name="mobile_layout_compact">Compact</string>
@@ -38,7 +35,6 @@
     <string name="mobile_recent_searches">Recent searches</string>
     <string name="mobile_clear_history">Clear all</string>
     <string name="mobile_remove">Remove</string>
-    <string name="mobile_section_options">Section options</string>
     <string name="mobile_favorites">Favorites</string>
     <string name="mobile_save_to_favorites">Save to favorites</string>
     <string name="mobile_new_folder">New folder</string>
@@ -63,11 +59,8 @@
     <string name="mobile_no_results">No favorites match the search</string>
     <string name="mobile_delete_folder_confirm">Delete \"%1$s\" and the videos saved in it?</string>
     <string name="mobile_download">Download</string>
-    <string name="mobile_download_audio">Audio (m4a)</string>
-    <string name="mobile_download_video">Video (mp4)</string>
     <string name="mobile_download_preparing">Preparing download…</string>
     <string name="mobile_download_unavailable">Download not available for this video</string>
-    <string name="mobile_download_started">Downloading to %1$s</string>
     <string name="mobile_downloads">Downloads</string>
     <string name="mobile_download_already">Already downloading</string>
     <string name="mobile_download_queued">Added to downloads</string>
@@ -103,9 +96,12 @@
     <string name="mobile_export">Export SuperTube data</string>
     <string name="mobile_import">Import SuperTube data</string>
     <string name="mobile_export_done">Data exported</string>
-    <string name="mobile_import_done">Data imported: %1$d favorites</string>
+    <plurals name="mobile_import_done">
+        <item quantity="one">Data imported: %1$d favorite</item>
+        <item quantity="other">Data imported: %1$d favorites</item>
+    </plurals>
     <string name="mobile_import_error">The file isn\'t a SuperTube backup</string>
-    <string name="mobile_supertube">SuperTube</string>
+    <string name="mobile_supertube" translatable="false">SuperTube</string>
     <string name="mobile_sleep_timer">Sleep timer</string>
     <string name="mobile_sleep_off">Off</string>
     <string name="mobile_sleep_minutes">%1$d min</string>
@@ -113,6 +109,9 @@
     <string name="mobile_sleep_end_short">End of video</string>
     <string name="mobile_sleep_stopped">Sleep timer: playback paused</string>
     <string name="mobile_close_player">Close player</string>
+    <string name="mobile_subscribe">Subscribe</string>
+    <string name="mobile_subscribed">Subscribed</string>
+    <string name="mobile_playback_channel">Playback</string>
     <string name="mobile_wifi_only">Wi‑Fi only</string>
     <string name="mobile_wifi_only_desc">Wait for a Wi‑Fi connection to download</string>
     <string name="mobile_download_status_waiting_wifi">Waiting for Wi‑Fi…</string>

@@ -267,7 +267,8 @@ fun FavoritesScreen(onLongClick: (Video) -> Unit) {
 
     if (videos.isEmpty()) {
         Column(Modifier.fillMaxSize()) {
-            header()
+            // Same insets as the header inside the feed grid (FeedView content padding)
+            Box(Modifier.padding(start = 12.dp, end = 12.dp, top = 8.dp)) { header() }
             Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 EmptyState(text = stringResource(if (searching) R.string.mobile_no_results else R.string.mobile_favorites_empty))
             }

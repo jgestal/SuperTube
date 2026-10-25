@@ -110,7 +110,7 @@ class BrowseActivity : ScreenActivity(), BrowseView {
                 .onFailure { MessageHelpers.showMessage(this, it.message) }
             REQUEST_IMPORT -> {
                 val added = runCatching { BackupManager.import(this, uri) }.getOrDefault(-1)
-                MessageHelpers.showMessage(this, if (added < 0) getString(R.string.mobile_import_error) else getString(R.string.mobile_import_done, added))
+                MessageHelpers.showMessage(this, if (added < 0) getString(R.string.mobile_import_error) else resources.getQuantityString(R.plurals.mobile_import_done, added, added))
             }
         }
     }

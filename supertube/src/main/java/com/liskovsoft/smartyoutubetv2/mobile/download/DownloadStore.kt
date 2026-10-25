@@ -1,5 +1,6 @@
 package com.liskovsoft.smartyoutubetv2.mobile.download
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.os.Handler
@@ -179,6 +180,8 @@ class DownloadStore private constructor(private val context: Context) {
 
         fun tempDir(context: Context): File = File(context.getExternalFilesDir(null) ?: context.filesDir, "downloads").apply { mkdirs() }
 
+        // Holds the application context only (see instance()): no leak
+        @SuppressLint("StaticFieldLeak")
         @Volatile
         private var instance: DownloadStore? = null
 

@@ -232,10 +232,8 @@ class DownloadService : Service() {
     }
 
     private fun createChannel() {
-        if (Build.VERSION.SDK_INT >= 26) {
-            val channel = NotificationChannel(CHANNEL_ID, getString(R.string.mobile_downloads), NotificationManager.IMPORTANCE_LOW)
-            (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).createNotificationChannel(channel)
-        }
+        val channel = NotificationChannel(CHANNEL_ID, getString(R.string.mobile_downloads), NotificationManager.IMPORTANCE_LOW)
+        (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).createNotificationChannel(channel)
     }
 
     private fun buildNotification(): Notification {

@@ -26,7 +26,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BrightnessMedium
 import androidx.compose.material.icons.filled.FastForward
 import androidx.compose.material.icons.filled.FastRewind
-import androidx.compose.material.icons.filled.VolumeUp
+import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -84,7 +84,6 @@ fun Modifier.playerGestures(
     onClose: () -> Unit,
 ): Modifier = this
     .pointerInput(isFullscreen) {
-        var speedBeforeHold = 1f
         detectTapGestures(
             onTap = {
                 engine.showOverlay(!state.isOverlayShown)
@@ -92,8 +91,12 @@ fun Modifier.playerGestures(
             },
             onDoubleTap = { offset ->
                 val forward = offset.x > size.width / 2
-                val target = (engine.positionMs + if (forward) SEEK_STEP_MS else -SEEK_STEP_MS).coerceAtLeast(0)
+                val duration = engine.durationMs
+                var target = (engine.positionMs + if (forward) SEEK_STEP_MS else -SEEK_STEP_MS).coerceAtLeast(0)
+                // Stay before the end: seeking past it ends the video (and may jump to the next one)
+                if (duration > 1_000) target = target.coerceAtMost(duration - 1_000)
                 engine.positionMs = target
+                state.positionMs = target
                 presenter.onSeekEnd()
                 val delta = (SEEK_STEP_MS / 1000).toInt().let { if (forward) it else -it }
                 // Same direction accumulates (+10, +20...), changing direction restarts
@@ -102,15 +105,14 @@ fun Modifier.playerGestures(
                 feedback.seekEvents++
             },
             onLongPress = {
-                speedBeforeHold = engine.speed
-                engine.speed = HOLD_SPEED
+                engine.startSpeedHold(HOLD_SPEED)
                 feedback.isSpeedHold = true
                 onHaptic()
             },
             onPress = {
                 tryAwaitRelease()
                 if (feedback.isSpeedHold) {
-                    engine.speed = speedBeforeHold
+                    engine.endSpeedHold()
                     feedback.isSpeedHold = false
                 }
             },
@@ -155,7 +157,7 @@ fun Modifier.playerGestures(
                     1 -> {
                         volume = (volume + delta).coerceIn(0f, 1f)
                         audio.setStreamVolume(AudioManager.STREAM_MUSIC, (volume * maxVolume).toInt(), 0)
-                        feedback.levelIcon = Icons.Default.VolumeUp
+                        feedback.levelIcon = Icons.AutoMirrored.Filled.VolumeUp
                         feedback.level = volume
                     }
                 }

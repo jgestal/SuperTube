@@ -1,10 +1,14 @@
 package com.liskovsoft.smartyoutubetv2.mobile.prefs
 
 import android.content.Context
+import android.content.res.Configuration
 import androidx.compose.runtime.mutableStateListOf
 import com.liskovsoft.smartyoutubetv2.common.app.models.data.Video
 import org.json.JSONArray
+import com.liskovsoft.smartyoutubetv2.mobile.R
 import org.json.JSONObject
+import org.xmlpull.v1.XmlPullParser
+import java.util.Locale
 
 /** Minimal copy of a video, enough to show it in a list and to play it */
 data class FavoriteVideo(
@@ -38,24 +42,38 @@ data class FavoriteVideo(
     }
 }
 
-data class FavoriteFolder(val id: Long, val name: String, val videos: List<FavoriteVideo>)
+/**
+ * @param hasDefaultName the automatic "Favorites" folder: its name is stored empty and shown in the current language
+ */
+data class FavoriteFolder(val id: Long, val name: String, val videos: List<FavoriteVideo>, val hasDefaultName: Boolean = false)
 
 /**
  * User favorites organized in folders. Stored only on this device (JSON in SharedPreferences).
  * The folder list is Compose state: screens update as soon as something changes.
  */
 class FavoritesStore private constructor(context: Context) {
-    private val prefs = context.applicationContext.getSharedPreferences("supertube_favorites", Context.MODE_PRIVATE)
-    private val defaultName = context.getString(com.liskovsoft.smartyoutubetv2.mobile.R.string.mobile_favorites)
+    private val appContext = context.applicationContext
+    private val prefs = appContext.getSharedPreferences("supertube_favorites", Context.MODE_PRIVATE)
+    private val defaultName = context.getString(R.string.mobile_favorites)
+
+    /** The default name in every language of the app: folders saved by version 1.2 and older stored it translated */
+    private val translatedDefaultNames: Set<String> by lazy {
+        appLocales().mapNotNull { locale ->
+            val config = Configuration(appContext.resources.configuration).apply { setLocale(locale) }
+            runCatching { appContext.createConfigurationContext(config).getString(R.string.mobile_favorites) }.getOrNull()
+        }.toSet()
+    }
 
     val folders = mutableStateListOf<FavoriteFolder>().apply { addAll(load()) }
 
     init {
         if (folders.isEmpty()) {
-            folders.add(FavoriteFolder(System.currentTimeMillis(), defaultName, emptyList()))
+            folders.add(defaultFolder())
             save()
         }
     }
+
+    private fun defaultFolder() = FavoriteFolder(System.currentTimeMillis(), defaultName, emptyList(), hasDefaultName = true)
 
     fun isFavorite(videoId: String?): Boolean = videoId != null && folders.any { folder -> folder.videos.any { it.videoId == videoId } }
 
@@ -93,7 +111,8 @@ class FavoritesStore private constructor(context: Context) {
     }
 
     fun createFolder(name: String): FavoriteFolder {
-        val folder = FavoriteFolder(System.currentTimeMillis(), name.trim().ifEmpty { defaultName }, emptyList())
+        val trimmed = name.trim()
+        val folder = FavoriteFolder(System.currentTimeMillis(), trimmed.ifEmpty { defaultName }, emptyList(), hasDefaultName = trimmed.isEmpty())
         folders.add(folder)
         save()
         return folder
@@ -102,13 +121,13 @@ class FavoritesStore private constructor(context: Context) {
     fun renameFolder(folderId: Long, name: String) {
         val index = folders.indexOfFirst { it.id == folderId }
         if (index == -1 || name.isBlank()) return
-        folders[index] = folders[index].copy(name = name.trim())
+        folders[index] = folders[index].copy(name = name.trim(), hasDefaultName = false)
         save()
     }
 
     fun deleteFolder(folderId: Long) {
         folders.removeAll { it.id == folderId }
-        if (folders.isEmpty()) folders.add(FavoriteFolder(System.currentTimeMillis(), defaultName, emptyList()))
+        if (folders.isEmpty()) folders.add(defaultFolder())
         save()
     }
 
@@ -127,7 +146,9 @@ class FavoritesStore private constructor(context: Context) {
     fun importJson(json: JSONArray): Int {
         var added = 0
         for (incoming in parse(json)) {
-            val index = folders.indexOfFirst { it.name.equals(incoming.name, ignoreCase = true) }
+            val index = folders.indexOfFirst {
+                if (incoming.hasDefaultName) it.hasDefaultName else !it.hasDefaultName && it.name.equals(incoming.name, ignoreCase = true)
+            }
             if (index == -1) {
                 folders.add(incoming.copy(id = System.currentTimeMillis() + folders.size))
                 added += incoming.videos.size
@@ -152,7 +173,7 @@ class FavoritesStore private constructor(context: Context) {
                     put("thumb", v.thumbnail); put("badge", v.badge); put("channel", v.channelId); put("live", v.isLive)
                 })
             }
-            json.put(JSONObject().apply { put("id", folder.id); put("name", folder.name); put("videos", videos) })
+            json.put(JSONObject().apply { put("id", folder.id); put("name", if (folder.hasDefaultName) "" else folder.name); put("videos", videos) })
         }
         return json
     }
@@ -167,9 +188,11 @@ class FavoritesStore private constructor(context: Context) {
         (0 until json.length()).map { i ->
             val folder = json.getJSONObject(i)
             val videos = folder.getJSONArray("videos")
+            val name = folder.getString("name")
+            val hasDefaultName = name.isEmpty() || name in translatedDefaultNames
             FavoriteFolder(
                 folder.getLong("id"),
-                folder.getString("name"),
+                if (hasDefaultName) defaultName else name,
                 (0 until videos.length()).map { j ->
                     val v = videos.getJSONObject(j)
                     FavoriteVideo(
@@ -177,13 +200,28 @@ class FavoritesStore private constructor(context: Context) {
                         v.optStringOrNull("thumb"), v.optStringOrNull("badge"), v.optStringOrNull("channel"), v.optBoolean("live"),
                     )
                 },
+                hasDefaultName,
             )
         }
+
+    /** Languages of the app, from the locale config (the same list the system language settings show) */
+    private fun appLocales(): List<Locale> {
+        val locales = mutableListOf<Locale>()
+        appContext.resources.getXml(R.xml.locales_config).use { parser ->
+            while (parser.next() != XmlPullParser.END_DOCUMENT) {
+                if (parser.eventType == XmlPullParser.START_TAG && parser.name == "locale") {
+                    parser.getAttributeValue(ANDROID_NAMESPACE, "name")?.let { locales.add(Locale.forLanguageTag(it)) }
+                }
+            }
+        }
+        return locales
+    }
 
     private fun JSONObject.optStringOrNull(key: String): String? = if (isNull(key)) null else optString(key)
 
     companion object {
         private const val KEY_FOLDERS = "folders"
+        private const val ANDROID_NAMESPACE = "http://schemas.android.com/apk/res/android"
 
         /** Called after every change (home screen widget refresh) */
         var onChanged: (() -> Unit)? = null

@@ -37,6 +37,7 @@ class PlayerUiState {
     var positionMs by mutableLongStateOf(0L)
     var durationMs by mutableLongStateOf(0L)
     var bufferedMs by mutableLongStateOf(0L)
+    var speed by mutableFloatStateOf(1f)
 
     /** Width / height of the current video (used for vertical videos in the portrait layout) */
     var videoAspect by mutableFloatStateOf(16f / 9f)

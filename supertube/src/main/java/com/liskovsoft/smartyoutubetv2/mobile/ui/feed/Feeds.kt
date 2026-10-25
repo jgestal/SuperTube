@@ -123,7 +123,8 @@ fun VideoShelves(
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         if (header != null) {
-            item { header() }
+            // Shelves are edge to edge: give the header the horizontal insets it has in the grid layouts
+            item { Box(Modifier.padding(horizontal = 12.dp)) { header() } }
         }
         items(feed.rows, key = { it.id }) { row ->
             Shelf(row, actions)

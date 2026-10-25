@@ -5,7 +5,6 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
@@ -116,7 +115,7 @@ object UpdateChecker {
 
     private fun install(activity: Activity, file: File) {
         // Android 8+: the user must allow SuperTube to install apps once
-        if (Build.VERSION.SDK_INT >= 26 && !activity.packageManager.canRequestPackageInstalls()) {
+        if (!activity.packageManager.canRequestPackageInstalls()) {
             MessageHelpers.showLongMessage(activity, activity.getString(R.string.mobile_update_permission))
             activity.startActivity(Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:${activity.packageName}")))
             return

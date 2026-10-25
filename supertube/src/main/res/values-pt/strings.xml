@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<!-- "many" is a real plural category for this language since CLDR 38 (Android 13+), e.g. "1 000 000 de vídeos":
+     the plural data of lint is older -->
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedQuantity">
     <string name="mobile_more">Mais</string>
     <string name="mobile_more_options">Mais opções</string>
     <string name="mobile_search_hint">Pesquisar no YouTube</string>
-    <string name="mobile_retry">Tentar novamente</string>
     <string name="mobile_nothing_here">Nada aqui ainda</string>
     <string name="mobile_back">Voltar</string>
     <string name="mobile_clear">Limpar</string>
@@ -20,8 +21,6 @@
     <string name="mobile_exit_fullscreen">Sair da tela cheia</string>
     <string name="mobile_quality">Qualidade</string>
     <string name="mobile_up_next">A seguir</string>
-    <string name="mobile_load_more">Carregar mais</string>
-    <string name="mobile_comments_empty">Nenhum comentário</string>
     <string name="mobile_layout">Visualização</string>
     <string name="mobile_layout_list">Lista</string>
     <string name="mobile_layout_compact">Compacta</string>
@@ -35,7 +34,6 @@
     <string name="mobile_recent_searches">Pesquisas recentes</string>
     <string name="mobile_clear_history">Limpar tudo</string>
     <string name="mobile_remove">Remover</string>
-    <string name="mobile_section_options">Opções da seção</string>
     <string name="mobile_favorites">Favoritos</string>
     <string name="mobile_save_to_favorites">Salvar nos favoritos</string>
     <string name="mobile_new_folder">Nova pasta</string>
@@ -56,11 +54,8 @@
     <string name="mobile_no_results">Nenhum favorito corresponde à pesquisa</string>
     <string name="mobile_delete_folder_confirm">Excluir \"%1$s\" e os vídeos salvos nela?</string>
     <string name="mobile_download">Baixar</string>
-    <string name="mobile_download_audio">Áudio (m4a)</string>
-    <string name="mobile_download_video">Vídeo (mp4)</string>
     <string name="mobile_download_preparing">Preparando o download…</string>
     <string name="mobile_download_unavailable">Download indisponível para este vídeo</string>
-    <string name="mobile_download_started">Baixando em %1$s</string>
     <string name="mobile_downloads">Downloads</string>
     <string name="mobile_download_already">Já está sendo baixado</string>
     <string name="mobile_download_queued">Adicionado aos downloads</string>
@@ -92,7 +87,11 @@
     <string name="mobile_export">Exportar dados do SuperTube</string>
     <string name="mobile_import">Importar dados do SuperTube</string>
     <string name="mobile_export_done">Dados exportados</string>
-    <string name="mobile_import_done">Dados importados: %1$d favoritos</string>
+    <plurals name="mobile_import_done">
+        <item quantity="one">Dados importados: %1$d favorito</item>
+        <item quantity="many">Dados importados: %1$d favoritos</item>
+        <item quantity="other">Dados importados: %1$d favoritos</item>
+    </plurals>
     <string name="mobile_import_error">O arquivo não é um backup do SuperTube</string>
     <string name="mobile_sleep_timer">Temporizador de desligamento</string>
     <string name="mobile_sleep_off">Desativado</string>
@@ -101,6 +100,9 @@
     <string name="mobile_sleep_end_short">Fim do vídeo</string>
     <string name="mobile_sleep_stopped">Temporizador: reprodução pausada</string>
     <string name="mobile_close_player">Fechar player</string>
+    <string name="mobile_subscribe">Inscrever-se</string>
+    <string name="mobile_subscribed">Inscrito</string>
+    <string name="mobile_playback_channel">Reprodução</string>
     <string name="mobile_wifi_only">Somente Wi-Fi</string>
     <string name="mobile_wifi_only_desc">Aguardar uma conexão Wi-Fi para baixar</string>
     <string name="mobile_download_status_waiting_wifi">Aguardando Wi-Fi…</string>

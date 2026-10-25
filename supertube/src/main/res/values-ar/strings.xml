@@ -3,7 +3,6 @@
     <string name="mobile_more">المزيد</string>
     <string name="mobile_more_options">خيارات أخرى</string>
     <string name="mobile_search_hint">البحث في YouTube</string>
-    <string name="mobile_retry">إعادة المحاولة</string>
     <string name="mobile_nothing_here">لا يوجد شيء هنا بعد</string>
     <string name="mobile_back">رجوع</string>
     <string name="mobile_clear">مسح</string>
@@ -20,8 +19,6 @@
     <string name="mobile_exit_fullscreen">الخروج من ملء الشاشة</string>
     <string name="mobile_quality">الجودة</string>
     <string name="mobile_up_next">التالي في القائمة</string>
-    <string name="mobile_load_more">تحميل المزيد</string>
-    <string name="mobile_comments_empty">لا توجد تعليقات</string>
     <string name="mobile_layout">العرض</string>
     <string name="mobile_layout_list">قائمة</string>
     <string name="mobile_layout_compact">مضغوط</string>
@@ -35,7 +32,6 @@
     <string name="mobile_recent_searches">عمليات البحث الأخيرة</string>
     <string name="mobile_clear_history">مسح الكل</string>
     <string name="mobile_remove">إزالة</string>
-    <string name="mobile_section_options">خيارات القسم</string>
     <string name="mobile_favorites">المفضلة</string>
     <string name="mobile_save_to_favorites">حفظ في المفضلة</string>
     <string name="mobile_new_folder">مجلد جديد</string>
@@ -56,11 +52,8 @@
     <string name="mobile_no_results">لا توجد مفضلات تطابق البحث</string>
     <string name="mobile_delete_folder_confirm">هل تريد حذف \"%1$s\" والفيديوهات المحفوظة فيه؟</string>
     <string name="mobile_download">تنزيل</string>
-    <string name="mobile_download_audio">صوت (m4a)</string>
-    <string name="mobile_download_video">فيديو (mp4)</string>
     <string name="mobile_download_preparing">جارٍ تحضير التنزيل…</string>
     <string name="mobile_download_unavailable">التنزيل غير متاح لهذا الفيديو</string>
-    <string name="mobile_download_started">جارٍ التنزيل إلى %1$s</string>
     <string name="mobile_downloads">التنزيلات</string>
     <string name="mobile_download_already">يتم تنزيله بالفعل</string>
     <string name="mobile_download_queued">تمت الإضافة إلى التنزيلات</string>
@@ -92,7 +85,14 @@
     <string name="mobile_export">تصدير بيانات SuperTube</string>
     <string name="mobile_import">استيراد بيانات SuperTube</string>
     <string name="mobile_export_done">تم تصدير البيانات</string>
-    <string name="mobile_import_done">تم استيراد البيانات: %1$d من المفضلة</string>
+    <plurals name="mobile_import_done">
+        <item quantity="zero">تم استيراد البيانات: %1$d من المفضلة</item>
+        <item quantity="one">تم استيراد البيانات: %1$d من المفضلة</item>
+        <item quantity="two">تم استيراد البيانات: %1$d من المفضلة</item>
+        <item quantity="few">تم استيراد البيانات: %1$d من المفضلة</item>
+        <item quantity="many">تم استيراد البيانات: %1$d من المفضلة</item>
+        <item quantity="other">تم استيراد البيانات: %1$d من المفضلة</item>
+    </plurals>
     <string name="mobile_import_error">الملف ليس نسخة احتياطية من SuperTube</string>
     <string name="mobile_sleep_timer">مؤقت النوم</string>
     <string name="mobile_sleep_off">إيقاف</string>
@@ -101,6 +101,9 @@
     <string name="mobile_sleep_end_short">نهاية الفيديو</string>
     <string name="mobile_sleep_stopped">مؤقت النوم: تم إيقاف التشغيل مؤقتًا</string>
     <string name="mobile_close_player">إغلاق المشغّل</string>
+    <string name="mobile_subscribe">اشتراك</string>
+    <string name="mobile_subscribed">مشترك</string>
+    <string name="mobile_playback_channel">التشغيل</string>
     <string name="mobile_wifi_only">عبر Wi-Fi فقط</string>
     <string name="mobile_wifi_only_desc">انتظار اتصال Wi-Fi للتنزيل</string>
     <string name="mobile_download_status_waiting_wifi">في انتظار Wi-Fi…</string>

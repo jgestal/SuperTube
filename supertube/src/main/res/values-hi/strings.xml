@@ -3,7 +3,6 @@
     <string name="mobile_more">और</string>
     <string name="mobile_more_options">अधिक विकल्प</string>
     <string name="mobile_search_hint">YouTube पर खोजें</string>
-    <string name="mobile_retry">फिर से कोशिश करें</string>
     <string name="mobile_nothing_here">यहाँ अभी कुछ नहीं है</string>
     <string name="mobile_back">वापस</string>
     <string name="mobile_clear">साफ़ करें</string>
@@ -20,8 +19,6 @@
     <string name="mobile_exit_fullscreen">फ़ुल स्क्रीन से बाहर निकलें</string>
     <string name="mobile_quality">क्वालिटी</string>
     <string name="mobile_up_next">आगे आने वाले</string>
-    <string name="mobile_load_more">और लोड करें</string>
-    <string name="mobile_comments_empty">कोई टिप्पणी नहीं</string>
     <string name="mobile_layout">व्यू</string>
     <string name="mobile_layout_list">सूची</string>
     <string name="mobile_layout_compact">कॉम्पैक्ट</string>
@@ -35,7 +32,6 @@
     <string name="mobile_recent_searches">हाल की खोजें</string>
     <string name="mobile_clear_history">सब साफ़ करें</string>
     <string name="mobile_remove">हटाएँ</string>
-    <string name="mobile_section_options">सेक्शन के विकल्प</string>
     <string name="mobile_favorites">पसंदीदा</string>
     <string name="mobile_save_to_favorites">पसंदीदा में सेव करें</string>
     <string name="mobile_new_folder">नया फ़ोल्डर</string>
@@ -56,11 +52,8 @@
     <string name="mobile_no_results">खोज से मेल खाता कोई पसंदीदा नहीं</string>
     <string name="mobile_delete_folder_confirm">\"%1$s\" और उसमें सेव किए गए वीडियो मिटाएँ?</string>
     <string name="mobile_download">डाउनलोड करें</string>
-    <string name="mobile_download_audio">ऑडियो (m4a)</string>
-    <string name="mobile_download_video">वीडियो (mp4)</string>
     <string name="mobile_download_preparing">डाउनलोड की तैयारी हो रही है…</string>
     <string name="mobile_download_unavailable">इस वीडियो के लिए डाउनलोड उपलब्ध नहीं है</string>
-    <string name="mobile_download_started">%1$s में डाउनलोड हो रहा है</string>
     <string name="mobile_downloads">डाउनलोड</string>
     <string name="mobile_download_already">पहले से डाउनलोड हो रहा है</string>
     <string name="mobile_download_queued">डाउनलोड में जोड़ा गया</string>
@@ -92,7 +85,10 @@
     <string name="mobile_export">SuperTube डेटा एक्सपोर्ट करें</string>
     <string name="mobile_import">SuperTube डेटा इंपोर्ट करें</string>
     <string name="mobile_export_done">डेटा एक्सपोर्ट हो गया</string>
-    <string name="mobile_import_done">डेटा इंपोर्ट हो गया: %1$d पसंदीदा</string>
+    <plurals name="mobile_import_done">
+        <item quantity="one">डेटा इंपोर्ट हो गया: %1$d पसंदीदा</item>
+        <item quantity="other">डेटा इंपोर्ट हो गया: %1$d पसंदीदा</item>
+    </plurals>
     <string name="mobile_import_error">यह फ़ाइल SuperTube बैकअप नहीं है</string>
     <string name="mobile_sleep_timer">स्लीप टाइमर</string>
     <string name="mobile_sleep_off">बंद</string>
@@ -101,6 +97,9 @@
     <string name="mobile_sleep_end_short">वीडियो का अंत</string>
     <string name="mobile_sleep_stopped">स्लीप टाइमर: प्लेबैक रोका गया</string>
     <string name="mobile_close_player">प्लेयर बंद करें</string>
+    <string name="mobile_subscribe">सब्सक्राइब करें</string>
+    <string name="mobile_subscribed">सब्सक्राइब किया</string>
+    <string name="mobile_playback_channel">प्लेबैक</string>
     <string name="mobile_wifi_only">सिर्फ़ Wi-Fi पर</string>
     <string name="mobile_wifi_only_desc">डाउनलोड के लिए Wi-Fi कनेक्शन का इंतज़ार करें</string>
     <string name="mobile_download_status_waiting_wifi">Wi-Fi का इंतज़ार…</string>

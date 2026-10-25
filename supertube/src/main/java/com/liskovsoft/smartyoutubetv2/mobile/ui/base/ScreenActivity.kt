@@ -2,6 +2,7 @@ package com.liskovsoft.smartyoutubetv2.mobile.ui.base
 
 import com.liskovsoft.smartyoutubetv2.mobile.ui.playback.PlaybackActivity
 import com.liskovsoft.sharedutils.helpers.Helpers
+import com.liskovsoft.smartyoutubetv2.common.app.presenters.PlaybackPresenter
 import com.liskovsoft.smartyoutubetv2.common.app.presenters.SearchPresenter
 import com.liskovsoft.smartyoutubetv2.common.utils.Utils
 
@@ -23,6 +24,9 @@ abstract class ScreenActivity : MobileActivity() {
             Helpers.setField(viewManager, "mIsMoveToBackEnabled", false)
         }
         viewManager.addTop(this)
+        if (this !is PlaybackActivity) {
+            (PlaybackPresenter.instance(this).view as? PlaybackActivity)?.returnFromPip()
+        }
     }
 
     override fun onSearchRequested(): Boolean {

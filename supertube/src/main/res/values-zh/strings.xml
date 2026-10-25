@@ -3,7 +3,6 @@
     <string name="mobile_more">更多</string>
     <string name="mobile_more_options">更多选项</string>
     <string name="mobile_search_hint">搜索 YouTube</string>
-    <string name="mobile_retry">重试</string>
     <string name="mobile_nothing_here">这里还没有内容</string>
     <string name="mobile_back">返回</string>
     <string name="mobile_clear">清除</string>
@@ -20,8 +19,6 @@
     <string name="mobile_exit_fullscreen">退出全屏</string>
     <string name="mobile_quality">画质</string>
     <string name="mobile_up_next">接下来播放</string>
-    <string name="mobile_load_more">加载更多</string>
-    <string name="mobile_comments_empty">暂无评论</string>
     <string name="mobile_layout">视图</string>
     <string name="mobile_layout_list">列表</string>
     <string name="mobile_layout_compact">紧凑</string>
@@ -35,7 +32,6 @@
     <string name="mobile_recent_searches">最近搜索</string>
     <string name="mobile_clear_history">全部清除</string>
     <string name="mobile_remove">移除</string>
-    <string name="mobile_section_options">版块选项</string>
     <string name="mobile_favorites">收藏</string>
     <string name="mobile_save_to_favorites">保存到收藏</string>
     <string name="mobile_new_folder">新建文件夹</string>
@@ -56,11 +52,8 @@
     <string name="mobile_no_results">没有与搜索匹配的收藏</string>
     <string name="mobile_delete_folder_confirm">要删除“%1$s”及其中保存的视频吗？</string>
     <string name="mobile_download">下载</string>
-    <string name="mobile_download_audio">音频 (m4a)</string>
-    <string name="mobile_download_video">视频 (mp4)</string>
     <string name="mobile_download_preparing">正在准备下载…</string>
     <string name="mobile_download_unavailable">此视频无法下载</string>
-    <string name="mobile_download_started">正在下载到 %1$s</string>
     <string name="mobile_downloads">下载</string>
     <string name="mobile_download_already">已在下载中</string>
     <string name="mobile_download_queued">已添加到下载</string>
@@ -92,7 +85,9 @@
     <string name="mobile_export">导出 SuperTube 数据</string>
     <string name="mobile_import">导入 SuperTube 数据</string>
     <string name="mobile_export_done">数据已导出</string>
-    <string name="mobile_import_done">数据已导入：%1$d 个收藏</string>
+    <plurals name="mobile_import_done">
+        <item quantity="other">数据已导入：%1$d 个收藏</item>
+    </plurals>
     <string name="mobile_import_error">该文件不是 SuperTube 备份</string>
     <string name="mobile_sleep_timer">睡眠定时器</string>
     <string name="mobile_sleep_off">关闭</string>
@@ -101,6 +96,9 @@
     <string name="mobile_sleep_end_short">视频结束时</string>
     <string name="mobile_sleep_stopped">睡眠定时器：已暂停播放</string>
     <string name="mobile_close_player">关闭播放器</string>
+    <string name="mobile_subscribe">订阅</string>
+    <string name="mobile_subscribed">已订阅</string>
+    <string name="mobile_playback_channel">播放</string>
     <string name="mobile_wifi_only">仅限 Wi-Fi</string>
     <string name="mobile_wifi_only_desc">等待 Wi-Fi 连接后再下载</string>
     <string name="mobile_download_status_waiting_wifi">正在等待 Wi-Fi…</string>

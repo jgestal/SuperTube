@@ -4,13 +4,19 @@ import com.liskovsoft.smartyoutubetv2.mobile.widget.FavoritesWidgetProvider
 import com.liskovsoft.smartyoutubetv2.mobile.ui.browse.BrowseActivity
 import com.liskovsoft.smartyoutubetv2.mobile.download.DownloadStore
 import com.liskovsoft.smartyoutubetv2.mobile.download.DownloadService
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import com.liskovsoft.smartyoutubetv2.common.app.presenters.SplashPresenter
 import com.liskovsoft.smartyoutubetv2.common.app.views.SplashView
 import com.liskovsoft.smartyoutubetv2.mobile.ui.base.MobileActivity
 
-/** Entry point: handles launcher and YouTube links/shares through the shared SplashPresenter */
+/**
+ * Entry point: handles launcher and YouTube links/shares through the shared SplashPresenter.
+ * Not a launch screen despite its name: it has no UI (translucent theme) and the system splash is shown as usual.
+ * The class name is kept so home screen shortcuts pointing to this component keep working.
+ */
+@SuppressLint("CustomSplashScreen")
 class SplashActivity : MobileActivity(), SplashView {
     private var newIntent: Intent? = null
     private lateinit var presenter: SplashPresenter

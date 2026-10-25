@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
@@ -63,7 +64,9 @@ fun MoreList(
     // Settings at the end, separated from the content sections (not movable)
     val (settings, content) = sections.partition { it.id == MediaGroup.TYPE_SETTINGS }
 
-    val items = remember { mutableStateListOf<BrowseSection>() }
+    // Filled in the first composition: if the list only had "Settings" in its first frame, the lazy list would keep
+    // "Settings" as the first visible item when the sections arrive, opening the screen scrolled down
+    val items = remember { mutableStateListOf<BrowseSection>().apply { addAll(content) } }
     var draggingId by remember { mutableStateOf<Int?>(null) }
     var dragOffset by remember { mutableFloatStateOf(0f) }
     val listState = rememberLazyListState()
@@ -118,9 +121,8 @@ fun MoreList(
             }
         }
 
-        items(items, key = { it.id }) { section ->
+        itemsIndexed(items, key = { _, section -> section.id }) { index, section ->
             val isDragging = section.id == draggingId
-            val index = items.indexOf(section)
             ListItem(
                 modifier = Modifier
                     .then(if (isDragging) Modifier else Modifier.animateItem())

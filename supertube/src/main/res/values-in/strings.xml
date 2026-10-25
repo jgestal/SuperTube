@@ -3,7 +3,6 @@
     <string name="mobile_more">Lainnya</string>
     <string name="mobile_more_options">Opsi lainnya</string>
     <string name="mobile_search_hint">Telusuri YouTube</string>
-    <string name="mobile_retry">Coba lagi</string>
     <string name="mobile_nothing_here">Belum ada apa pun di sini</string>
     <string name="mobile_back">Kembali</string>
     <string name="mobile_clear">Hapus</string>
@@ -20,8 +19,6 @@
     <string name="mobile_exit_fullscreen">Keluar dari layar penuh</string>
     <string name="mobile_quality">Kualitas</string>
     <string name="mobile_up_next">Berikutnya</string>
-    <string name="mobile_load_more">Muat lebih banyak</string>
-    <string name="mobile_comments_empty">Tidak ada komentar</string>
     <string name="mobile_layout">Tampilan</string>
     <string name="mobile_layout_list">Daftar</string>
     <string name="mobile_layout_compact">Ringkas</string>
@@ -35,7 +32,6 @@
     <string name="mobile_recent_searches">Penelusuran terbaru</string>
     <string name="mobile_clear_history">Hapus semua</string>
     <string name="mobile_remove">Hapus</string>
-    <string name="mobile_section_options">Opsi bagian</string>
     <string name="mobile_favorites">Favorit</string>
     <string name="mobile_save_to_favorites">Simpan ke favorit</string>
     <string name="mobile_new_folder">Folder baru</string>
@@ -56,11 +52,8 @@
     <string name="mobile_no_results">Tidak ada favorit yang cocok</string>
     <string name="mobile_delete_folder_confirm">Hapus \"%1$s\" dan video yang tersimpan di dalamnya?</string>
     <string name="mobile_download">Download</string>
-    <string name="mobile_download_audio">Audio (m4a)</string>
-    <string name="mobile_download_video">Video (mp4)</string>
     <string name="mobile_download_preparing">Menyiapkan download…</string>
     <string name="mobile_download_unavailable">Download tidak tersedia untuk video ini</string>
-    <string name="mobile_download_started">Mendownload ke %1$s</string>
     <string name="mobile_downloads">Download</string>
     <string name="mobile_download_already">Sudah didownload</string>
     <string name="mobile_download_queued">Ditambahkan ke download</string>
@@ -92,7 +85,9 @@
     <string name="mobile_export">Ekspor data SuperTube</string>
     <string name="mobile_import">Impor data SuperTube</string>
     <string name="mobile_export_done">Data diekspor</string>
-    <string name="mobile_import_done">Data diimpor: %1$d favorit</string>
+    <plurals name="mobile_import_done">
+        <item quantity="other">Data diimpor: %1$d favorit</item>
+    </plurals>
     <string name="mobile_import_error">File ini bukan cadangan SuperTube</string>
     <string name="mobile_sleep_timer">Timer tidur</string>
     <string name="mobile_sleep_off">Nonaktif</string>
@@ -101,6 +96,9 @@
     <string name="mobile_sleep_end_short">Akhir video</string>
     <string name="mobile_sleep_stopped">Timer tidur: pemutaran dijeda</string>
     <string name="mobile_close_player">Tutup pemutar</string>
+    <string name="mobile_subscribe">Subscribe</string>
+    <string name="mobile_subscribed">Disubscribe</string>
+    <string name="mobile_playback_channel">Pemutaran</string>
     <string name="mobile_wifi_only">Hanya Wi-Fi</string>
     <string name="mobile_wifi_only_desc">Tunggu koneksi Wi-Fi untuk mendownload</string>
     <string name="mobile_download_status_waiting_wifi">Menunggu Wi-Fi…</string>

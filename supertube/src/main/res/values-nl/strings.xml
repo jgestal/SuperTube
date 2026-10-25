@@ -3,7 +3,6 @@
     <string name="mobile_more">Meer</string>
     <string name="mobile_more_options">Meer opties</string>
     <string name="mobile_search_hint">Zoeken op YouTube</string>
-    <string name="mobile_retry">Opnieuw proberen</string>
     <string name="mobile_nothing_here">Hier staat nog niets</string>
     <string name="mobile_back">Terug</string>
     <string name="mobile_clear">Wissen</string>
@@ -20,8 +19,6 @@
     <string name="mobile_exit_fullscreen">Volledig scherm sluiten</string>
     <string name="mobile_quality">Kwaliteit</string>
     <string name="mobile_up_next">Hierna</string>
-    <string name="mobile_load_more">Meer laden</string>
-    <string name="mobile_comments_empty">Geen reacties</string>
     <string name="mobile_layout">Weergave</string>
     <string name="mobile_layout_list">Lijst</string>
     <string name="mobile_layout_compact">Compact</string>
@@ -35,7 +32,6 @@
     <string name="mobile_recent_searches">Recente zoekopdrachten</string>
     <string name="mobile_clear_history">Alles wissen</string>
     <string name="mobile_remove">Verwijderen</string>
-    <string name="mobile_section_options">Sectieopties</string>
     <string name="mobile_favorites">Favorieten</string>
     <string name="mobile_save_to_favorites">Opslaan in favorieten</string>
     <string name="mobile_new_folder">Nieuwe map</string>
@@ -56,11 +52,8 @@
     <string name="mobile_no_results">Geen favorieten gevonden</string>
     <string name="mobile_delete_folder_confirm">\"%1$s\" en de opgeslagen video\'s verwijderen?</string>
     <string name="mobile_download">Downloaden</string>
-    <string name="mobile_download_audio">Audio (m4a)</string>
-    <string name="mobile_download_video">Video (mp4)</string>
     <string name="mobile_download_preparing">Download voorbereiden…</string>
     <string name="mobile_download_unavailable">Downloaden niet beschikbaar voor deze video</string>
-    <string name="mobile_download_started">Downloaden naar %1$s</string>
     <string name="mobile_downloads">Downloads</string>
     <string name="mobile_download_already">Wordt al gedownload</string>
     <string name="mobile_download_queued">Toegevoegd aan downloads</string>
@@ -92,7 +85,10 @@
     <string name="mobile_export">SuperTube-gegevens exporteren</string>
     <string name="mobile_import">SuperTube-gegevens importeren</string>
     <string name="mobile_export_done">Gegevens geëxporteerd</string>
-    <string name="mobile_import_done">Gegevens geïmporteerd: %1$d favorieten</string>
+    <plurals name="mobile_import_done">
+        <item quantity="one">Gegevens geïmporteerd: %1$d favoriet</item>
+        <item quantity="other">Gegevens geïmporteerd: %1$d favorieten</item>
+    </plurals>
     <string name="mobile_import_error">Het bestand is geen SuperTube-back-up</string>
     <string name="mobile_sleep_timer">Slaaptimer</string>
     <string name="mobile_sleep_off">Uit</string>
@@ -101,6 +97,9 @@
     <string name="mobile_sleep_end_short">Einde video</string>
     <string name="mobile_sleep_stopped">Slaaptimer: afspelen gepauzeerd</string>
     <string name="mobile_close_player">Speler sluiten</string>
+    <string name="mobile_subscribe">Abonneren</string>
+    <string name="mobile_subscribed">Geabonneerd</string>
+    <string name="mobile_playback_channel">Afspelen</string>
     <string name="mobile_wifi_only">Alleen via wifi</string>
     <string name="mobile_wifi_only_desc">Wachten op een wifi-verbinding om te downloaden</string>
     <string name="mobile_download_status_waiting_wifi">Wachten op wifi…</string>
