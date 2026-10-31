@@ -30,6 +30,8 @@ class PlayerUiState {
     var isProgressShown by mutableStateOf(false)
     var isSubtitlesShown by mutableStateOf(true)
     var isInPip by mutableStateOf(false)
+    /** Fullscreen of a vertical video, in portrait (see FullscreenPolicy) */
+    var isPortraitFullscreen by mutableStateOf(false)
 
     // Polled from the engine
     var isPlaying by mutableStateOf(false)

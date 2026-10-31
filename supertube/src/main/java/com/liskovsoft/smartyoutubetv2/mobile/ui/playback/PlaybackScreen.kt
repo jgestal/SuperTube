@@ -75,7 +75,7 @@ fun PlaybackScreen(
     }
 
     BoxWithConstraints(Modifier.fillMaxSize().background(Color.Black)) {
-        val isFullscreen = maxWidth > maxHeight || state.isInPip
+        val isFullscreen = maxWidth > maxHeight || state.isInPip || state.isPortraitFullscreen
 
         // Back in fullscreen returns to the portrait layout first
         BackHandler(enabled = isFullscreen && !state.isInPip) { onToggleFullscreen() }

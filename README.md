@@ -62,7 +62,7 @@ bar on phones and a navigation rail in landscape, on tablets and on foldables. V
 | Double tap left / right | Seek −10 / +10 s (consecutive taps add up) |
 | Press and hold | Temporary 2× speed |
 | Speed button | 1× → 1.5× → 2×; long press for the full list |
-| Swipe up / down | Fullscreen / collapse into the mini player |
+| Swipe up / down | Fullscreen / collapse into the mini player (vertical videos stay in portrait) |
 | Swipe in fullscreen | Brightness (left side) and volume (right side) |
 
 The seek bar shows the **SponsorBlock** segments. Back or a swipe down collapses the video into a **mini player** that
@@ -140,7 +140,14 @@ JAVA_HOME=/path/to/jdk-17 ./gradlew :supertube:assembleStbetaDebug
 
 The APK is generated in `supertube/build/outputs/apk/stbeta/debug/`. For signed release builds, create
 `supertube/keystore.properties` (`storeFile`, `storePassword`, `keyAlias`, `keyPassword`) and run
-`./gradlew :supertube:assembleStbetaRelease`. Static analysis: `./gradlew :supertube:lintStbetaDebug`.
+`./gradlew :supertube:assembleStbetaRelease`.
+
+Checks before a release:
+
+```bash
+./gradlew :supertube:testStbetaDebugUnitTest :supertube:lintStbetaDebug   # unit tests and lint
+supertube/tools/rotation_e2e.sh path/to/SuperTube.apk                      # fullscreen and rotation, on an emulator
+```
 
 ## Architecture
 

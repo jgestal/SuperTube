@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.OrientationEventListener
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
@@ -65,8 +66,11 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
     private var userLeaveHintMs = 0L
     private var pipEnteredMs = 0L
     private var orientationListener: OrientationEventListener? = null
-    /** Orientation requested by the fullscreen button. Released when the device physically matches it. */
-    private var lockedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+    private var lastDegrees = OrientationEventListener.ORIENTATION_UNKNOWN
+    private val settleCheck = Runnable { onDeviceRotated() }
+    private val fullscreen = FullscreenPolicy(isAutoRotateEnabled = {
+        Settings.System.getInt(contentResolver, Settings.System.ACCELEROMETER_ROTATION, 0) == 1
+    })
 
     private val qualityView = object : PlayerView {
         override fun setQualityInfo(info: String?) { state.qualityInfo = info }
@@ -84,6 +88,8 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
     private val videoListener = object : VideoListener {
         override fun onVideoSizeChanged(width: Int, height: Int, unappliedRotationDegrees: Int, pixelWidthHeightRatio: Float) {
             if (width > 0 && height > 0) state.videoAspect = width * pixelWidthHeightRatio / height
+            fullscreen.onVideoChanged(isVerticalVideo())
+            applyFullscreen()
         }
     }
 
@@ -113,19 +119,15 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
 
         orientationListener = object : OrientationEventListener(this) {
             override fun onOrientationChanged(degrees: Int) {
-                if (degrees == ORIENTATION_UNKNOWN || lockedOrientation == ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) return
-                val isPhysicalLandscape = degrees in 60..120 || degrees in 240..300
-                val isPhysicalPortrait = degrees < 30 || degrees > 330
-                val wantsLandscape = lockedOrientation == ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
-                if ((wantsLandscape && isPhysicalLandscape) || (!wantsLandscape && isPhysicalPortrait)) {
-                    // The user holds the phone as requested: give control back to the sensor
-                    lockedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
-                    requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
-                }
+                lastDegrees = degrees
+                onDeviceRotated()
+                // A still phone may send no more events: check again once the rotation has settled
+                window.decorView.removeCallbacks(settleCheck)
+                window.decorView.postDelayed(settleCheck, FullscreenPolicy.SETTLE_MS + 50)
             }
         }
 
-        applySystemBars(resources.configuration)
+        applyFullscreen()
         presenter.onViewInitialized()
     }
 
@@ -138,6 +140,7 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
     override fun onStop() {
         super.onStop()
         orientationListener?.disable()
+        window.decorView.removeCallbacks(settleCheck)
         maybeReleasePlayer()
     }
 
@@ -191,9 +194,35 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
         viewManager.startView(PlaybackView::class.java)
     }
 
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        // Dialogs (quality, speed) and the background can bring the system bars back
+        if (hasFocus) applySystemBars(resources.configuration)
+    }
+
+    private fun onDeviceRotated() {
+        if (fullscreen.onDeviceRotated(lastDegrees)) applyFullscreen()
+    }
+
+    private fun isVerticalVideo(): Boolean = state.videoAspect < VERTICAL_VIDEO_ASPECT
+
+    private fun isLandscape(): Boolean = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+
+    /** Applies the fullscreen policy: requested orientation, portrait fullscreen and system bars */
+    private fun applyFullscreen() {
+        val orientation = when (fullscreen.request) {
+            OrientationRequest.SENSOR -> ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+            OrientationRequest.LANDSCAPE -> ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
+            OrientationRequest.PORTRAIT -> ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
+        if (requestedOrientation != orientation) requestedOrientation = orientation
+        state.isPortraitFullscreen = fullscreen.isPortraitFullscreen
+        applySystemBars(resources.configuration)
+    }
+
     private fun applySystemBars(config: Configuration) {
         val controller = WindowCompat.getInsetsController(window, window.decorView)
-        if (config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (fullscreen.hidesSystemBars(config.orientation == Configuration.ORIENTATION_LANDSCAPE)) {
             controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
             controller.hide(WindowInsetsCompat.Type.systemBars())
         } else {
@@ -213,13 +242,15 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
         isMinimized = true
         blockEngine(true)
         showOverlay(false)
+        // The next time the player is opened it follows the device
+        fullscreen.reset()
+        applyFullscreen()
         viewManager.startParentView(this)
     }
 
     private fun toggleFullscreen() {
-        val isLandscape = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-        lockedOrientation = if (isLandscape) ActivityInfo.SCREEN_ORIENTATION_PORTRAIT else ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
-        requestedOrientation = lockedOrientation
+        fullscreen.toggle(isLandscape(), isVerticalVideo())
+        applyFullscreen()
     }
 
     // Engine lifecycle (same order as the TV PlaybackFragment)
@@ -283,6 +314,8 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
 
     override fun finishReally() {
         SleepTimer.cancel()
+        fullscreen.reset()
+        applyFullscreen()
         if (isMinimized) {
             // Closed from the mini player: the parent screen is already in front, just stop and close
             isMinimized = false
@@ -583,5 +616,10 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
             playWhenReady = false
             MessageHelpers.showMessage(this, getString(R.string.mobile_sleep_stopped))
         }
+    }
+
+    private companion object {
+        /** Width / height below which a video is vertical (fullscreen in portrait) */
+        const val VERTICAL_VIDEO_ASPECT = 0.95f
     }
 }

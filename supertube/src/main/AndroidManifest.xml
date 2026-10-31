@@ -119,8 +119,11 @@
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation|density|uiMode|keyboardHidden"
             android:theme="@style/Theme.SmartTube.Mobile.Player" />
 
+        <!-- Own task: drawn over whatever is in front (player or browsing screens) and closing it goes back there.
+             In the main task it brought the browsing screens to the front and stopped the player. -->
         <activity
             android:name=".ui.dialog.AppDialogActivity"
+            android:taskAffinity="${applicationId}.dialog"
             android:launchMode="singleTop"
             android:noHistory="true"
             android:excludeFromRecents="true"

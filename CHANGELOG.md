@@ -2,6 +2,22 @@
 
 All notable changes to SuperTube. Versions follow the [GitHub releases](https://github.com/jgestal/SuperTube/releases).
 
+## 1.3.1 — 2026-10-31
+
+### Fixed
+- Opening the player settings (quality, speed, subtitles…) stopped the video and showed the browsing screens behind
+  the dialog; closing it didn't go back to the player. The dialog now opens over the player and returns to it.
+- With the system auto-rotate off, turning the phone after pressing the fullscreen button undid the fullscreen.
+- After leaving fullscreen with the phone on a table, turning the phone to landscape no longer entered fullscreen.
+- The screen could rotate back and forth after pressing the fullscreen button and turning the phone.
+- System bars came back in fullscreen after closing a dialog or returning to the app.
+- The orientation forced by the fullscreen button carried over to the next video.
+
+### Added
+- **Vertical videos** (Shorts) go fullscreen in portrait, without rotating the screen.
+- Unit tests for the fullscreen and rotation rules, and an end-to-end rotation test for the emulator
+  (`supertube/tools/rotation_e2e.sh`).
+
 ## 1.3 — 2026-10-25
 
 ### Added
