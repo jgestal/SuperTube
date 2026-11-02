@@ -104,6 +104,13 @@
     <string name="mobile_playback_channel">Воспроизведение</string>
     <string name="mobile_wifi_only">Только по Wi-Fi</string>
     <string name="mobile_wifi_only_desc">Ждать подключения к Wi-Fi для загрузки</string>
+    <string name="mobile_open_links">Открывать ссылки YouTube</string>
+    <string name="mobile_open_links_on">Вкл.: ссылки YouTube открываются в SuperTube</string>
+    <string name="mobile_open_links_off">Выкл.: нажмите, затем «Добавить ссылки» и отметьте ссылки YouTube</string>
+    <string name="mobile_open_links_youtube">Их открывает приложение YouTube: нажмите и отключите «Открывать поддерживаемые ссылки»</string>
+    <string name="mobile_open_links_help_title">Ссылки YouTube</string>
+    <string name="mobile_open_links_help">Android открывает ссылки YouTube в SuperTube, только если вы это разрешите:\n\n1. Нажмите на пункт, откройте «Добавить ссылки» и отметьте ссылки YouTube.\n\n2. Если установлено приложение YouTube, оно забирает ссылки себе. Отключите или удалите его либо выключите «Открывать поддерживаемые ссылки» в его настройках (этот пункт откроет их).\n\nКогда всё будет готово, пункт покажет «Вкл.».</string>
+    <string name="mobile_open_links_open_settings">Открыть настройки</string>
     <string name="mobile_download_status_waiting_wifi">Ожидание Wi-Fi…</string>
     <string name="mobile_widget_title">SuperTube · Избранное</string>
     <string name="mobile_widget_description">Любимые видео в одно касание</string>

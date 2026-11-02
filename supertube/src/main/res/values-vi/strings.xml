@@ -101,6 +101,13 @@
     <string name="mobile_playback_channel">Phát lại</string>
     <string name="mobile_wifi_only">Chỉ qua Wi-Fi</string>
     <string name="mobile_wifi_only_desc">Chờ kết nối Wi-Fi để tải xuống</string>
+    <string name="mobile_open_links">Mở đường liên kết YouTube</string>
+    <string name="mobile_open_links_on">Bật: đường liên kết YouTube mở trong SuperTube</string>
+    <string name="mobile_open_links_off">Tắt: nhấn, rồi chọn \"Thêm đường liên kết\" và chọn các liên kết YouTube</string>
+    <string name="mobile_open_links_youtube">Ứng dụng YouTube đang mở chúng: nhấn và tắt \"Mở đường liên kết được hỗ trợ\"</string>
+    <string name="mobile_open_links_help_title">Đường liên kết YouTube</string>
+    <string name="mobile_open_links_help">Android chỉ mở đường liên kết YouTube trong SuperTube nếu bạn cho phép:\n\n1. Nhấn vào tùy chọn, vào \"Thêm đường liên kết\" và chọn các liên kết YouTube.\n\n2. Nếu đã cài ứng dụng YouTube, ứng dụng đó sẽ giữ các liên kết. Hãy tắt hoặc gỡ cài đặt ứng dụng, hoặc tắt \"Mở đường liên kết được hỗ trợ\" trong phần cài đặt của nó (tùy chọn này sẽ đưa bạn đến đó).\n\nKhi mọi thứ đã sẵn sàng, tùy chọn sẽ hiển thị \"Bật\".</string>
+    <string name="mobile_open_links_open_settings">Mở cài đặt</string>
     <string name="mobile_download_status_waiting_wifi">Đang chờ Wi-Fi…</string>
     <string name="mobile_widget_title">SuperTube · Yêu thích</string>
     <string name="mobile_widget_description">Video yêu thích chỉ với một lần chạm</string>

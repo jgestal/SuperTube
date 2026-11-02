@@ -111,6 +111,9 @@ refreshed automatically. Optional **Wi‑Fi only** mode, video and audio filters
 
 - **Search** with local recent searches, voice search and filters.
 - **Reorderable sections** in *More*, settings as bottom sheets, and TV-only settings hidden.
+- **Opens YouTube links** shared or tapped in other apps. On Android 12+ it has to be allowed once in
+  *Settings › SuperTube › Open YouTube links*, which explains the steps (the YouTube app, if installed, keeps the
+  links until its *Open supported links* is turned off).
 - **Updates** from the releases of this repository (*Settings › SuperTube › Check for updates*).
 - **20 languages**, selectable per app in the Android 13+ system settings.
 - Everything from SmartTube: no ads, SponsorBlock, DeArrow, sign-in (subscriptions, history, playlists), 4K/8K, HDR,

@@ -101,6 +101,13 @@
     <string name="mobile_playback_channel">การเล่น</string>
     <string name="mobile_wifi_only">ใช้ Wi-Fi เท่านั้น</string>
     <string name="mobile_wifi_only_desc">รอการเชื่อมต่อ Wi-Fi เพื่อดาวน์โหลด</string>
+    <string name="mobile_open_links">เปิดลิงก์ YouTube</string>
+    <string name="mobile_open_links_on">เปิด: ลิงก์ YouTube จะเปิดใน SuperTube</string>
+    <string name="mobile_open_links_off">ปิด: แตะ แล้วเลือก \"เพิ่มลิงก์\" และเลือกลิงก์ YouTube</string>
+    <string name="mobile_open_links_youtube">แอป YouTube เปิดลิงก์เหล่านี้: แตะแล้วปิด \"เปิดลิงก์ที่รองรับ\"</string>
+    <string name="mobile_open_links_help_title">ลิงก์ YouTube</string>
+    <string name="mobile_open_links_help">Android จะเปิดลิงก์ YouTube ใน SuperTube ก็ต่อเมื่อคุณอนุญาต:\n\n1. แตะตัวเลือกนี้ ไปที่ \"เพิ่มลิงก์\" แล้วเลือกลิงก์ YouTube\n\n2. หากติดตั้งแอป YouTube ไว้ แอปนั้นจะรับลิงก์ไปเอง ให้ปิดใช้งานหรือถอนการติดตั้ง หรือปิด \"เปิดลิงก์ที่รองรับ\" ในการตั้งค่าของแอป (ตัวเลือกนี้จะพาคุณไปที่นั่น)\n\nเมื่อพร้อมแล้ว ตัวเลือกจะแสดงว่า \"เปิด\"</string>
+    <string name="mobile_open_links_open_settings">เปิดการตั้งค่า</string>
     <string name="mobile_download_status_waiting_wifi">กำลังรอ Wi-Fi…</string>
     <string name="mobile_widget_title">SuperTube · รายการโปรด</string>
     <string name="mobile_widget_description">วิดีโอโปรดของคุณในแตะเดียว</string>

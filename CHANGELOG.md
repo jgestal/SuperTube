@@ -2,6 +2,13 @@
 
 All notable changes to SuperTube. Versions follow the [GitHub releases](https://github.com/jgestal/SuperTube/releases).
 
+## 1.3.2 — 2026-11-02
+
+### Added
+- **Open YouTube links**: new option in *Settings › SuperTube*. On Android 12+ YouTube links only open in SuperTube
+  once allowed in the system settings; the option shows whether they do (on, off, or taken by the YouTube app),
+  takes you to the right system screen, and its (?) help button explains the steps.
+
 ## 1.3.1 — 2026-10-31
 
 ### Fixed

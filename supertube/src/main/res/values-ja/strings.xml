@@ -101,6 +101,13 @@
     <string name="mobile_playback_channel">再生</string>
     <string name="mobile_wifi_only">Wi-Fi 接続時のみ</string>
     <string name="mobile_wifi_only_desc">Wi-Fi に接続するまでダウンロードを待機</string>
+    <string name="mobile_open_links">YouTube のリンクを開く</string>
+    <string name="mobile_open_links_on">オン: YouTube のリンクは SuperTube で開きます</string>
+    <string name="mobile_open_links_off">オフ: タップして「リンクを追加」から YouTube のリンクを選択</string>
+    <string name="mobile_open_links_youtube">YouTube アプリが開いています: タップして「対応リンクを開く」をオフにしてください</string>
+    <string name="mobile_open_links_help_title">YouTube のリンク</string>
+    <string name="mobile_open_links_help">YouTube のリンクを SuperTube で開くには、Android で許可する必要があります:\n\n1. この項目をタップし、「リンクを追加」で YouTube のリンクを選択します。\n\n2. YouTube アプリがインストールされていると、リンクはそちらで開かれます。アプリを無効化またはアンインストールするか、その設定で「対応リンクを開く」をオフにしてください (この項目から移動できます)。\n\n準備ができると、この項目に「オン」と表示されます。</string>
+    <string name="mobile_open_links_open_settings">設定を開く</string>
     <string name="mobile_download_status_waiting_wifi">Wi-Fi を待機中…</string>
     <string name="mobile_widget_title">SuperTube · お気に入り</string>
     <string name="mobile_widget_description">お気に入りの動画にワンタップで</string>

@@ -35,8 +35,8 @@ android {
         applicationId "app.supertube"
         minSdkVersion 26
         targetSdkVersion project.properties.compileSdkVersion
-        versionCode 7
-        versionName "1.3.1"
+        versionCode 8
+        versionName "1.3.2"
         multiDexEnabled = true
         vectorDrawables.useSupportLibrary = true
 

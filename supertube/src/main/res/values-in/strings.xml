@@ -101,6 +101,13 @@
     <string name="mobile_playback_channel">Pemutaran</string>
     <string name="mobile_wifi_only">Hanya Wi-Fi</string>
     <string name="mobile_wifi_only_desc">Tunggu koneksi Wi-Fi untuk mendownload</string>
+    <string name="mobile_open_links">Buka link YouTube</string>
+    <string name="mobile_open_links_on">Aktif: link YouTube dibuka di SuperTube</string>
+    <string name="mobile_open_links_off">Nonaktif: ketuk, lalu “Tambahkan link” dan pilih link YouTube</string>
+    <string name="mobile_open_links_youtube">Aplikasi YouTube yang membukanya: ketuk dan nonaktifkan “Buka link yang didukung”</string>
+    <string name="mobile_open_links_help_title">Link YouTube</string>
+    <string name="mobile_open_links_help">Android hanya membuka link YouTube di SuperTube jika Anda mengizinkannya:\n\n1. Ketuk opsi ini, buka “Tambahkan link” dan pilih link YouTube.\n\n2. Jika aplikasi YouTube terpasang, aplikasi itu mengambil link-nya. Nonaktifkan atau copot, atau matikan “Buka link yang didukung” di setelannya (opsi ini membawa Anda ke sana).\n\nSetelah semuanya siap, opsi ini menampilkan “Aktif”.</string>
+    <string name="mobile_open_links_open_settings">Buka setelan</string>
     <string name="mobile_download_status_waiting_wifi">Menunggu Wi-Fi…</string>
     <string name="mobile_widget_title">SuperTube · Favorit</string>
     <string name="mobile_widget_description">Video favorit Anda, cukup sekali ketuk</string>

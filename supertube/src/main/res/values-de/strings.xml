@@ -102,6 +102,13 @@
     <string name="mobile_playback_channel">Wiedergabe</string>
     <string name="mobile_wifi_only">Nur über WLAN</string>
     <string name="mobile_wifi_only_desc">Zum Herunterladen auf eine WLAN-Verbindung warten</string>
+    <string name="mobile_open_links">YouTube-Links öffnen</string>
+    <string name="mobile_open_links_on">An: YouTube-Links werden in SuperTube geöffnet</string>
+    <string name="mobile_open_links_off">Aus: Tippen, dann „Links hinzufügen“ und die YouTube-Links auswählen</string>
+    <string name="mobile_open_links_youtube">Die YouTube-App übernimmt sie: Tippen und „Unterstützte Links öffnen“ deaktivieren</string>
+    <string name="mobile_open_links_help_title">YouTube-Links</string>
+    <string name="mobile_open_links_help">Android öffnet YouTube-Links nur in SuperTube, wenn du es erlaubst:\n\n1. Tippe auf die Option, öffne „Links hinzufügen“ und wähle die YouTube-Links aus.\n\n2. Ist die YouTube-App installiert, behält sie die Links für sich. Deaktiviere oder deinstalliere sie oder schalte in ihren Einstellungen „Unterstützte Links öffnen“ aus (diese Option bringt dich dorthin).\n\nWenn alles bereit ist, zeigt die Option „An“.</string>
+    <string name="mobile_open_links_open_settings">Einstellungen öffnen</string>
     <string name="mobile_download_status_waiting_wifi">Warten auf WLAN…</string>
     <string name="mobile_widget_title">SuperTube · Favoriten</string>
     <string name="mobile_widget_description">Deine Lieblingsvideos, nur einen Tipp entfernt</string>

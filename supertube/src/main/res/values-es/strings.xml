@@ -113,6 +113,13 @@
     <string name="mobile_playback_channel">Reproducción</string>
     <string name="mobile_wifi_only">Solo con Wi‑Fi</string>
     <string name="mobile_wifi_only_desc">Esperar a una red Wi‑Fi para descargar</string>
+    <string name="mobile_open_links">Abrir enlaces de YouTube</string>
+    <string name="mobile_open_links_on">Activado: los enlaces de YouTube se abren en SuperTube</string>
+    <string name="mobile_open_links_off">Desactivado: toca, luego «Añadir enlaces» y marca los de YouTube</string>
+    <string name="mobile_open_links_youtube">La app de YouTube se los queda: toca y desactiva «Abrir enlaces compatibles»</string>
+    <string name="mobile_open_links_help_title">Enlaces de YouTube</string>
+    <string name="mobile_open_links_help">Android solo abre los enlaces de YouTube en SuperTube si se lo permites:\n\n1. Toca la opción, entra en «Añadir enlaces» y marca los de YouTube.\n\n2. Si tienes la app de YouTube instalada, se queda con los enlaces. Desactívala o desinstálala, o apaga «Abrir enlaces compatibles» en sus ajustes (esta opción te lleva ahí).\n\nCuando esté todo listo, la opción mostrará «Activado».</string>
+    <string name="mobile_open_links_open_settings">Abrir ajustes</string>
     <string name="mobile_download_status_waiting_wifi">Esperando Wi‑Fi…</string>
     <string name="mobile_widget_title">SuperTube · Favoritos</string>
     <string name="mobile_widget_description">Tus vídeos favoritos, a un toque</string>

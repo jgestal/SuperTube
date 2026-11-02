@@ -5,6 +5,8 @@
           tools:ignore="MissingLeanbackLauncher">
 
     <queries>
+        <!-- Settings > Open YouTube links: detect the YouTube app taking the links -->
+        <package android:name="com.google.android.youtube" />
         <intent>
             <action android:name="android.speech.RecognitionService" />
         </intent>

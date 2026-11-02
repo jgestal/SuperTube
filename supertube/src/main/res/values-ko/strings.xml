@@ -101,6 +101,13 @@
     <string name="mobile_playback_channel">재생</string>
     <string name="mobile_wifi_only">Wi-Fi에서만</string>
     <string name="mobile_wifi_only_desc">Wi-Fi에 연결될 때까지 다운로드 대기</string>
+    <string name="mobile_open_links">YouTube 링크 열기</string>
+    <string name="mobile_open_links_on">사용: YouTube 링크가 SuperTube에서 열립니다</string>
+    <string name="mobile_open_links_off">사용 안함: 탭한 후 \'링크 추가\'에서 YouTube 링크를 선택하세요</string>
+    <string name="mobile_open_links_youtube">YouTube 앱이 링크를 엽니다: 탭하여 \'지원되는 링크 열기\'를 끄세요</string>
+    <string name="mobile_open_links_help_title">YouTube 링크</string>
+    <string name="mobile_open_links_help">Android는 허용한 경우에만 YouTube 링크를 SuperTube에서 엽니다.\n\n1. 이 옵션을 탭하고 \'링크 추가\'에서 YouTube 링크를 선택하세요.\n\n2. YouTube 앱이 설치되어 있으면 링크를 그 앱이 가져갑니다. 앱을 사용 중지하거나 제거하거나, 앱 설정에서 \'지원되는 링크 열기\'를 끄세요(이 옵션으로 이동할 수 있습니다).\n\n모두 준비되면 옵션에 \'사용\'이 표시됩니다.</string>
+    <string name="mobile_open_links_open_settings">설정 열기</string>
     <string name="mobile_download_status_waiting_wifi">Wi-Fi 대기 중…</string>
     <string name="mobile_widget_title">SuperTube · 즐겨찾기</string>
     <string name="mobile_widget_description">좋아하는 동영상을 한 번의 탭으로</string>

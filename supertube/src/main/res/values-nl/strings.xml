@@ -102,6 +102,13 @@
     <string name="mobile_playback_channel">Afspelen</string>
     <string name="mobile_wifi_only">Alleen via wifi</string>
     <string name="mobile_wifi_only_desc">Wachten op een wifi-verbinding om te downloaden</string>
+    <string name="mobile_open_links">YouTube-links openen</string>
+    <string name="mobile_open_links_on">Aan: YouTube-links openen in SuperTube</string>
+    <string name="mobile_open_links_off">Uit: tik, dan ‘Links toevoegen’ en selecteer de YouTube-links</string>
+    <string name="mobile_open_links_youtube">De YouTube-app opent ze: tik en zet ‘Ondersteunde links openen’ uit</string>
+    <string name="mobile_open_links_help_title">YouTube-links</string>
+    <string name="mobile_open_links_help">Android opent YouTube-links alleen in SuperTube als je dat toestaat:\n\n1. Tik op de optie, ga naar ‘Links toevoegen’ en selecteer de YouTube-links.\n\n2. Als de YouTube-app is geïnstalleerd, houdt die de links voor zichzelf. Schakel hem uit of verwijder hem, of zet ‘Ondersteunde links openen’ uit in de instellingen ervan (deze optie brengt je daarheen).\n\nAls alles klaar is, toont de optie ‘Aan’.</string>
+    <string name="mobile_open_links_open_settings">Instellingen openen</string>
     <string name="mobile_download_status_waiting_wifi">Wachten op wifi…</string>
     <string name="mobile_widget_title">SuperTube · Favorieten</string>
     <string name="mobile_widget_description">Je favoriete video\'s met één tik</string>

@@ -6,6 +6,13 @@ import androidx.compose.material.icons.outlined.FileDownload
 import androidx.compose.material.icons.outlined.FileUpload
 import androidx.compose.material.icons.outlined.SystemUpdate
 import androidx.compose.material.icons.outlined.Wifi
+import androidx.compose.material.icons.outlined.Link
+import androidx.compose.material.icons.automirrored.outlined.HelpOutline
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.TextButton
+import androidx.compose.foundation.layout.Row
+import androidx.lifecycle.compose.LifecycleResumeEffect
+import com.liskovsoft.smartyoutubetv2.mobile.links.YouTubeLinks
 import androidx.compose.material3.Switch
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.WindowInsetsSides
@@ -349,6 +356,49 @@ private fun SettingsList(items: List<SettingsItem>) {
                     leadingContent = { Icon(Icons.Outlined.Wifi, null) },
                     trailingContent = { Switch(checked = prefs.wifiOnlyDownloads, onCheckedChange = { prefs.updateWifiOnlyDownloads(it) }) },
                 )
+            }
+            if (YouTubeLinks.needsSetup) {
+                item {
+                    // Re-checked on resume: the user enables it in the system settings and comes back
+                    var linksState by remember { mutableStateOf(YouTubeLinks.state(activity)) }
+                    var showLinksHelp by rememberSaveable { mutableStateOf(false) }
+                    LifecycleResumeEffect(Unit) {
+                        linksState = YouTubeLinks.state(activity)
+                        onPauseOrDispose { }
+                    }
+                    ListItem(
+                        modifier = Modifier.clickable { YouTubeLinks.openSettings(activity) },
+                        headlineContent = { Text(stringResource(R.string.mobile_open_links)) },
+                        supportingContent = {
+                            Text(stringResource(when (linksState) {
+                                YouTubeLinks.State.ENABLED -> R.string.mobile_open_links_on
+                                YouTubeLinks.State.DISABLED -> R.string.mobile_open_links_off
+                                YouTubeLinks.State.TAKEN_BY_YOUTUBE -> R.string.mobile_open_links_youtube
+                            }))
+                        },
+                        leadingContent = { Icon(Icons.Outlined.Link, null) },
+                        trailingContent = {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                if (linksState == YouTubeLinks.State.ENABLED) Icon(Icons.Filled.Check, null, tint = MaterialTheme.colorScheme.primary)
+                                IconButton(onClick = { showLinksHelp = true }) {
+                                    Icon(Icons.AutoMirrored.Outlined.HelpOutline, contentDescription = stringResource(R.string.mobile_open_links_help_title))
+                                }
+                            }
+                        },
+                    )
+                    if (showLinksHelp) {
+                        AlertDialog(
+                            onDismissRequest = { showLinksHelp = false },
+                            icon = { Icon(Icons.Outlined.Link, null) },
+                            title = { Text(stringResource(R.string.mobile_open_links_help_title)) },
+                            text = { Text(stringResource(R.string.mobile_open_links_help)) },
+                            confirmButton = {
+                                TextButton(onClick = { showLinksHelp = false; YouTubeLinks.openSettings(activity) }) { Text(stringResource(R.string.mobile_open_links_open_settings)) }
+                            },
+                            dismissButton = { TextButton(onClick = { showLinksHelp = false }) { Text(stringResource(R.string.mobile_close)) } },
+                        )
+                    }
+                }
             }
             item { ListItem(modifier = Modifier.clickable { activity.exportData() }, headlineContent = { Text(stringResource(R.string.mobile_export)) }, leadingContent = { Icon(Icons.Outlined.FileUpload, null) }) }
             item { ListItem(modifier = Modifier.clickable { activity.importData() }, headlineContent = { Text(stringResource(R.string.mobile_import)) }, leadingContent = { Icon(Icons.Outlined.FileDownload, null) }) }

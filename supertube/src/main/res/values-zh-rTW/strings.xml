@@ -101,6 +101,13 @@
     <string name="mobile_playback_channel">播放</string>
     <string name="mobile_wifi_only">僅限 Wi-Fi</string>
     <string name="mobile_wifi_only_desc">等待 Wi-Fi 連線後再下載</string>
+    <string name="mobile_open_links">開啟 YouTube 連結</string>
+    <string name="mobile_open_links_on">已開啟：YouTube 連結會在 SuperTube 中開啟</string>
+    <string name="mobile_open_links_off">已關閉：輕觸，然後選擇「新增連結」並勾選 YouTube 連結</string>
+    <string name="mobile_open_links_youtube">YouTube 應用程式會開啟這些連結：輕觸並關閉「開啟支援的連結」</string>
+    <string name="mobile_open_links_help_title">YouTube 連結</string>
+    <string name="mobile_open_links_help">只有在你允許後，Android 才會在 SuperTube 中開啟 YouTube 連結：\n\n1. 輕觸此選項，進入「新增連結」並勾選 YouTube 連結。\n\n2. 如果安裝了 YouTube 應用程式，它會佔用這些連結。請停用或解除安裝，或在其設定中關閉「開啟支援的連結」（此選項會帶你前往）。\n\n全部設定好後，此選項會顯示「已開啟」。</string>
+    <string name="mobile_open_links_open_settings">開啟設定</string>
     <string name="mobile_download_status_waiting_wifi">正在等待 Wi-Fi…</string>
     <string name="mobile_widget_title">SuperTube · 收藏</string>
     <string name="mobile_widget_description">輕觸一下就能看你收藏的影片</string>

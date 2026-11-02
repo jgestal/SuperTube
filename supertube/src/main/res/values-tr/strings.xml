@@ -102,6 +102,13 @@
     <string name="mobile_playback_channel">Oynatma</string>
     <string name="mobile_wifi_only">Yalnızca Wi-Fi</string>
     <string name="mobile_wifi_only_desc">İndirmek için Wi-Fi bağlantısını bekle</string>
+    <string name="mobile_open_links">YouTube bağlantılarını aç</string>
+    <string name="mobile_open_links_on">Açık: YouTube bağlantıları SuperTube\'da açılır</string>
+    <string name="mobile_open_links_off">Kapalı: dokunun, ardından \"Bağlantı ekle\" ve YouTube bağlantılarını seçin</string>
+    <string name="mobile_open_links_youtube">YouTube uygulaması açıyor: dokunun ve \"Desteklenen bağlantıları aç\"ı kapatın</string>
+    <string name="mobile_open_links_help_title">YouTube bağlantıları</string>
+    <string name="mobile_open_links_help">Android, YouTube bağlantılarını yalnızca izin verirseniz SuperTube\'da açar:\n\n1. Seçeneğe dokunun, \"Bağlantı ekle\"ye girin ve YouTube bağlantılarını seçin.\n\n2. YouTube uygulaması yüklüyse bağlantıları kendine alır. Uygulamayı devre dışı bırakın veya kaldırın ya da ayarlarında \"Desteklenen bağlantıları aç\"ı kapatın (bu seçenek sizi oraya götürür).\n\nHer şey hazır olduğunda seçenek \"Açık\" gösterir.</string>
+    <string name="mobile_open_links_open_settings">Ayarları aç</string>
     <string name="mobile_download_status_waiting_wifi">Wi-Fi bekleniyor…</string>
     <string name="mobile_widget_title">SuperTube · Favoriler</string>
     <string name="mobile_widget_description">Favori videolarınız bir dokunuş uzağınızda</string>

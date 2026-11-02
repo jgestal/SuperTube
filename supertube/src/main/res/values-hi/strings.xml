@@ -102,6 +102,13 @@
     <string name="mobile_playback_channel">प्लेबैक</string>
     <string name="mobile_wifi_only">सिर्फ़ Wi-Fi पर</string>
     <string name="mobile_wifi_only_desc">डाउनलोड के लिए Wi-Fi कनेक्शन का इंतज़ार करें</string>
+    <string name="mobile_open_links">YouTube लिंक खोलें</string>
+    <string name="mobile_open_links_on">चालू: YouTube लिंक SuperTube में खुलते हैं</string>
+    <string name="mobile_open_links_off">बंद: टैप करें, फिर “लिंक जोड़ें” और YouTube वाले चुनें</string>
+    <string name="mobile_open_links_youtube">YouTube ऐप इन्हें खोलता है: टैप करें और “समर्थित लिंक खोलें” बंद करें</string>
+    <string name="mobile_open_links_help_title">YouTube लिंक</string>
+    <string name="mobile_open_links_help">Android, YouTube लिंक SuperTube में तभी खोलता है जब आप अनुमति दें:\n\n1. विकल्प पर टैप करें, “लिंक जोड़ें” में जाएं और YouTube वाले चुनें।\n\n2. अगर YouTube ऐप इंस्टॉल है, तो वह लिंक अपने पास रखता है। उसे बंद या अनइंस्टॉल करें, या उसकी सेटिंग में “समर्थित लिंक खोलें” बंद करें (यह विकल्प आपको वहां ले जाता है)।\n\nसब तैयार होने पर विकल्प “चालू” दिखाएगा।</string>
+    <string name="mobile_open_links_open_settings">सेटिंग खोलें</string>
     <string name="mobile_download_status_waiting_wifi">Wi-Fi का इंतज़ार…</string>
     <string name="mobile_widget_title">SuperTube · पसंदीदा</string>
     <string name="mobile_widget_description">आपके पसंदीदा वीडियो, बस एक टैप दूर</string>
