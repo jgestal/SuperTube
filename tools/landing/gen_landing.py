@@ -35,7 +35,7 @@ TV = None  # None until there is a TV APK: then the "Coming soon" badges go away
 LANGS = ["en", "es", "fr", "de", "pt", "it"]
 HREFLANG = {"en": "en", "es": "es", "fr": "fr", "de": "de", "pt": "pt-BR", "it": "it"}
 LEGAL_LANGS = ["en", "es"]  # the rest link to the English legal pages
-PHONE_SHOTS = ["grid", "player", "favorites", "download_sheet", "search_mini", "layout_menu"]
+PHONE_SHOTS = ["grid", "save_to", "favorites", "download_sheet", "search_mini", "layout_menu"]
 TV_SHOTS = ["tv_backdrop", "tv_backdrop_spring", "tv_settings", "tv_lite_mode"]
 # Hero simulator: thumbnails of Blender Studio open movies (CC BY 4.0) cropped from the TV app screenshots
 CARDS = [("spring", "Spring", "7:45"), ("sprite_fright", "Sprite Fright", "10:30"), ("charge", "CHARGE", "4:23"),
@@ -148,7 +148,7 @@ def images():
     for name, size in [("favicon.png", 64), ("apple-touch-icon.png", 180), ("icon-192.png", 192), ("icon-512.png", 512)]:
         promo.icon(size).save(os.path.join(img, name))
     Image.open(promo.AMBIENT).convert("RGB").save(os.path.join(img, "ambient.webp"), "WEBP", quality=80)
-    for n in PHONE_SHOTS:
+    for n in PHONE_SHOTS + ["player"]:  # player: the phone app card, not the gallery (cropped, short)
         src = Image.open(os.path.join(promo.SHOTS, n + ".webp")).convert("RGB")
         for w in (328, 656):
             src.resize((w, round(src.height * w / src.width)), Image.LANCZOS).save(
