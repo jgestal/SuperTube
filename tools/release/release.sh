@@ -92,12 +92,13 @@ fi
 step "TV update manifest"
 python3 tools/release/tv_update_manifest.py
 git add update/supertube_tv.json
-git commit -q -m "chore: TV update manifest $VERSION"
+# Already up to date when it was generated and committed before
+git diff --cached --quiet || git commit -q -m "chore: TV update manifest $VERSION"
 
 echo
 ls -1 "$DIST"
 read -r -p "Publish $TAG on GitHub with these files and push the manifest? [y/N] " answer
-[[ "$answer" == [yY] ]] || die "stopped: the manifest commit is local (git reset HEAD~1 to undo it)"
+[[ "$answer" == [yY] ]] || die "stopped: nothing published (a local manifest commit, if any, can be undone with git reset HEAD~1)"
 
 # ---------- 5. GitHub release ----------
 step "GitHub release"
