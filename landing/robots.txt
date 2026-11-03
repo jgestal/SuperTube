@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://gestal.es/supertube/sitemap.xml
