@@ -325,6 +325,7 @@ section { padding: clamp(56px, 8vw, 100px) 0; }
 
 /* Downloads: one button per app (phone and TV are different APKs) */
 .dl-pair { display: flex; flex-wrap: wrap; gap: 12px; }
+.final-card .dl-pair, .solo .dl-pair { justify-content: center; }
 .btn.small span { display: flex; flex-direction: column; line-height: 1.15; text-align: left; }
 .btn.small small { font-weight: 500; opacity: .85; font-size: .72rem; }
 .soon-btn { opacity: .65; cursor: default; }
