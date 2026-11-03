@@ -753,4 +753,7 @@
         <item quantity="other">%s Sekunden</item>
     </plurals>
     <string name="remove_from_search_history">Aus Suchverlauf entfernen</string>
+    <string name="video_backdrop">Hintergrundbild des ausgewählten Videos</string>
+    <string name="lite_mode">Leichter Modus (langsame Fernseher)</string>
+    <string name="lite_mode_desc">Keine Hintergrundbilder, Videovorschauen auf Karten, laufenden Titel oder Vorschaubilder beim Spulen und ein kleinerer Videopuffer.</string>
 </resources>

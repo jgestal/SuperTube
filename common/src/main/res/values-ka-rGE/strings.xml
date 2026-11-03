@@ -748,4 +748,7 @@
   <string name="audio_shift_sec">%s წმ</string>
   <string name="ui_hide_timeout_sec">%s წმ</string>
   <string name="screen_dimming_timeout_min">%s წთ</string>
+  <string name="video_backdrop">არჩეული ვიდეოს ფონური სურათი</string>
+  <string name="lite_mode">მსუბუქი რეჟიმი (ნელი ტელევიზორები)</string>
+  <string name="lite_mode_desc">ფონური სურათების, ბარათებზე ვიდეოს გადახედვის, მოძრავი სათაურების და გადახვევის მინიატიურების გარეშე, უფრო მცირე ვიდეო ბუფერით.</string>
 </resources>

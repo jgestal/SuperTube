@@ -7,6 +7,7 @@ import com.liskovsoft.sharedutils.helpers.MessageHelpers;
 import com.liskovsoft.smartyoutubetv2.common.R;
 import com.liskovsoft.smartyoutubetv2.common.app.models.playback.ui.OptionItem;
 import com.liskovsoft.smartyoutubetv2.common.app.models.playback.ui.UiOptionItem;
+import com.liskovsoft.smartyoutubetv2.common.utils.Utils;
 import com.liskovsoft.smartyoutubetv2.common.app.presenters.AppDialogPresenter;
 import com.liskovsoft.smartyoutubetv2.common.app.presenters.base.BasePresenter;
 import com.liskovsoft.smartyoutubetv2.common.app.presenters.dialogs.ATVBridgePresenter;
@@ -28,7 +29,7 @@ public class AboutSimpleSettingsPresenter extends BasePresenter<Void> {
 
     public void show() {
         String mainTitle = String.format("%s %s",
-                getContext().getString(R.string.app_name) + " MOD",
+                getContext().getString(R.string.app_name),
                 AppInfoHelpers.getAppVersionName(getContext()));
 
         AppDialogPresenter settingsPresenter = AppDialogPresenter.instance(getContext());
@@ -38,8 +39,12 @@ public class AboutSimpleSettingsPresenter extends BasePresenter<Void> {
 
             appendUpdateCheckButton(settingsPresenter);
 
-            appendInstallBridge(settingsPresenter);
+            // No voice search bridge: the original one replaces YouTube with a SmartTube launcher
         }
+
+        // SuperTube project page (releases, sources, issues) as a QR code: TVs have no easy browser
+        settingsPresenter.appendSingleButton(UiOptionItem.from(getContext().getString(R.string.sources),
+                option -> Utils.openLink(getContext(), Utils.toQrCodeLink(getContext().getString(R.string.sources_url)))));
 
         settingsPresenter.showDialog(mainTitle);
     }

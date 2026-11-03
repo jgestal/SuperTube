@@ -748,4 +748,7 @@
   <string name="enable_conscrypt_desc">Mejora la compatibilidad con HTTPS, TLS y VPN en algunos dispositivos, pero en ocasiones puede causar problemas de reproducción o ralentizar la red</string>
   <string name="network_settings">Configuración de red</string>
   <string name="comments_disabled">Los comentarios están desactivados para este video</string>
+  <string name="video_backdrop">Imagen de fondo del vídeo seleccionado</string>
+  <string name="lite_mode">Modo ligero (televisores lentos)</string>
+  <string name="lite_mode_desc">Sin imágenes de fondo, vistas previas de vídeo en las tarjetas, títulos en movimiento ni miniaturas al avanzar, y con un búfer de vídeo más pequeño.</string>
 </resources>

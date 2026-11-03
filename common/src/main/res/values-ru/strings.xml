@@ -748,4 +748,7 @@
         <item quantity="many">%s секунд</item>
         <item quantity="other">%s секунды</item>
     </plurals>
+    <string name="video_backdrop">Фоновое изображение выбранного видео</string>
+    <string name="lite_mode">Облегчённый режим (медленные ТВ)</string>
+    <string name="lite_mode_desc">Без фоновых изображений, превью видео на карточках, бегущих названий и миниатюр при перемотке, с уменьшенным видеобуфером.</string>
 </resources>

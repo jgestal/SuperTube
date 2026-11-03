@@ -756,4 +756,7 @@
     <item quantity="one">%s sekund</item>
     <item quantity="other">%s sekunder</item>
   </plurals>
+  <string name="video_backdrop">Bakgrundsbild från den valda videon</string>
+  <string name="lite_mode">Lätt läge (långsamma tv-apparater)</string>
+  <string name="lite_mode_desc">Inga bakgrundsbilder, videoförhandsvisningar på kort, rullande titlar eller miniatyrer vid spolning, och en mindre videobuffert.</string>
 </resources>

@@ -728,4 +728,7 @@
     <string name="channel_unblocked">Kanál odblokovaný</string>
     <string name="header_blocked_channels">Zablokované kanály</string>
     <string name="msg_no_blocked_channels">Žiadne zablokované kanály</string>
+    <string name="video_backdrop">Obrázok vybraného videa na pozadí</string>
+    <string name="lite_mode">Odľahčený režim (pomalé televízory)</string>
+    <string name="lite_mode_desc">Bez obrázkov na pozadí, náhľadov videí na kartách, posúvajúcich sa názvov a náhľadov pri pretáčaní, s menšou vyrovnávacou pamäťou videa.</string>
 </resources>

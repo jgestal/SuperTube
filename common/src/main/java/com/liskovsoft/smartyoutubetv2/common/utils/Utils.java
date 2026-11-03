@@ -109,6 +109,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class Utils {
+    // Original SmartTube packages: still recognized to restore their Google Drive backups
     public static final String[] KNOWN_PACKAGES = {
             "com.liskovsoft.smarttubetv.beta",
             "com.teamsmart.videomanager.tv",
@@ -127,7 +128,7 @@ public class Utils {
             "yt_service_prefs",
             "global_prefs"
     };
-    private static final String SUPER_PASSWD = "smarttube";
+    private static final String SUPER_PASSWD = "supertube";
     private static final int RANDOM_FAIL_REPEAT_TIMES = 10;
     private static final String REMOTE_CONTROL_RECEIVER_CLASS_NAME = "com.liskovsoft.smartyoutubetv2.common.misc.RemoteControlReceiver";
     private static final String UPDATE_CHANNELS_RECEIVER_CLASS_NAME = "com.liskovsoft.leanbackassistant.channels.UpdateChannelsReceiver";

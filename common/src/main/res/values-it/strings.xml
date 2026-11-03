@@ -756,4 +756,7 @@
         <item quantity="one">%s secondo</item>
         <item quantity="other">%s secondi</item>
     </plurals>
+    <string name="video_backdrop">Immagine di sfondo del video selezionato</string>
+    <string name="lite_mode">Modalità leggera (TV lente)</string>
+    <string name="lite_mode_desc">Niente immagini di sfondo, anteprime video sulle schede, titoli scorrevoli né miniature durante l\'avanzamento, e un buffer video più piccolo.</string>
 </resources>

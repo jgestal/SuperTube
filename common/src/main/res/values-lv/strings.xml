@@ -119,4 +119,7 @@
     <string name="sorting_by_new_content">Jauns saturs</string>
     <string name="sorting_alphabetically">Alfabētiski</string>
     <string name="sorting_last_viewed">Pēdējais skatītais</string>
+    <string name="video_backdrop">Atlasītā video fona attēls</string>
+    <string name="lite_mode">Vieglais režīms (lēni televizori)</string>
+    <string name="lite_mode_desc">Bez fona attēliem, video priekšskatījumiem kartītēs, ritošiem nosaukumiem un sīktēliem pārtīšanas laikā, ar mazāku video buferi.</string>
 </resources>

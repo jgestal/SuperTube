@@ -11,7 +11,7 @@ import com.liskovsoft.smartyoutubetv2.common.app.presenters.AppDialogPresenter
 import com.liskovsoft.smartyoutubetv2.common.app.views.AppDialogView
 import com.liskovsoft.smartyoutubetv2.mobile.R
 import com.liskovsoft.smartyoutubetv2.mobile.ui.base.MobileActivity
-import com.liskovsoft.smartyoutubetv2.mobile.ui.theme.SmartTubeTheme
+import com.liskovsoft.smartyoutubetv2.mobile.ui.theme.SuperTubeTheme
 
 /** One screen of the dialog back stack: either a list of categories or a single opened category */
 class DialogPage(
@@ -42,7 +42,7 @@ class AppDialogActivity : MobileActivity(), AppDialogView {
     private var isPausedState = false
     private var viewId = -1
 
-    override val themeResId: Int = R.style.Theme_SmartTube_Mobile_Dialog
+    override val themeResId: Int = R.style.Theme_SuperTube_Mobile_Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +51,7 @@ class AppDialogActivity : MobileActivity(), AppDialogView {
         presenter.setView(this)
 
         setContent {
-            SmartTubeTheme {
+            SuperTubeTheme {
                 AppDialogScreen(
                     state = state,
                     onOpenCategory = { page, category -> state.pages.add(DialogPage(page.categories, category.title, category)) },

@@ -49,7 +49,7 @@ import com.liskovsoft.smartyoutubetv2.mobile.ui.feed.FeedContainer
 import com.liskovsoft.smartyoutubetv2.mobile.ui.feed.FeedState
 import com.liskovsoft.smartyoutubetv2.mobile.ui.feed.VideoActions
 import com.liskovsoft.smartyoutubetv2.mobile.ui.feed.VideoShelves
-import com.liskovsoft.smartyoutubetv2.mobile.ui.theme.SmartTubeTheme
+import com.liskovsoft.smartyoutubetv2.mobile.ui.theme.SuperTubeTheme
 
 /** Channel page: header (avatar, name, subscribers, in-channel search) + shelves */
 class ChannelActivity : ScreenActivity(), ChannelView {
@@ -64,7 +64,7 @@ class ChannelActivity : ScreenActivity(), ChannelView {
         presenter.setView(this)
 
         setContent {
-            SmartTubeTheme {
+            SuperTubeTheme {
                 val actions = VideoActions(
                     onClick = { presenter.onVideoItemSelected(it); presenter.onVideoItemClicked(it) },
                     onLongClick = { presenter.onVideoItemSelected(it); presenter.onVideoItemLongClicked(it) },

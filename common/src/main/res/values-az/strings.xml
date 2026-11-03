@@ -756,4 +756,7 @@
         <item quantity="one">%s saniyə</item>
         <item quantity="other">%s saniyə</item>
     </plurals>
+    <string name="video_backdrop">Seçilmiş videonun fon şəkli</string>
+    <string name="lite_mode">Yüngül rejim (yavaş televizorlar)</string>
+    <string name="lite_mode_desc">Fon şəkilləri, kartlarda video önizləmələri, sürüşən başlıqlar və keçid miniatürləri olmadan, daha kiçik video buferi ilə.</string>
 </resources>

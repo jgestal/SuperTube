@@ -756,6 +756,9 @@
         <item quantity="one">%s sekunda</item>
         <item quantity="other">%s sekund</item>
     </plurals>
+    <string name="video_backdrop">Obrázek vybraného videa na pozadí</string>
+    <string name="lite_mode">Odlehčený režim (pomalé televize)</string>
+    <string name="lite_mode_desc">Bez obrázků na pozadí, náhledů videí na kartách, posouvajících se titulků a náhledů při přetáčení, s menší vyrovnávací pamětí videa.</string>
 </resources>
 
 

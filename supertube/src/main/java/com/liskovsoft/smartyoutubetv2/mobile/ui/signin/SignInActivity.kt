@@ -48,7 +48,7 @@ import com.liskovsoft.smartyoutubetv2.common.app.views.SignInView
 import com.liskovsoft.smartyoutubetv2.mobile.R
 import com.liskovsoft.smartyoutubetv2.mobile.ui.base.ScreenActivity
 import com.liskovsoft.smartyoutubetv2.mobile.ui.components.ScreenScaffold
-import com.liskovsoft.smartyoutubetv2.mobile.ui.theme.SmartTubeTheme
+import com.liskovsoft.smartyoutubetv2.mobile.ui.theme.SuperTubeTheme
 
 /** Device code flow screen shared by "sign in" and "link device" */
 abstract class CodeActivity : ScreenActivity() {
@@ -62,7 +62,7 @@ abstract class CodeActivity : ScreenActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            SmartTubeTheme {
+            SuperTubeTheme {
                 ScreenScaffold(title = screenTitle, onBack = { finish() }) {
                     CodeScreen(code, url, fullUrl ?: url)
                 }

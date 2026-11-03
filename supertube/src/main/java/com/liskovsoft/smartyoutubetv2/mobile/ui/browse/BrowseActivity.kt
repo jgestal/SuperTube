@@ -25,7 +25,7 @@ import com.liskovsoft.smartyoutubetv2.common.app.presenters.BrowsePresenter
 import com.liskovsoft.smartyoutubetv2.common.app.views.BrowseView
 import com.liskovsoft.smartyoutubetv2.mobile.ui.base.ScreenActivity
 import com.liskovsoft.smartyoutubetv2.mobile.ui.feed.FeedState
-import com.liskovsoft.smartyoutubetv2.mobile.ui.theme.SmartTubeTheme
+import com.liskovsoft.smartyoutubetv2.mobile.ui.theme.SuperTubeTheme
 
 /** Settings that only make sense on a TV (being casted to, display refresh rate switching) */
 private val TV_ONLY_SETTINGS = setOf(
@@ -128,7 +128,7 @@ class BrowseActivity : ScreenActivity(), BrowseView {
         )
 
         setContent {
-            SmartTubeTheme {
+            SuperTubeTheme {
                 BrowseScreen(
                     state = state,
                     presenter = presenter,

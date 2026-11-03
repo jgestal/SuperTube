@@ -28,7 +28,7 @@ class LocalPlayerActivity : Activity() {
     private var position = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.Theme_SmartTube_Mobile_Player)
+        setTheme(R.style.Theme_SuperTube_Mobile_Player)
         super.onCreate(savedInstanceState)
         position = savedInstanceState?.getLong(KEY_POSITION) ?: 0L
 

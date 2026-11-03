@@ -17,7 +17,7 @@ abstract class MobileActivity : MotherActivity() {
         setTheme(themeResId)
     }
 
-    protected open val themeResId: Int = R.style.Theme_SmartTube_Mobile
+    protected open val themeResId: Int = R.style.Theme_SuperTube_Mobile
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Draw behind the system bars. Compose insets are applied by every screen.

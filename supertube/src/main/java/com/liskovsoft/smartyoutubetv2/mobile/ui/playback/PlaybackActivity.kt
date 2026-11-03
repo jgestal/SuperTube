@@ -42,7 +42,7 @@ import com.liskovsoft.smartyoutubetv2.mobile.R
 import com.liskovsoft.smartyoutubetv2.mobile.playback.PlaybackCommands
 import com.liskovsoft.smartyoutubetv2.mobile.playback.PlaybackMediaSession
 import com.liskovsoft.smartyoutubetv2.mobile.ui.base.ScreenActivity
-import com.liskovsoft.smartyoutubetv2.mobile.ui.theme.SmartTubeTheme
+import com.liskovsoft.smartyoutubetv2.mobile.ui.theme.SuperTubeTheme
 import java.io.InputStream
 
 /**
@@ -93,7 +93,7 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
         }
     }
 
-    override val themeResId: Int = R.style.Theme_SmartTube_Mobile_Player
+    override val themeResId: Int = R.style.Theme_SuperTube_Mobile_Player
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,7 +105,7 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
         presenter.setView(this)
 
         setContent {
-            SmartTubeTheme(darkTheme = true) {
+            SuperTubeTheme(darkTheme = true) {
                 PlaybackScreen(
                     state = state,
                     presenter = presenter,

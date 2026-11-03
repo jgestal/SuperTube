@@ -736,4 +736,7 @@
   <string name="ignore_short_segments">Bỏ qua các đoạn ngắn</string>
   <string name="card_unlocalized_titles">Tiêu đề video chưa được bản địa hóa</string>
   <string name="remove_video_to_watch_later">Xóa khỏi Xem sau</string>
+  <string name="video_backdrop">Ảnh nền của video đang chọn</string>
+  <string name="lite_mode">Chế độ nhẹ (TV chậm)</string>
+  <string name="lite_mode_desc">Tắt ảnh nền, xem trước video trên thẻ, tiêu đề chạy chữ và hình thu nhỏ khi tua, đồng thời giảm bộ đệm video.</string>
 </resources>

@@ -6,7 +6,8 @@
 
 <p align="center">
   <b>An ad-free YouTube client for Android phones and tablets, with a touch-first Material&nbsp;3 interface.</b><br>
-  Phone &amp; tablet fork of <a href="https://github.com/yuliskov/SmartTube">SmartTube</a> by yuliskov.
+  Also for Android TV. Fork of <a href="https://github.com/yuliskov/SmartTube">SmartTube</a> by yuliskov.<br>
+  <a href="https://gestal.es/supertube/">gestal.es/supertube</a>
 </p>
 
 <p align="center">
@@ -22,6 +23,7 @@
 
 <p align="center">
   <a href="#features">Features</a> ·
+  <a href="#supertube-for-android-tv">Android TV</a> ·
   <a href="#download">Download</a> ·
   <a href="#building">Building</a> ·
   <a href="#architecture">Architecture</a> ·
@@ -119,13 +121,32 @@ refreshed automatically. Optional **Wi‑Fi only** mode, video and audio filters
 - Everything from SmartTube: no ads, SponsorBlock, DeArrow, sign-in (subscriptions, history, playlists), 4K/8K, HDR,
   60 fps, codec selection, subtitles, live chat and comments.
 
+## SuperTube for Android TV
+
+The TV app (`smarttubetv` module) keeps SmartTube's remote-friendly Leanback interface and adds:
+
+- **Backdrops**: the focused video fills the background, Netflix-style, faded so the text stays readable. Without a
+  thumbnail the home screen shows a SuperTube ambient image.
+- **Lite mode for slow TVs and TV boxes** (*Settings › User interface*): no background images, card previews, scrolling
+  titles or seek thumbnails, and a smaller video buffer.
+- SuperTube name, icons, launcher banner and home screen channel, and updates from this repository.
+
+<p align="center">
+  <img src="docs/screenshots/tv_backdrop.webp" width="640" alt="SuperTube for Android TV: the focused video fills the background">
+</p>
+<p align="center">
+  <img src="docs/screenshots/tv_settings.webp" width="316" alt="TV user interface settings with lite mode">
+  <img src="docs/screenshots/tv_lite_mode.webp" width="316" alt="TV home screen in lite mode">
+</p>
+
 ## Download
 
 Get the APK from the **[latest release](https://github.com/jgestal/SuperTube/releases/latest)**. Later versions can be
 installed from *Settings › SuperTube › Check for updates*.
 
 - Requires **Android 8.0** or newer (ARM 32/64-bit); ready for devices with 16 KB memory pages.
-- SuperTube is a separate app (`app.supertube`) and can be installed next to SmartTube.
+- SuperTube is a separate app (`es.gestal.supertube`; the TV app is `es.gestal.supertube.tv`) and can be installed
+  next to SmartTube. TV APKs are named `SuperTubeTV_stable_<version>_<abi>.apk`.
 - Release signing certificate (SHA-256):
   `f6:fb:28:69:7f:24:d1:bf:21:ff:12:b8:20:e2:64:ca:4a:94:2f:3e:e8:4c:75:f2:01:6d:eb:3c:e6:07:70:41`
 
@@ -145,12 +166,26 @@ The APK is generated in `supertube/build/outputs/apk/stbeta/debug/`. For signed 
 `supertube/keystore.properties` (`storeFile`, `storePassword`, `keyAlias`, `keyPassword`) and run
 `./gradlew :supertube:assembleStbetaRelease`.
 
+The TV app:
+
+```bash
+JAVA_HOME=/path/to/jdk-17 ./gradlew :smarttubetv:assembleStstableDebug   # es.gestal.supertube.tv
+```
+
 Checks before a release:
 
 ```bash
 ./gradlew :supertube:testStbetaDebugUnitTest :supertube:lintStbetaDebug   # unit tests and lint
 supertube/tools/rotation_e2e.sh path/to/SuperTube.apk                      # fullscreen and rotation, on an emulator
 ```
+
+To publish a version (same `versionName` in both apps and a dated CHANGELOG section), `tools/release/release.sh`
+runs the tests, builds and checks both signed apps, writes the TV update manifest, creates the GitHub release with
+every APK and regenerates the website. `--dry-run` stops after the build. The TV app is signed with the root
+`keystore.properties` (same format as the phone one).
+
+The website (`landing/`) and the social network images (`promo/`) are generated with
+`python3 tools/landing/gen_landing.py` and `python3 tools/landing/promo.py`.
 
 ## Architecture
 
@@ -162,7 +197,7 @@ fragments; **SuperTube implements them with Compose activities**, so the busines
 | --- | --- |
 | `supertube` | The mobile app: Compose UI, playback service, favorites, downloads, widget, updater |
 | `common` | SmartTube business logic: presenters, player engine (ExoPlayer), settings |
-| `smarttubetv` | Original SmartTube TV app, kept to make merging upstream changes easy |
+| `smarttubetv` | The Android TV app (Leanback UI, backdrops, lite mode); module name kept to merge upstream changes |
 | `MediaServiceCore`, `SharedModules` | SmartTube submodules (YouTube API, utilities) |
 
 Notable mobile-only pieces in `supertube/src/main/java/.../mobile/`:
@@ -189,6 +224,8 @@ released under the MIT License. All the credit for the YouTube engine and the or
 original README is kept in [README_SmartTube.md](README_SmartTube.md).
 
 SuperTube is released under the [MIT License](LICENSE). ExoPlayer (`exoplayer-amzn-2.10.6`) is licensed under Apache 2.0.
+The YouTube engine in `MediaServiceCore` uses [Java Regex](https://github.com/florianingerl/com.florianingerl.util.regex)
+by Florian Ingerl, licensed under GPL 2.0; its source is available at that link.
 Screenshots show Creative Commons films by the Blender Foundation, without a signed-in account.
 
 SuperTube is not affiliated with, endorsed by or connected to YouTube, Google or the SmartTube project.
@@ -198,7 +235,9 @@ SuperTube is not affiliated with, endorsed by or connected to YouTube, Google or
 ## En español
 
 **SuperTube** es un cliente de YouTube sin anuncios para móviles y tablets Android, basado en SmartTube (diseñado para
-TV). Mantiene todo su motor y sustituye la interfaz por una táctil con Material 3:
+TV). Mantiene todo su motor y sustituye la interfaz por una táctil con Material 3. También hay versión para
+**Android TV**, con imágenes de fondo al estilo Netflix y un **modo ligero** para teles y TV boxes lentos. Más
+información en [gestal.es/supertube](https://gestal.es/supertube/).
 
 - **Navegación adaptativa**: barra inferior o lateral, y cuatro vistas de vídeos (lista, compacta, cuadrícula y carrusel).
 - **Reproductor táctil**:

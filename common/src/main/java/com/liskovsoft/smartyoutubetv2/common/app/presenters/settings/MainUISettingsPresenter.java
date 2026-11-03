@@ -15,6 +15,8 @@ import com.liskovsoft.smartyoutubetv2.common.prefs.GeneralData;
 import com.liskovsoft.smartyoutubetv2.common.prefs.MainUIData;
 import com.liskovsoft.smartyoutubetv2.common.prefs.MainUIData.ColorScheme;
 import com.liskovsoft.smartyoutubetv2.common.prefs.PlayerData;
+import com.liskovsoft.smartyoutubetv2.common.prefs.PlayerTweaksData;
+import com.liskovsoft.smartyoutubetv2.common.app.models.playback.manager.PlayerConstants;
 import com.liskovsoft.smartyoutubetv2.common.utils.ClickbaitRemover;
 
 import java.util.ArrayList;
@@ -48,8 +50,10 @@ public class MainUISettingsPresenter extends BasePresenter<Void> {
     public void show() {
         AppDialogPresenter settingsPresenter = AppDialogPresenter.instance(getContext());
 
+        appendLiteMode(settingsPresenter);
         appendTopButtonsCategory(settingsPresenter);
         appendColorScheme(settingsPresenter);
+        appendVideoBackdrop(settingsPresenter);
         if (Build.VERSION.SDK_INT > 19) {
             appendCardTextScrollSpeed(settingsPresenter);
         }
@@ -108,6 +112,63 @@ public class MainUISettingsPresenter extends BasePresenter<Void> {
         }
 
         return styleOptions;
+    }
+
+    private boolean isMobileApp() {
+        // The phone/tablet app shares these settings but has no backdrop and its own lighter UI
+        return getContext().getResources().getBoolean(R.bool.is_mobile_app);
+    }
+
+    /**
+     * One switch for cheap Smart TVs and TV boxes: everything that costs memory or CPU while browsing.
+     */
+    private void appendLiteMode(AppDialogPresenter settingsPresenter) {
+        if (isMobileApp()) {
+            return;
+        }
+
+        settingsPresenter.appendSingleSwitch(UiOptionItem.from(getContext().getString(R.string.lite_mode),
+                getContext().getString(R.string.lite_mode_desc),
+                option -> {
+                    boolean enable = option.isSelected();
+
+                    if (enable) {
+                        mMainUIData.setUiTweakEnabled(MainUIData.UI_TWEAK_LITE_MODE);
+                        // No video previews on the focused card, no scrolling titles
+                        mMainUIData.setCardPreviewType(MainUIData.CARD_PREVIEW_DISABLED);
+                        mMainUIData.setCardTextAutoScrollEnabled(false);
+                        // Player: no thumbnails while seeking, smaller buffer (less memory), no UI animations
+                        mPlayerData.setSeekPreviewMode(PlayerData.SEEK_PREVIEW_NONE);
+                        mPlayerData.setVideoBufferType(PlayerConstants.BUFFER_LOW);
+                        PlayerTweaksData.instance(getContext()).setUIAnimationsEnabled(false);
+                    } else {
+                        // Back to the defaults of the options above
+                        mMainUIData.setUiTweakDisabled(MainUIData.UI_TWEAK_LITE_MODE);
+                        mMainUIData.setCardTextAutoScrollEnabled(true);
+                        mPlayerData.setSeekPreviewMode(PlayerData.SEEK_PREVIEW_SINGLE);
+                        mPlayerData.setVideoBufferType(PlayerConstants.BUFFER_MEDIUM);
+                    }
+
+                    mRestartApp = true; // the cards read their settings when created
+                },
+                mMainUIData.isLiteModeEnabled()));
+    }
+
+    private void appendVideoBackdrop(AppDialogPresenter settingsPresenter) {
+        if (isMobileApp() || mMainUIData.isLiteModeEnabled()) {
+            return; // the lite mode already turns the background images off
+        }
+
+        // Image of the focused video behind the rows. Can be turned off on slow TV boxes.
+        settingsPresenter.appendSingleSwitch(UiOptionItem.from(getContext().getString(R.string.video_backdrop),
+                option -> {
+                    if (option.isSelected()) {
+                        mMainUIData.setUiTweakDisabled(MainUIData.UI_TWEAK_DISABLE_VIDEO_BACKDROP);
+                    } else {
+                        mMainUIData.setUiTweakEnabled(MainUIData.UI_TWEAK_DISABLE_VIDEO_BACKDROP);
+                    }
+                },
+                !mMainUIData.isUiTweakEnabled(MainUIData.UI_TWEAK_DISABLE_VIDEO_BACKDROP)));
     }
 
     private void appendCardPreviews(AppDialogPresenter settingsPresenter) {

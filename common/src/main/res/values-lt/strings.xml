@@ -410,4 +410,7 @@
     <string name="skip_codec_profile_check_desc">Pradedant leisti vaizdo įrašą netikrinti, ar kodekas yra palaikomas. Gali padėti, jei programinėje įrangoje yra klaidų.</string>
     <string name="force_sw_codec">Naudoti programinį vaizdo dekoderį</string>
     <string name="force_sw_codec_desc">Gali atkurti beveik bet kurį vaizdo įrašą, bet atkūrimo sparta yra labai maža.</string>
+    <string name="video_backdrop">Pasirinkto vaizdo įrašo fono paveikslėlis</string>
+    <string name="lite_mode">Lengvasis režimas (lėti televizoriai)</string>
+    <string name="lite_mode_desc">Be fono paveikslėlių, vaizdo įrašų peržiūrų kortelėse, slenkančių pavadinimų ir miniatiūrų persukant, su mažesniu vaizdo buferiu.</string>
 </resources>

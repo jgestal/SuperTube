@@ -710,4 +710,7 @@
     <string name="dont_resize_video_to_fit_dialog">Не мењај величину видеа да би се уклопио у дијалог</string>
     <string name="typing_corrections">Онемогући аутоматско исправљање приликом куцања текста</string>
     <string name="suggestions_horizontally_scrolled">Хоризонтално померани предлози</string>
+    <string name="video_backdrop">Позадинска слика изабраног видеа</string>
+    <string name="lite_mode">Лагани режим (спори телевизори)</string>
+    <string name="lite_mode_desc">Без позадинских слика, прегледа видеа на картицама, покретних наслова и сличица при премотавању, уз мањи видео бафер.</string>
 </resources>

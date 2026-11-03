@@ -73,6 +73,10 @@ public class MainUIData extends DataChangeBase implements ProfileChangeListener 
     public static final int TOP_BUTTON_SEARCH = 1 << 2;
     public static final int TOP_BUTTON_DEFAULT = TOP_BUTTON_SEARCH | TOP_BUTTON_BROWSE_ACCOUNTS;
     public static final long UI_TWEAK_ROUNDED_CORNERS = 1;
+    /** TV: no background image of the focused video (slow TV boxes). Stored as "disabled" so it's on by default. */
+    public static final long UI_TWEAK_DISABLE_VIDEO_BACKDROP = 1 << 1;
+    /** TV: lite mode for slow TVs (no background images, see MainUISettingsPresenter for the rest). */
+    public static final long UI_TWEAK_LITE_MODE = 1 << 2;
     public static final long MENU_ITEM_DEFAULT = MENU_ITEM_PIN_TO_SIDEBAR | MENU_ITEM_NOT_INTERESTED | MENU_ITEM_NOT_RECOMMEND_CHANNEL
             | MENU_ITEM_REMOVE_FROM_HISTORY | MENU_ITEM_BLOCK_CHANNEL | MENU_ITEM_MOVE_SECTION_UP | MENU_ITEM_MOVE_SECTION_DOWN
             | MENU_ITEM_RENAME_SECTION | MENU_ITEM_SAVE_REMOVE_PLAYLIST | MENU_ITEM_ADD_TO_PLAYLIST | MENU_ITEM_CREATE_PLAYLIST
@@ -360,6 +364,10 @@ public class MainUIData extends DataChangeBase implements ProfileChangeListener 
 
     public boolean isUiTweakEnabled(long uiTweaks) {
         return (mUiTweaks & uiTweaks) == uiTweaks;
+    }
+
+    public boolean isLiteModeEnabled() {
+        return isUiTweakEnabled(UI_TWEAK_LITE_MODE);
     }
 
     public void setUiTweakEnabled(long uiTweaks) {

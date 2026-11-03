@@ -756,4 +756,7 @@
         <item quantity="one">%s second</item>
         <item quantity="other">%s seconds</item>
     </plurals>
+    <string name="video_backdrop">Background image of the selected video</string>
+    <string name="lite_mode">Lite mode (slow TVs)</string>
+    <string name="lite_mode_desc">No background images, video previews on cards, scrolling titles or seek thumbnails, and a smaller video buffer.</string>
 </resources>

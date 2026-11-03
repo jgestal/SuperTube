@@ -713,4 +713,7 @@
   <string name="channel_unblocked">차단 해제됨</string>
   <string name="header_blocked_channels">차단된 채널</string>
   <string name="msg_no_blocked_channels">차단된 채널 없음</string>
+  <string name="video_backdrop">선택한 동영상의 배경 이미지</string>
+  <string name="lite_mode">라이트 모드 (느린 TV)</string>
+  <string name="lite_mode_desc">배경 이미지, 카드의 동영상 미리보기, 스크롤되는 제목, 탐색 미리보기 이미지를 끄고 동영상 버퍼를 줄입니다.</string>
 </resources>

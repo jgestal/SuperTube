@@ -748,4 +748,7 @@
         <item quantity="one">%s ثانية</item>
         <item quantity="other">%s ثانية</item>
     </plurals>
+  <string name="video_backdrop">صورة خلفية للفيديو المحدد</string>
+  <string name="lite_mode">الوضع الخفيف (أجهزة التلفاز البطيئة)</string>
+  <string name="lite_mode_desc">بدون صور خلفية أو معاينات فيديو على البطاقات أو عناوين متحركة أو صور مصغرة عند التقديم، مع ذاكرة تخزين مؤقت أصغر للفيديو.</string>
 </resources>

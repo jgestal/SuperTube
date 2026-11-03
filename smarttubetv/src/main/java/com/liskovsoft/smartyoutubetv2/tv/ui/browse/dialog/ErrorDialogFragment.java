@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.leanback.app.BrowseSupportFragment;
+import com.liskovsoft.smartyoutubetv2.tv.ui.common.LeanbackActivity;
 import androidx.leanback.app.BrowseSupportFragment.MainFragmentAdapter;
 import com.liskovsoft.sharedutils.helpers.Helpers;
 import com.liskovsoft.smartyoutubetv2.common.app.models.errors.CategoryEmptyError;
@@ -46,6 +47,10 @@ public class ErrorDialogFragment extends ErrorSupportFragment implements BrowseS
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getActivity() instanceof LeanbackActivity) {
+            ((LeanbackActivity) getActivity()).getBackgroundManager().clearBackdrop(); // translucent: keep the message readable
+        }
     }
 
     @Override

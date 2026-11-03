@@ -32,11 +32,11 @@ android {
     buildToolsVersion project.properties.buildToolsVersion
 
     defaultConfig {
-        applicationId "app.supertube"
+        applicationId "es.gestal.supertube"
         minSdkVersion 26
         targetSdkVersion project.properties.compileSdkVersion
-        versionCode 8
-        versionName "1.3.2"
+        versionCode 9
+        versionName "1.4"
         multiDexEnabled = true
         vectorDrawables.useSupportLibrary = true
 

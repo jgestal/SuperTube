@@ -49,15 +49,15 @@ tap_control() {
 AUTO_ROTATE=$("$ADB" shell settings get system accelerometer_rotation)
 trap '"$ADB" shell settings put system accelerometer_rotation "$AUTO_ROTATE"; portrait' EXIT
 
-"$ADB" uninstall app.supertube >/dev/null 2>&1
+"$ADB" uninstall es.gestal.supertube >/dev/null 2>&1
 "$ADB" install "$APK" >/dev/null || exit 1
-"$ADB" shell cmd locale set-app-locales app.supertube --locales en-US
-"$ADB" shell am force-stop app.supertube
+"$ADB" shell cmd locale set-app-locales es.gestal.supertube --locales en-US
+"$ADB" shell am force-stop es.gestal.supertube
 portrait
 "$ADB" shell settings put system accelerometer_rotation 1
-"$ADB" shell monkey -p app.supertube -c android.intent.category.LAUNCHER 1 >/dev/null 2>&1
+"$ADB" shell monkey -p es.gestal.supertube -c android.intent.category.LAUNCHER 1 >/dev/null 2>&1
 sleep 6
-"$ADB" shell am start -a android.intent.action.VIEW -d "$VIDEO" -p app.supertube >/dev/null
+"$ADB" shell am start -a android.intent.action.VIEW -d "$VIDEO" -p es.gestal.supertube >/dev/null
 sleep 10
 
 echo "Auto-rotate on"

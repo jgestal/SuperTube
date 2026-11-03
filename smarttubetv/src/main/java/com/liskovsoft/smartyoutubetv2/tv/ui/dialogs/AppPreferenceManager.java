@@ -136,7 +136,9 @@ public class AppPreferenceManager {
             OptionItem item = category.options.get(0);
             Preference preference = new SwitchPreference(mContext);
             preference.setPersistent(false);
-            preference.setTitle(item.getTitle());
+            // Optional description under the title, like in the option lists
+            preference.setTitle(item.getDescription() != null ?
+                    TextUtils.concat(item.getTitle(), "\n", Utils.italic(item.getDescription())) : item.getTitle());
             preference.setDefaultValue(item.isSelected());
             preference.setOnPreferenceChangeListener((pref, newValue) -> {
                 item.onSelect((boolean) newValue);

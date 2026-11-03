@@ -664,4 +664,7 @@
   <string name="local_backup">Copie de rezervă locală</string>
   <string name="auto_backup">Copie de rezervă automată (o dată pe zi)</string>
   <string name="repeat_mode_reverse_list">Redă lista de redare sau videoclipurile canalului în ordine inversă</string>
+  <string name="video_backdrop">Imagine de fundal a videoclipului selectat</string>
+  <string name="lite_mode">Mod ușor (televizoare lente)</string>
+  <string name="lite_mode_desc">Fără imagini de fundal, previzualizări video pe carduri, titluri derulante sau miniaturi la derulare, cu un buffer video mai mic.</string>
 </resources>

@@ -727,4 +727,7 @@
     <string name="channel_unblocked">Canal desbloqueado</string>
     <string name="header_blocked_channels">Canais bloqueados</string>
     <string name="msg_no_blocked_channels">Nenhum canal bloqueado</string>
+    <string name="video_backdrop">Imagem de fundo do vídeo selecionado</string>
+    <string name="lite_mode">Modo leve (televisores lentos)</string>
+    <string name="lite_mode_desc">Sem imagens de fundo, pré-visualizações de vídeo nos cartões, títulos em movimento ou miniaturas ao avançar, e com uma memória intermédia de vídeo mais pequena.</string>
 </resources>

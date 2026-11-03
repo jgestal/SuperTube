@@ -35,7 +35,7 @@ private val LightColors = lightColorScheme(
 val YouTubeRed = Red
 
 @Composable
-fun SmartTubeTheme(
+fun SuperTubeTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {

@@ -749,4 +749,7 @@ So, make a copy of values-he and name it values-iw. Keep both in your structure.
         <item quantity="one">שנייה אחת</item>
         <item quantity="other">%s שניות</item>
     </plurals>
+    <string name="video_backdrop">תמונת רקע של הסרטון הנבחר</string>
+    <string name="lite_mode">מצב קל (טלוויזיות איטיות)</string>
+    <string name="lite_mode_desc">ללא תמונות רקע, תצוגות מקדימות של סרטונים בכרטיסים, כותרות נגללות או תמונות ממוזערות בזמן דילוג, ועם מאגר וידאו קטן יותר.</string>
 </resources>

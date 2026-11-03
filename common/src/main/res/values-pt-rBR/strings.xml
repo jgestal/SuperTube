@@ -748,4 +748,7 @@
   <string name="sidebar_notification">Mostrar notificação na barra lateral</string>
   <string name="color_scheme_dark_blue_oled">Azul Escuro (OLED)</string>
   <string name="remove_video_to_watch_later">Remover da playlist \"Assistir mais tarde\"</string>
+  <string name="video_backdrop">Imagem de fundo do vídeo selecionado</string>
+  <string name="lite_mode">Modo leve (TVs lentas)</string>
+  <string name="lite_mode_desc">Sem imagens de fundo, prévias de vídeo nos cartões, títulos rolando ou miniaturas ao avançar, e com um buffer de vídeo menor.</string>
 </resources>

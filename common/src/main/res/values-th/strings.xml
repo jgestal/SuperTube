@@ -323,4 +323,7 @@
     <string name="update_error">อัปเดตข้อผิดพลาด</string>
     <string name="hide_shorts_from_history">ซ่อน shorts จากประวัติการเข้าชม</string>
     <string name="disable_screensaver">Disable screensaver</string>
+    <string name="video_backdrop">ภาพพื้นหลังจากวิดีโอที่เลือก</string>
+    <string name="lite_mode">โหมดเบา (ทีวีที่ช้า)</string>
+    <string name="lite_mode_desc">ปิดภาพพื้นหลัง ตัวอย่างวิดีโอบนการ์ด ชื่อที่เลื่อน และภาพย่อขณะเลื่อนหา พร้อมลดบัฟเฟอร์วิดีโอ</string>
 </resources>

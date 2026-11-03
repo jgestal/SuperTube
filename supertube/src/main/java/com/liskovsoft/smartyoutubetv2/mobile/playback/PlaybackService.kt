@@ -66,11 +66,11 @@ class PlaybackService : Service() {
     companion object {
         private val TAG = PlaybackService::class.java.simpleName
         const val NOTIFICATION_ID = 4343
-        const val ACTION_PLAY = "app.supertube.playback.PLAY"
-        const val ACTION_PAUSE = "app.supertube.playback.PAUSE"
-        const val ACTION_NEXT = "app.supertube.playback.NEXT"
-        const val ACTION_PREVIOUS = "app.supertube.playback.PREVIOUS"
-        const val ACTION_STOP = "app.supertube.playback.STOP"
+        const val ACTION_PLAY = "es.gestal.supertube.playback.PLAY"
+        const val ACTION_PAUSE = "es.gestal.supertube.playback.PAUSE"
+        const val ACTION_NEXT = "es.gestal.supertube.playback.NEXT"
+        const val ACTION_PREVIOUS = "es.gestal.supertube.playback.PREVIOUS"
+        const val ACTION_STOP = "es.gestal.supertube.playback.STOP"
 
         private val mainHandler = Handler(Looper.getMainLooper())
         private var pendingStop: Runnable? = null

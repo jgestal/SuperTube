@@ -494,4 +494,7 @@
     <string name="auto_frame_rate_modes">Podržani načini</string>
     <string name="loading">Učitavanje…</string>
     <string name="hide_streams">Sakrij strujanja iz Pretplata</string>
+    <string name="video_backdrop">Pozadinska slika odabranog videozapisa</string>
+    <string name="lite_mode">Lagani način (spori televizori)</string>
+    <string name="lite_mode_desc">Bez pozadinskih slika, pregleda videozapisa na karticama, pomičnih naslova i sličica pri premotavanju, uz manji međuspremnik videa.</string>
 </resources>

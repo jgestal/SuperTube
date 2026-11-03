@@ -693,4 +693,7 @@
   <string name="context_menu_sorting">مرتب‌سازی منوی زمینه</string>
   <string name="player_audio_focus">تمرکز صوتی (مکث در صورت شناسایی سایر پخش‌کننده‌ها)</string>
   <string name="paid_content_notification">اعلان محتوای پولی</string>
+  <string name="video_backdrop">تصویر پس‌زمینه از ویدیوی انتخاب‌شده</string>
+  <string name="lite_mode">حالت سبک (تلویزیون‌های کند)</string>
+  <string name="lite_mode_desc">بدون تصاویر پس‌زمینه، پیش‌نمایش ویدیو روی کارت‌ها، عنوان‌های متحرک یا تصاویر کوچک هنگام جابه‌جایی، با بافر ویدیوی کوچک‌تر.</string>
 </resources>

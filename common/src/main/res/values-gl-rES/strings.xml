@@ -748,4 +748,7 @@
   <string name="network_settings">Axustes de rede</string>
   <string name="remove_video_to_watch_later">Eliminar de Ver máis tarde</string>
   <string name="comments_disabled">Os comentarios están desactivados para este vídeo</string>
+  <string name="video_backdrop">Imaxe de fondo do vídeo seleccionado</string>
+  <string name="lite_mode">Modo lixeiro (televisores lentos)</string>
+  <string name="lite_mode_desc">Sen imaxes de fondo, vistas previas de vídeo nas tarxetas, títulos en movemento nin miniaturas ao avanzar, e cun búfer de vídeo máis pequeno.</string>
 </resources>

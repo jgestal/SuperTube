@@ -754,4 +754,7 @@
     <plurals name="seconds">
         <item quantity="other">%s 秒</item>
     </plurals>
+    <string name="video_backdrop">選択中の動画を背景に表示</string>
+    <string name="lite_mode">軽量モード（低速なテレビ向け）</string>
+    <string name="lite_mode_desc">背景画像、カードの動画プレビュー、スクロールするタイトル、シーク時のサムネイルをオフにし、動画バッファを小さくします。</string>
 </resources>

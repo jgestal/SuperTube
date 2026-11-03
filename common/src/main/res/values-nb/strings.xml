@@ -706,4 +706,7 @@
     <string name="card_preview">Forhåndsvisning av kort</string>
     <string name="card_unlocalized_titles">Ikke-lokaliserte videotitler</string>
     <string name="dont_resize_video_to_fit_dialog">Ikke endre størrelsen på videoen for å passe i dialogboksen</string>
+    <string name="video_backdrop">Bakgrunnsbilde av den valgte videoen</string>
+    <string name="lite_mode">Lett modus (trege TV-er)</string>
+    <string name="lite_mode_desc">Ingen bakgrunnsbilder, videoforhåndsvisninger på kort, rullende titler eller miniatyrbilder ved spoling, og en mindre videobuffer.</string>
 </resources>

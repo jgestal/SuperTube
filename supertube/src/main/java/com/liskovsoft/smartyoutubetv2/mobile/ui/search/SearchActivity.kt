@@ -18,7 +18,7 @@ import com.liskovsoft.smartyoutubetv2.common.app.presenters.SearchPresenter
 import com.liskovsoft.smartyoutubetv2.common.app.views.SearchView
 import com.liskovsoft.smartyoutubetv2.mobile.ui.base.ScreenActivity
 import com.liskovsoft.smartyoutubetv2.mobile.ui.feed.FeedState
-import com.liskovsoft.smartyoutubetv2.mobile.ui.theme.SmartTubeTheme
+import com.liskovsoft.smartyoutubetv2.mobile.ui.theme.SuperTubeTheme
 
 class SearchUiState {
     var query by mutableStateOf("")
@@ -51,7 +51,7 @@ class SearchActivity : ScreenActivity(), SearchView {
         presenter.setView(this)
 
         setContent {
-            SmartTubeTheme {
+            SuperTubeTheme {
                 SearchScreen(
                     state = state,
                     presenter = presenter,

@@ -13,7 +13,7 @@ import com.liskovsoft.smartyoutubetv2.mobile.ui.feed.FeedContainer
 import com.liskovsoft.smartyoutubetv2.mobile.ui.feed.FeedState
 import com.liskovsoft.smartyoutubetv2.mobile.ui.feed.VideoActions
 import com.liskovsoft.smartyoutubetv2.mobile.ui.feed.VideoGrid
-import com.liskovsoft.smartyoutubetv2.mobile.ui.theme.SmartTubeTheme
+import com.liskovsoft.smartyoutubetv2.mobile.ui.theme.SuperTubeTheme
 
 /** Grid of videos of a channel or playlist */
 class ChannelUploadsActivity : ScreenActivity(), ChannelUploadsView {
@@ -27,7 +27,7 @@ class ChannelUploadsActivity : ScreenActivity(), ChannelUploadsView {
         presenter.setView(this)
 
         setContent {
-            SmartTubeTheme {
+            SuperTubeTheme {
                 val actions = VideoActions(
                     onClick = { presenter.onVideoItemSelected(it); presenter.onVideoItemClicked(it) },
                     onLongClick = { presenter.onVideoItemSelected(it); presenter.onVideoItemLongClicked(it) },

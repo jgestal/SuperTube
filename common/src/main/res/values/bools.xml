@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Update checks against the original project releases. Forks override it with false. -->
-    <bool name="app_update_check_enabled">true</bool>
+    <!-- Update checks: only the TV stable build (common/src/ststable) checks the SuperTube releases -->
+    <bool name="app_update_check_enabled">false</bool>
+    <!-- The phone/tablet app (supertube module) overrides it with true -->
+    <bool name="is_mobile_app">false</bool>
 </resources>

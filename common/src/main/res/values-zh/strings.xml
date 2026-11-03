@@ -749,4 +749,7 @@
   <string name="network_settings">网络设置</string>
   <string name="comments_disabled">此视频已关闭评论</string>
   <string name="remove_video_to_watch_later">从稍后观看移除</string>
+  <string name="video_backdrop">以所选视频作为背景图片</string>
+  <string name="lite_mode">轻量模式（低速电视）</string>
+  <string name="lite_mode_desc">关闭背景图片、卡片上的视频预览、滚动标题和拖动时的缩略图，并减小视频缓冲区。</string>
 </resources>

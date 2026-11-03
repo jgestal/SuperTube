@@ -748,4 +748,7 @@
   <string name="network_settings">Setelan jaringan</string>
   <string name="comments_disabled">Komentar dimatikan</string>
   <string name="remove_video_to_watch_later">Hapus dari Tonton nanti</string>
+  <string name="video_backdrop">Gambar latar dari video yang dipilih</string>
+  <string name="lite_mode">Mode ringan (TV lambat)</string>
+  <string name="lite_mode_desc">Tanpa gambar latar, pratinjau video di kartu, judul bergulir, atau thumbnail saat menggeser, dan dengan buffer video lebih kecil.</string>
 </resources>

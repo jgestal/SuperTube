@@ -127,4 +127,7 @@
     <string name="player_show_clock">Show clock</string>
     <string name="player_show_remaining_time">Show remaining time</string>
     <string name="open_channel_uploads">Open channel videos</string>
+    <string name="video_backdrop">Imagine de fundal a videoclipului selectat</string>
+    <string name="lite_mode">Mod ușor (televizoare lente)</string>
+    <string name="lite_mode_desc">Fără imagini de fundal, previzualizări video pe carduri, titluri derulante sau miniaturi la derulare, cu un buffer video mai mic.</string>
 </resources>

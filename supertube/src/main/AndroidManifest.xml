@@ -40,7 +40,7 @@
         android:icon="@mipmap/app_icon"
         android:roundIcon="@mipmap/app_icon_round"
         android:label="@string/mobile_app_name"
-        android:theme="@style/Theme.SmartTube.Mobile"
+        android:theme="@style/Theme.SuperTube.Mobile"
         android:resizeableActivity="true"
         android:localeConfig="@xml/locales_config"
         tools:replace="android:label,android:theme,android:allowBackup,android:icon"
@@ -60,7 +60,7 @@
             android:name=".ui.splash.SplashActivity"
             android:exported="true"
             android:launchMode="singleTask"
-            android:theme="@style/Theme.SmartTube.Mobile.Dialog"
+            android:theme="@style/Theme.SuperTube.Mobile.Dialog"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation|density|uiMode|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -119,7 +119,7 @@
             android:taskAffinity="${applicationId}.player"
             android:supportsPictureInPicture="true"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation|density|uiMode|keyboardHidden"
-            android:theme="@style/Theme.SmartTube.Mobile.Player" />
+            android:theme="@style/Theme.SuperTube.Mobile.Player" />
 
         <!-- Own task: drawn over whatever is in front (player or browsing screens) and closing it goes back there.
              In the main task it brought the browsing screens to the front and stopped the player. -->
@@ -129,7 +129,7 @@
             android:launchMode="singleTop"
             android:noHistory="true"
             android:excludeFromRecents="true"
-            android:theme="@style/Theme.SmartTube.Mobile.Dialog"
+            android:theme="@style/Theme.SuperTube.Mobile.Dialog"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation|density|uiMode|keyboardHidden" />
 
         <activity
@@ -150,7 +150,7 @@
             android:name=".ui.downloads.LocalPlayerActivity"
             android:exported="false"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation|density|uiMode|keyboardHidden"
-            android:theme="@style/Theme.SmartTube.Mobile.Player" />
+            android:theme="@style/Theme.SuperTube.Mobile.Player" />
 
         <provider
             android:name=".update.UpdateFileProvider"

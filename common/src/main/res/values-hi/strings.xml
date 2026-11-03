@@ -569,4 +569,7 @@
   <string name="header_shorts">शॉर्ट्स</string>
   <string name="unlock_high_bitrate_formats">उच्च बिटरेट 1080p VP9 प्रारूप अनलॉक करें</string>
   <string name="unlock_high_bitrate_audio_formats">उच्च बिटरेट mp4a प्रारूप अनलॉक करें</string>
+  <string name="video_backdrop">चुने गए वीडियो की पृष्ठभूमि छवि</string>
+  <string name="lite_mode">लाइट मोड (धीमे टीवी)</string>
+  <string name="lite_mode_desc">बैकग्राउंड इमेज, कार्ड पर वीडियो प्रीव्यू, स्क्रॉल होते टाइटल और सीक थंबनेल बंद, और छोटा वीडियो बफ़र।</string>
 </resources>

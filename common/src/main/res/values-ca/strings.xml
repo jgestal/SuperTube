@@ -504,4 +504,7 @@
   <string name="hide_shorts_from_trending">Amaga els curts de la tendència</string>
   <string name="disable_history">Desactiva l\'historial</string>
   <string name="enable_history">Activeu l\'historial</string>
+  <string name="video_backdrop">Imatge de fons del vídeo seleccionat</string>
+  <string name="lite_mode">Mode lleuger (televisors lents)</string>
+  <string name="lite_mode_desc">Sense imatges de fons, previsualitzacions de vídeo a les targetes, títols en moviment ni miniatures en avançar, i amb una memòria intermèdia de vídeo més petita.</string>
 </resources>

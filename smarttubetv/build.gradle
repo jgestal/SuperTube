@@ -11,14 +11,6 @@ buildscript {
         // These docs use an open ended version so that our plugin
         // can be updated quickly in response to Android tooling updates
 
-        // Check that you have the Google Services Gradle plugin v4.3.2 or later
-        // (if not, add it).
-        classpath 'com.google.gms:google-services:4.3.15'
-
-        // Add the Crashlytics Gradle plugin.
-        // https://firebase.google.com/docs/crashlytics/get-started?platform=android
-        // https://firebase.google.com/docs/android/setup
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.7.1'
     }
 }
 
@@ -30,15 +22,7 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
-// The first letter of the flavor name must be in uppercase
-if (new File("${projectDir}/google-services.json").exists() && (getGradle().getStartParameter().getTaskRequests().toString().contains("Stbeta") ||
-        getGradle().getStartParameter().getTaskRequests().toString().contains("Ststable"))) {
-    // Google Services Gradle plugin (transforms google-services.json file)
-    apply plugin: 'com.google.gms.google-services'
-
-    // Apply the Crashlytics Gradle plugin
-    apply plugin: 'com.google.firebase.crashlytics'
-}
+// SuperTube: no Firebase/Crashlytics (the original google-services.json sent the crash reports to the SmartTube project)
 
 android {
     // FIX: Default interface methods are only supported starting with Android N (--min-api 24)
@@ -54,11 +38,11 @@ android {
     
     defaultConfig {
         // values linked with applicationId: searchable.searchSuggestAuthority, searchable.searchSuggestIntentData, VideoContract.CONTENT_AUTHORITY
-        applicationId "app.smarttube"
+        applicationId "es.gestal.supertube.tv"
         minSdkVersion project.properties.minSdkVersion
         targetSdkVersion project.properties.targetSdkVersion
         versionCode 2458
-        versionName "32.68"
+        versionName "1.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "long", "TIMESTAMP", System.currentTimeMillis() + "L"
 
@@ -123,7 +107,7 @@ android {
     // https://stackoverflow.com/questions/18332474/how-to-set-versionname-in-apk-filename-using-gradle
     applicationVariants.all { variant ->
         variant.outputs.all { output ->
-            def project = "SmartTube"
+            def project = "SuperTubeTV"
             def flavor = variant.productFlavors[-1].name.substring(2) // remove st prefix
             def buildType = variant.buildType.name.take(1)
             def version = variant.versionName
@@ -160,15 +144,15 @@ android {
     // NOTE: The main goal of prefixing a flavor is to group flavors' folders together
     productFlavors {
         stbeta {
-            applicationId "org.smarttube.beta"
+            applicationId "es.gestal.supertube.tv.beta"
             targetSdkVersion project.properties.compileSdkVersion
         }
         ststable {
-            applicationId "org.smarttube.stable"
+            applicationId "es.gestal.supertube.tv"
             targetSdkVersion project.properties.compileSdkVersion
         }
         stfdroid {
-            applicationId "app.smarttube.fdroid"
+            applicationId "es.gestal.supertube.tv.fdroid"
             minSdkVersion 21
             targetSdkVersion project.properties.compileSdkVersion
 
@@ -235,16 +219,6 @@ dependencies {
 
     implementation 'io.reactivex.rxjava2:rxandroid:' + rxAndroidVersion
     implementation 'io.reactivex.rxjava2:rxjava:' + rxJavaVersion
-
-    // Add the Firebase Crashlytics SDK.
-
-    stbetaImplementation('com.google.firebase:firebase-crashlytics:' + firebaseCrashlyticsVersion) {
-        transitive = true
-    }
-
-    ststableImplementation('com.google.firebase:firebase-crashlytics:' + firebaseCrashlyticsVersion) {
-        transitive = true
-    }
 
     // debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.14'
 

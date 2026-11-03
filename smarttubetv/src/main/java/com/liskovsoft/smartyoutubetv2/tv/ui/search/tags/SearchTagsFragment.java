@@ -247,6 +247,10 @@ public class SearchTagsFragment extends SearchTagsFragmentBase {
     protected void onItemViewSelected(Object item) {
         if (item instanceof Video) {
             mSearchPresenter.onVideoItemSelected((Video) item);
+            // Backdrop of the focused video, like in the browse rows
+            if (getActivity() instanceof LeanbackActivity) {
+                ((LeanbackActivity) getActivity()).getBackgroundManager().setBackgroundFrom((Video) item);
+            }
             checkScrollEnd((Video) item);
         }
     }

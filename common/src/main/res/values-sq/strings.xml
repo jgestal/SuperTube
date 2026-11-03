@@ -709,4 +709,7 @@
   <string name="remove_playlist_fmt">Do ta fshish %s përgjithmonë?</string>
   <string name="player_chapter_notification2">Kalo te kapitulli tjetër duke klikuar mbi njoftimin</string>
   <string name="suggestions_horizontally_scrolled">Sugjerime të lëvizura horizontalisht</string>
+  <string name="video_backdrop">Imazh sfondi i videos së zgjedhur</string>
+  <string name="lite_mode">Modaliteti i lehtë (televizorë të ngadaltë)</string>
+  <string name="lite_mode_desc">Pa imazhe sfondi, paraparje videosh në karta, tituj lëvizës ose miniatura gjatë kërkimit, dhe me një bufer më të vogël videoje.</string>
 </resources>

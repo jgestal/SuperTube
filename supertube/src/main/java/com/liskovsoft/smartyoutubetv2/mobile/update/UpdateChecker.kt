@@ -27,7 +27,7 @@ object UpdateChecker {
     private const val PREFS = "supertube_update"
     private const val KEY_LAST_CHECK = "last_check"
     private const val DAY_MS = 24 * 60 * 60 * 1000L
-    private val main = Handler(Looper.getMainLooper())
+    private val main by lazy { Handler(Looper.getMainLooper()) } // lazy: unit tests have no main looper
 
     private class Release(val version: String, val notes: String, val apkUrl: String)
 
@@ -63,7 +63,7 @@ object UpdateChecker {
             if (connection.responseCode != 200) return null
             val json = JSONObject(connection.inputStream.bufferedReader().readText())
             val assets = json.getJSONArray("assets")
-            val apk = (0 until assets.length()).map { assets.getJSONObject(it) }.firstOrNull { it.getString("name").endsWith(".apk") } ?: return null
+            val apk = (0 until assets.length()).map { assets.getJSONObject(it) }.firstOrNull { isPhoneApk(it.getString("name")) } ?: return null
             return Release(
                 version = json.getString("tag_name").removePrefix("v"),
                 notes = json.optString("body").replace(Regex("[#*`>]"), "").trim(),
@@ -73,6 +73,9 @@ object UpdateChecker {
             connection.disconnect()
         }
     }
+
+    /** Releases also carry the TV app (SuperTubeTV_*.apk): only the phone APK is ours */
+    internal fun isPhoneApk(name: String): Boolean = name.endsWith(".apk") && !name.startsWith("SuperTubeTV")
 
     /** "1.10" > "1.9", "1.0.1" > "1.0" */
     internal fun isNewer(remote: String, local: String): Boolean {

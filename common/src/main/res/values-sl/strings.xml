@@ -296,4 +296,7 @@
   <string name="content_block_outro"></string>
   <string name="action_playlist_add">Dodaj na seznam predvajanja</string>
   <string name="keyboard_auto_show">Samodejno prikaži tipkovnico</string>
+  <string name="video_backdrop">Slika izbranega videoposnetka v ozadju</string>
+  <string name="lite_mode">Lahki način (počasni televizorji)</string>
+  <string name="lite_mode_desc">Brez slik v ozadju, predogledov videoposnetkov na karticah, drsečih naslovov in sličic pri previjanju, z manjšim medpomnilnikom videa.</string>
 </resources>

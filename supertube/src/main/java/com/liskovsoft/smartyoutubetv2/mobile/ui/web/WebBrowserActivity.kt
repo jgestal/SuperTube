@@ -11,7 +11,7 @@ import com.liskovsoft.smartyoutubetv2.common.app.presenters.WebBrowserPresenter
 import com.liskovsoft.smartyoutubetv2.common.app.views.WebBrowserView
 import com.liskovsoft.smartyoutubetv2.mobile.ui.base.ScreenActivity
 import com.liskovsoft.smartyoutubetv2.mobile.ui.components.ScreenScaffold
-import com.liskovsoft.smartyoutubetv2.mobile.ui.theme.SmartTubeTheme
+import com.liskovsoft.smartyoutubetv2.mobile.ui.theme.SuperTubeTheme
 
 class WebBrowserActivity : ScreenActivity(), WebBrowserView {
     private lateinit var presenter: WebBrowserPresenter
@@ -26,7 +26,7 @@ class WebBrowserActivity : ScreenActivity(), WebBrowserView {
         presenter.setView(this)
 
         setContent {
-            SmartTubeTheme {
+            SuperTubeTheme {
                 ScreenScaffold(title = "", onBack = { if (webView?.canGoBack() == true) webView?.goBack() else finish() }) {
                     AndroidView(factory = { context ->
                         WebView(context).apply {

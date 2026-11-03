@@ -75,3 +75,9 @@ hs_err_pid*.log
 # SuperTube release signing (keep out of git)
 supertube/keystore.properties
 *.jks
+
+# Root signing config for the TV app (smarttubetv); contains passwords
+/keystore.properties
+
+# Python
+__pycache__/

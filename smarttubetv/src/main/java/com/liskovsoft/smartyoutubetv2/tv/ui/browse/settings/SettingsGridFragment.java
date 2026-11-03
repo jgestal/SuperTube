@@ -41,6 +41,7 @@ public class SettingsGridFragment extends GridFragment implements SettingsSectio
 
         mMainPresenter = BrowsePresenter.instance(getContext());
         mBackgroundManager = ((LeanbackActivity) getActivity()).getBackgroundManager();
+        mBackgroundManager.clearBackdrop(); // keep the settings cards clean
 
         setupAdapter();
         setupEventListeners();

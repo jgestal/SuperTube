@@ -748,4 +748,7 @@
   <string name="network_settings">Paramètres réseau</string>
   <string name="comments_disabled">Les commentaires sont désactivés pour cette vidéo</string>
   <string name="remove_video_to_watch_later">Supprimer de \"À regarder plus tard\"</string>
+  <string name="video_backdrop">Image de fond de la vidéo sélectionnée</string>
+  <string name="lite_mode">Mode léger (téléviseurs lents)</string>
+  <string name="lite_mode_desc">Pas d\'images de fond, d\'aperçus vidéo sur les cartes, de titres défilants ni de miniatures pendant l\'avance, et une mémoire tampon vidéo plus petite.</string>
 </resources>
