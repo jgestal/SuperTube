@@ -285,6 +285,8 @@ def main():
         for name, fn in OUTPUTS:
             fn(lang).save(os.path.join(out, name), "JPEG", quality=90, optimize=True, progressive=True)
         print(out)
+    # Pillow writes none today; cheap insurance for images edited or added by hand
+    subprocess.run([sys.executable, os.path.join(ROOT, "tools", "strip_metadata.py"), "promo"], check=True)
 
 
 if __name__ == "__main__":

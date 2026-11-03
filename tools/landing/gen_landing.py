@@ -571,6 +571,7 @@ def main():
     llms_txt()
     tv_page()
     not_found()
+    subprocess.run([sys.executable, os.path.join(ROOT, "tools", "strip_metadata.py"), str(OUT)], check=True)
     print("landing ->", OUT)
 
 
