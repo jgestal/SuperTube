@@ -10,6 +10,7 @@
 #
 #   tools/release/release.sh            # asks before anything is pushed or published
 #   tools/release/release.sh --dry-run  # stops after building and checking the APKs
+#   tools/release/release.sh --yes      # publishes without asking (already approved)
 #
 # Needs JAVA_HOME (JDK 17) and ANDROID_HOME, keystore.properties (TV) and supertube/keystore.properties (phone).
 set -euo pipefail
@@ -17,7 +18,14 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 cd "$ROOT"
 DRY_RUN=0
-[[ "${1:-}" == "--dry-run" ]] && DRY_RUN=1
+YES=0
+for arg in "$@"; do
+  case "$arg" in
+    --dry-run) DRY_RUN=1 ;;
+    --yes) YES=1 ;;
+    *) echo "usage: $0 [--dry-run] [--yes]" >&2; exit 2 ;;
+  esac
+done
 
 die() { echo "ERROR: $*" >&2; exit 1; }
 step() { echo; echo "==> $*"; }
@@ -54,8 +62,9 @@ echo "SuperTube $VERSION ($TAG)"
 
 # ---------- 2. build ----------
 step "Unit tests and release builds"
+# < /dev/null: Gradle would otherwise read the answer meant for the confirmation below
 sh ./gradlew -q clean :supertube:testStbetaDebugUnitTest \
-  :smarttubetv:assembleStstableRelease :supertube:assembleStbetaRelease
+  :smarttubetv:assembleStstableRelease :supertube:assembleStbetaRelease < /dev/null
 
 DIST="$ROOT/dist/release-$VERSION"  # not in git; gen_landing.py copies these APKs to landing/apk/
 rm -rf "$DIST" && mkdir -p "$DIST"
@@ -97,7 +106,8 @@ git diff --cached --quiet || git commit -q -m "chore: TV update manifest $VERSIO
 
 echo
 ls -1 "$DIST"
-read -r -p "Publish $TAG on GitHub with these files and push the manifest? [y/N] " answer
+answer=y
+(( YES )) || read -r -p "Publish $TAG on GitHub with these files and push the manifest? [y/N] " answer || answer=n
 [[ "$answer" == [yY] ]] || die "stopped: nothing published (a local manifest commit, if any, can be undone with git reset HEAD~1)"
 
 # ---------- 5. GitHub release ----------
