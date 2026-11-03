@@ -2,7 +2,7 @@
 
 All notable changes to SuperTube. Versions follow the [GitHub releases](https://github.com/jgestal/SuperTube/releases).
 
-## 1.4 — unreleased
+## 1.4 — 2026-11-03
 
 ### Changed
 - New application ids: `es.gestal.supertube` (phones and tablets) and `es.gestal.supertube.tv` (Android TV). They are
