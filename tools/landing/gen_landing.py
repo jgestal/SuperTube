@@ -27,8 +27,11 @@ REPO = "https://github.com/jgestal/SuperTube"
 DOWNLOAD = REPO + "/releases/latest"
 TV_URL = BASE.split("://", 1)[1] + "tv"  # short address to type on a TV remote (tv/index.html redirects to the APK)
 # Filled by find_downloads(): direct links to the newest release that carries each app
-PHONE = {"url": DOWNLOAD, "name": "", "version": ""}
-TV = None  # None until a release has the TV APK: then the "Coming soon" badges go away
+DIST = os.path.join(ROOT, "dist")  # signed APKs written by tools/release/release.sh (not in git)
+# Filled by find_downloads(). "href" (site-relative) when the APK is hosted on this website (landing/apk/),
+# else a GitHub release link. "src" is the local APK to copy.
+PHONE = {"url": DOWNLOAD, "href": "", "name": "", "version": "", "src": "", "mb": 0}
+TV = None  # None until there is a TV APK: then the "Coming soon" badges go away
 LANGS = ["en", "es", "fr", "de", "pt", "it"]
 HREFLANG = {"en": "en", "es": "es", "fr": "fr", "de": "de", "pt": "pt-BR", "it": "it"}
 LEGAL_LANGS = ["en", "es"]  # the rest link to the English legal pages
@@ -45,12 +48,37 @@ def version():
     return m.group(1) if m else ""
 
 
-def find_downloads():
-    """Direct APK links from the GitHub releases: the phone APK, and the universal TV APK (SuperTubeTV_*).
+def vkey(v):
+    return [int(x) if x.isdigit() else 0 for x in re.split(r"[.-]", v)]
 
-    Without network the phone button links to the releases page and the TV stays as "Coming soon"."""
+
+def local_apk(pattern):
+    """Newest APK matching `pattern` in dist/release-<version>/: hosted on the website, in landing/apk/."""
+    if not os.path.isdir(DIST):
+        return None
+    for d in sorted(os.listdir(DIST), key=lambda n: vkey(n.replace("release-", "")), reverse=True):
+        folder = os.path.join(DIST, d)
+        for name in sorted(os.listdir(folder)) if os.path.isdir(folder) else []:
+            if re.match(pattern, name):
+                path = os.path.join(folder, name)
+                return {"url": BASE + "apk/" + name, "href": "apk/" + name, "name": name, "src": path,
+                        "version": d.replace("release-", ""), "mb": round(os.path.getsize(path) / 1e6)}
+    return None
+
+
+def find_downloads():
+    """APK links: the website's own copies (dist/ -> landing/apk/) or else the GitHub releases.
+
+    Phone: SuperTube-<version>.apk. TV: the universal SuperTubeTV_stable_<version>_universal.apk (works on every TV)."""
     global TV
     PHONE["version"] = version()
+    phone, tv = local_apk(r"SuperTube-[\d.]+\.apk$"), local_apk(r"SuperTubeTV_stable_.*_universal\.apk$")
+    if phone:
+        PHONE.update(phone)
+    TV = tv
+    if phone and tv:
+        print("phone:", phone["name"], "| tv:", tv["name"], "(hosted in landing/apk/)")
+        return
     try:
         req = urllib.request.Request("https://api.github.com/repos/jgestal/SuperTube/releases?per_page=20",
                                      headers={"Accept": "application/vnd.github+json", "User-Agent": "supertube-landing"})
@@ -69,7 +97,23 @@ def find_downloads():
                 PHONE.update(url=url, name=name, version=ver)
             if TV is None and re.match(r"SuperTubeTV_stable_.*_universal\.apk$", name):
                 TV = {"url": url, "name": name, "version": ver}
-    print("phone:", PHONE["name"] or "-", "| tv:", TV["name"] if TV else "not released")
+    print("phone:", PHONE["href"] or PHONE["name"] or "-", "| tv:", (TV.get("href") or TV["name"]) if TV else "not released")
+
+
+def publish_apks():
+    """Copies the hosted APKs to landing/apk/ (the server must send them as application/vnd.android.package-archive)."""
+    for app in (PHONE, TV):
+        if app and app.get("src"):
+            os.makedirs(os.path.join(OUT, "apk"), exist_ok=True)
+            shutil.copy2(app["src"], os.path.join(OUT, app["href"]))
+    # Apache: right type for the APKs (otherwise some browsers save them as .zip) and the 404 page
+    root = "/" + BASE.split("://", 1)[1].split("/", 1)[1]
+    write(".htaccess", "AddType application/vnd.android.package-archive .apk\n"
+                       f"ErrorDocument 404 {root}404.html\n")
+
+
+def link(app, here):
+    return rel(here, app["href"]) if app.get("href") else app["url"]
 
 
 def e(text):
@@ -224,23 +268,24 @@ def footer(lang, here):
 """
 
 
-def dl_button(lang, kind, size="big"):
+def dl_button(lang, here, kind, size="big"):
     """Download button of one app: phone and TV are different APKs, each button says which one it is."""
     s = S[lang]
     if kind == "phone":
-        url, ver, label = PHONE["url"], PHONE["version"], s["dl_phone"]
+        app, label = PHONE, s["dl_phone"]
     elif TV:
-        url, ver, label = TV["url"], TV["version"], s["dl_tv"]
+        app, label = TV, s["dl_tv"]
     else:
         return (f'<span class="btn {size} ghost soon-btn" aria-disabled="true">{svg("tv")}'
                 f'<span><b>{e(s["dl_tv"])}</b><small>{e(s["soon"])}</small></span></span>')
-    sub = f'APK{" · v" + ver if ver else ""} · GitHub'
-    return (f'<a class="btn primary {size}" href="{url}" rel="noopener">{svg(kind)}'
+    ver = app["version"]
+    sub = f'APK{" · v" + ver if ver else ""} · ' + (f'{app["mb"]} MB' if app.get("href") else "GitHub")
+    return (f'<a class="btn primary {size}" href="{link(app, here)}"{" download" if app.get("href") else ""} rel="noopener">{svg(kind)}'
             f'<span><b>{e(label)}</b><small>{e(sub)}</small></span></a>')
 
 
-def cta(lang):
-    return f'<div class="dl-pair">{dl_button(lang, "phone")}{dl_button(lang, "tv")}</div>'
+def cta(lang, here):
+    return f'<div class="dl-pair">{dl_button(lang, here, "phone")}{dl_button(lang, here, "tv")}</div>'
 
 
 def file_line(lang, kind):
@@ -341,7 +386,7 @@ def home(lang):
     <p class="kicker"><i></i>{e(s['kicker'])}</p>
     <h1><span>{e(s['h1a'])}</span> <span class="grad">{e(s['h1b'])}</span></h1>
     <p class="lead">{e(s['lead'])}</p>
-    <div class="ctas">{cta(lang)}</div>
+    <div class="ctas">{cta(lang, here)}</div>
     <ul class="chips">{chips}</ul>
   </div>
   <div class="stage">
@@ -357,10 +402,10 @@ def home(lang):
   <div class="apps">
     <article class="card app reveal"><div class="app-media phone-media">{phone_img(here, 'player')}</div>
       <div class="app-copy"><h3>{svg('phone')}{e(s['phone_h'])}</h3><p>{e(s['phone_p'])}</p><ul class="ticks">{phone_pts}</ul>
-      <div class="app-dl">{dl_button(lang, 'phone', 'small')}{file_line(lang, 'phone')}</div></div></article>
+      <div class="app-dl">{dl_button(lang, here, 'phone', 'small')}{file_line(lang, 'phone')}</div></div></article>
     <article class="card app reveal"><div class="app-media tv-media">{tv_img(here, 'tv_lite_mode')}</div>
       <div class="app-copy"><h3>{svg('tv')}{e(s['tv_h'])}{soon}</h3><p>{e(s['tv_p'])}</p><ul class="ticks">{tv_pts}</ul>
-      <div class="app-dl">{dl_button(lang, 'tv', 'small')}{file_line(lang, 'tv')}</div></div></article>
+      <div class="app-dl">{dl_button(lang, here, 'tv', 'small')}{file_line(lang, 'tv')}</div></div></article>
   </div>
 </div></section>
 
@@ -402,7 +447,7 @@ def home(lang):
 
 <section class="final"><div class="wrap">
   <div class="final-card reveal"><img src="{rel(here, 'assets/img/icon.svg')}" alt="" width="88" height="88" loading="lazy">
-  <h2>{e(s['final_h'])}</h2><p>{e(s['final_p'])}</p>{cta(lang)}</div>
+  <h2>{e(s['final_h'])}</h2><p>{e(s['final_p'])}</p>{cta(lang, here)}</div>
 </div></section>
 </main>
 
@@ -471,7 +516,7 @@ def llms_txt():
 
 def tv_page():
     """{TV_URL}: short address for the TV remote. Redirects to the universal TV APK (or to the install steps)."""
-    target = TV["url"] if TV else "../#install"
+    target = link(TV, "tv/") if TV else "../#install"
     texts = {l: [S[l]["tv_page_h"], S[l]["tv_page_p"], S[l]["dl_tv"]] for l in LANGS}
     write("tv/index.html", f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -515,6 +560,7 @@ def main():
         shutil.rmtree(OUT)
     os.makedirs(OUT)
     shutil.copytree(os.path.join(HERE, "static"), os.path.join(OUT, "assets"), dirs_exist_ok=True)
+    publish_apks()
     images()
     for lang in LANGS:
         home(lang)

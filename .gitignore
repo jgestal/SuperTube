@@ -81,3 +81,7 @@ supertube/keystore.properties
 
 # Python
 __pycache__/
+
+# Signed release APKs (tools/release/release.sh); the website copies them to landing/apk/
+/dist/
+/landing/apk/*.apk

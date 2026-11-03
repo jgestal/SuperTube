@@ -6,7 +6,7 @@
 #   4. writes the TV update manifest (update/supertube_tv.json) and commits it
 #   5. creates the GitHub release (draft until every APK is uploaded), then pushes the manifest: TVs only see the
 #      update once the APKs can be downloaded
-#   6. regenerates the website so its download buttons point to the new APKs
+#   6. regenerates the website: it hosts the new APKs (dist/ -> landing/apk/) behind its download buttons
 #
 #   tools/release/release.sh            # asks before anything is pushed or published
 #   tools/release/release.sh --dry-run  # stops after building and checking the APKs
@@ -57,7 +57,7 @@ step "Unit tests and release builds"
 sh ./gradlew -q clean :supertube:testStbetaDebugUnitTest \
   :smarttubetv:assembleStstableRelease :supertube:assembleStbetaRelease
 
-DIST="$ROOT/build/release-$VERSION"
+DIST="$ROOT/dist/release-$VERSION"  # not in git; gen_landing.py copies these APKs to landing/apk/
 rm -rf "$DIST" && mkdir -p "$DIST"
 cp smarttubetv/build/outputs/apk/ststable/release/SuperTubeTV_stable_"$VERSION"_*.apk "$DIST/"
 cp supertube/build/outputs/apk/stbeta/release/SuperTube_"$VERSION"_release.apk "$DIST/SuperTube-$VERSION.apk"
