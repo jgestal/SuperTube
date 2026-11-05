@@ -35,8 +35,8 @@ android {
         applicationId "es.gestal.supertube"
         minSdkVersion 26
         targetSdkVersion project.properties.compileSdkVersion
-        versionCode 9
-        versionName "1.4"
+        versionCode 10
+        versionName "1.4.1"
         multiDexEnabled = true
         vectorDrawables.useSupportLibrary = true
 

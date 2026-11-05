@@ -2,6 +2,18 @@
 
 All notable changes to SuperTube. Versions follow the [GitHub releases](https://github.com/jgestal/SuperTube/releases).
 
+## 1.4.1 — 2026-11-05
+
+### Added
+- Website: the install section explains the Chrome, Android and Play Protect warnings, what to tap to install
+  anyway, and the signing certificate to check the APK. New question about it in the FAQ.
+
+### Fixed
+- The VirusTotal scan of each release failed when no API key was set. Releases now get the VirusTotal report
+  of every APK in their notes.
+
+The apps themselves are unchanged from 1.4.
+
 ## 1.4 — 2026-11-03
 
 ### Changed
