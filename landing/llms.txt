@@ -49,8 +49,8 @@ SuperTube has no server of its own, no analytics and no advertising code. Your s
 ## Links
 
 - [Website](https://gestal.es/supertube/): [English](https://gestal.es/supertube/), [Español](https://gestal.es/supertube/es/), [Français](https://gestal.es/supertube/fr/), [Deutsch](https://gestal.es/supertube/de/), [Português](https://gestal.es/supertube/pt/), [Italiano](https://gestal.es/supertube/it/)
-- [Download for phones and tablets](https://gestal.es/supertube/apk/SuperTube-1.4.apk) (SuperTube-1.4.apk)
-- [Download for Android TV](https://gestal.es/supertube/apk/SuperTubeTV_stable_1.4_universal.apk) (SuperTubeTV_stable_1.4_universal.apk), or type gestal.es/supertube/tv in the Downloader app on the TV
+- [Download for phones and tablets](https://gestal.es/supertube/apk/SuperTube-1.4.1.apk) (SuperTube-1.4.1.apk)
+- [Download for Android TV](https://gestal.es/supertube/apk/SuperTubeTV_stable_1.4.1_universal.apk) (SuperTubeTV_stable_1.4.1_universal.apk), or type gestal.es/supertube/tv in the Downloader app on the TV
 - [All releases](https://github.com/jgestal/SuperTube/releases/latest)
 - [Source code and changelog](https://github.com/jgestal/SuperTube)
 - [Privacy policy](https://gestal.es/supertube/privacy/)
