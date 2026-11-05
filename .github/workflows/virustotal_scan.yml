@@ -40,6 +40,10 @@ jobs:
           mkdir -p release_assets
           gh release download "$TAG_NAME" --dir release_assets --pattern "*.apk"
 
+      - name: No VirusTotal key
+        if: ${{ env.HAS_VT_KEY != 'true' }}
+        run: echo "::warning::VIRUS_TOTAL_API_KEY secret not set; skipping the VirusTotal scan and the release notes report."
+
       - name: VirusTotal Scan
         if: ${{ env.HAS_VT_KEY == 'true' }}
         id: vt
@@ -79,6 +83,7 @@ jobs:
           done
 
       - name: Update Release Notes
+        if: steps.vt.outcome == 'success'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
