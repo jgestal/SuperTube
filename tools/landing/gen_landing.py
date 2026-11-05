@@ -108,9 +108,10 @@ def publish_apks():
         if app and app.get("src"):
             os.makedirs(os.path.join(OUT, "apk"), exist_ok=True)
             shutil.copy2(app["src"], os.path.join(OUT, app["href"]))
-    # Apache: right type for the APKs (otherwise some browsers save them as .zip) and the 404 page
+    # Apache: right type for the APKs (otherwise some browsers save them as .zip) and the 404 page.
+    # Written as _htaccess so it shows up in Finder and FTP clients: rename it to .htaccess on the server.
     root = "/" + BASE.split("://", 1)[1].split("/", 1)[1]
-    write(".htaccess", "AddType application/vnd.android.package-archive .apk\n"
+    write("_htaccess", "AddType application/vnd.android.package-archive .apk\n"
                        f"ErrorDocument 404 {root}404.html\n")
 
 

@@ -182,7 +182,7 @@ supertube/tools/rotation_e2e.sh path/to/SuperTube.apk                      # ful
 To publish a version (same `versionName` in both apps and a dated CHANGELOG section), `tools/release/release.sh`
 runs the tests, builds and checks both signed apps, writes the TV update manifest, creates the GitHub release with
 every APK and regenerates the website. `--dry-run` stops after the build. The signed APKs stay in `dist/` (not in
-git) and the website hosts the newest ones in `landing/apk/`: upload `landing/` after every release. The TV app is signed with the root
+git) and the website hosts the newest ones in `landing/apk/`: upload `landing/` after every release and rename `_htaccess` to `.htaccess` on the server. The TV app is signed with the root
 `keystore.properties` (same format as the phone one).
 
 The website (`landing/`) and the social network images (`promo/`) are generated with

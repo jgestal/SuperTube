@@ -123,4 +123,4 @@ gh release view "$TAG" --json url -q .url
 step "Website"
 python3 tools/landing/gen_landing.py
 echo
-echo "Done. Upload landing/ to the web server."
+echo "Done. Upload landing/ to the web server and rename _htaccess to .htaccess there."
