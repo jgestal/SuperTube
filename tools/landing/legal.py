@@ -1,5 +1,6 @@
 # Privacy policy and legal notice (English and Spanish; the other languages link to the English pages).
 # Plain HTML fragments. Keep them in sync with what the apps really do (see the README).
+# gen_landing.py also writes the privacy policy as PRIVACY.md and PRIVACY.es.md in the repository root.
 
 UPDATED = "2026-11-03"
 EMAIL = "juan@gestal.es"

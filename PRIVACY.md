@@ -1,42 +1,66 @@
-# Privacy Policy for SmartTube (F-Droid Build)
+**English** · [Español](PRIVACY.es.md)
 
-**Last Updated:** March 21, 2026
+# Privacy policy · SuperTube
 
-This Privacy Policy applies specifically to the **F-Droid flavor** of SmartTube (Package ID: `app.smarttube.fdroid`). This version is specifically hardened for user privacy and compliance with F-Droid’s inclusion policy.
+*Last updated: 2026-11-03*
 
-## 1. Scope of this Policy
-This document covers the **F-Droid build** only. Other versions or "flavors" of the application (e.g., Stable, Beta) may contain additional features such as self-update mechanisms or crash reporting that are removed in this specific F-Droid release.
+## In short
 
-## 2. Data Collection and Processing
-* **No Backend:** The F-Droid build of SmartTube operates entirely as a client-side application. It does not communicate with any developer-controlled servers.
-* **No Telemetry or Analytics:** This version contains no tracking code, telemetry, or analytics frameworks (e.g., no Firebase, no Crashlytics). We do not monitor how you use the app.
-* **No Update Tracking:** The self-update mechanism is disabled in this flavor. Updates are handled exclusively through the F-Droid client.
+The SuperTube apps (`es.gestal.supertube` for phones and tablets, `es.gestal.supertube.tv` for
+Android TV) and this website **don't collect any personal data for the developer**. There are no SuperTube
+accounts, no analytics, no advertising and no crash reports. SuperTube has no server of its own.
 
-## 3. Third-Party Services (YouTube/Google)
-* **Authentication:** When you sign in, the application uses the official Google OAuth 2.0 flow. This is a secure method that allows you to authorize the app without sharing your password with the developer.
-* **Local Storage:** Authentication tokens are stored exclusively on your device's secure local storage. They are never transmitted to, or stored by, the developer.
-* **Data Flow:** Video data and account information are fetched directly from YouTube/Google servers to your device.
+## Who is responsible
 
-## 4. Community-Driven Services & Third-Party APIs
-To provide core functionality and enhanced features, the application communicates with the following community-driven services:
-* **SponsorBlock:** The app sends the ID of the video being viewed to the SponsorBlock API to retrieve crowd-sourced skip segments.
-* **DeArrow:** The app sends the ID of the video being viewed to the DeArrow API to retrieve crowd-sourced titles.
-* **Return YouTube Dislike (RYD):** The app sends the Video ID to the RYD API to retrieve estimated dislike counts.
-* **Anonymous Metadata Requests:** These requests are "read-only" and do not include personal identifiers, Google account tokens, or user-specific profile data. 
-* **General API Communication:** The application may communicate with other third-party infrastructure (such as official YouTube/Google endpoints) solely to fetch media content and metadata required for the application to function. These functional requests do not involve the collection or storage of personal user data by the developer.
+Juan Gestal, developer of SuperTube. Contact: [juan@gestal.es](mailto:juan@gestal.es). If you write to us, we only use
+your email to answer you and delete it when the conversation is over.
 
-## 5. Automated Decision-Making and Profiling
-In accordance with **GDPR Article 15**, we confirm for this build:
-* **No Profiling:** We do not track user behavior to build profiles.
-* **No Automated Decisions:** The app does not use algorithms or AI to make decisions about users or to manipulate content ranking. Content is served as-is from the YouTube API.
+## Data that stays on your device
 
-## 6. External Links & Donations
-The application contains static links and addresses for project documentation (GitHub) and donations (e.g., PayPal, Patreon, Bitcoin, Ethereum, and other cryptocurrencies).
-* **Manual Action Only:** These links do not trigger automatically. No data is transmitted until the user manually clicks a link or copies an address.
-* **Third-Party Policies:** Once you leave the application to a donation platform or use a third-party wallet, your data is governed by the privacy policy of those respective services.
+To work, the app keeps on your device: your settings, favorites and folders, recent searches, playback positions,
+downloaded files (in `Movies/SuperTube` and `Music/SuperTube`) and, only if you sign in, the session
+of your Google account. None of this is sent to us. You can delete it by clearing the app data or uninstalling it.
+Backups are files you export yourself or, if you choose it, copies saved in your own Google Drive.
 
-## 7. Your Rights (GDPR / CCPA)
-Because this specific build flavor does not store or transmit personal data to the developer, we hold no identifiable records (names, emails, IPs) associated with your identity. Therefore, we have no data to provide or delete upon request.
+## Services the app connects to
 
-## 8. Contact
-For technical inquiries regarding the privacy architecture of the F-Droid build, please open an issue on the official GitHub repository.
+To show videos, SuperTube connects **directly** from your device to these services. They receive your IP
+address and the data needed for each request, and they process it under their own policies; the developer doesn't
+receive any of it:
+
+- **YouTube and Google**: videos, thumbnails, search, comments, sign-in and the features of your account
+  (subscriptions, history, playlists), and the optional Google Drive backup. When you are signed in, Google may record your
+  activity in your account according to your settings there. [Google Privacy Policy](https://policies.google.com/privacy).
+- **SponsorBlock and DeArrow** (`sponsor.ajay.app`): the video identifier, to get the sponsor
+  segments and the community titles and thumbnails, when these features are on.
+- **Return YouTube Dislike** (`returnyoutubedislikeapi.com`): the video identifier, to show the
+  like and dislike counts in the player (it can be turned off in the player settings).
+- **GitHub**: the update check and the download of new versions, and a configuration file used by the
+  video engine. [GitHub Privacy Statement](https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement).
+- **Images for some menus**: on Android TV, links are shown as QR codes generated by
+  `api.qrserver.com` (it receives the link), and country flags may be loaded from `flagcdn.com`.
+
+## Permissions
+
+Internet access to play videos; notifications for media controls and downloads; access to storage only to save
+downloads and backups where Android requires it; and the microphone only if you use voice search.
+
+## This website
+
+These are static pages with no cookies, no analytics and no resources from other sites. The hosting server may keep
+standard access logs (IP address, date and page requested) for security, for a limited time.
+
+## Children
+
+SuperTube is not directed to children. The content comes from YouTube, which has its own age rules.
+
+## Your rights
+
+As we don't keep your data, there is nothing we can show, correct or delete. For your data at YouTube, use the tools in
+your Google account. You can also complain to your data protection authority (in Spain, the AEPD).
+
+## Changes
+
+If this policy changes, the new version will be published on this page with its date.
+
+This policy is also published at [https://gestal.es/supertube/privacy/](https://gestal.es/supertube/privacy/).

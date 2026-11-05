@@ -1,0 +1,24 @@
+<p><b>SuperTube</b> es un cliente de YouTube sin anuncios para móviles y tablets Android, con una interfaz táctil Material 3. Conserva el motor de SmartTube (de yuliskov) y sustituye su interfaz de TV por una diseñada para pantallas táctiles.</p>
+
+<p><b>Reproductor táctil</b></p>
+<ul>
+<li>Doble toque para avanzar o retroceder, mantener pulsado para 2× y botón de velocidad (1× · 1,5× · 2×).</li>
+<li>Gestos de brillo y volumen, mini reproductor, imagen en imagen y temporizador de apagado.</li>
+<li>Reproducción en segundo plano con controles en la pantalla de bloqueo y en las notificaciones.</li>
+<li>Segmentos de SponsorBlock en la barra de progreso, y DeArrow.</li>
+</ul>
+
+<p><b>Hecha para móviles y tablets</b></p>
+<ul>
+<li>Barra inferior o lateral, y cuatro vistas de vídeos: lista, lista compacta, cuadrícula y carruseles.</li>
+<li>Favoritos con carpetas, widget de pantalla de inicio y exportación e importación en JSON.</li>
+<li>Gestor de descargas de audio y vídeo, con selector de calidad, modo solo Wi‑Fi y pausa y reanudación.</li>
+<li>Búsqueda con búsquedas recientes, búsqueda por voz y filtros. Abre los enlaces de YouTube de otras apps.</li>
+<li>20 idiomas, tema claro y oscuro y colores dinámicos.</li>
+</ul>
+
+<p>Inicio de sesión opcional para tus suscripciones, historial y listas. Sin anuncios, sin analíticas y sin informes de errores: los ajustes, favoritos y descargas se quedan en tu dispositivo.</p>
+
+<p>También existe <b>SuperTube para Android TV</b> (una app aparte, es.gestal.supertube.tv), con imágenes de fondo al estilo Netflix y un modo ligero para teles lentas.</p>
+
+<p>SuperTube es un proyecto independiente, sin relación con YouTube ni con Google. Web: https://gestal.es/supertube/es/</p>

@@ -1,9 +1,12 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: SmartTube
-Source: https://github.com/yuliskov/SmartTube
+Upstream-Name: SuperTube
+Upstream-Contact: Juan Gestal <juan@gestal.es>
+Source: https://github.com/jgestal/SuperTube
+Comment: SuperTube is a fork of SmartTube by yuliskov (https://github.com/yuliskov/SmartTube), MIT license.
 
 Files: *
-Copyright: 2020-present yuliskov
+Copyright: 2020-present yuliskov (SmartTube)
+           2026-present Juan Gestal (SuperTube modifications)
 License: MIT
 
 License: MIT

@@ -566,6 +566,35 @@ def sitemap():
     write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: {BASE}sitemap.xml\n")
 
 
+PRIVACY_MD = {"en": "PRIVACY.md", "es": "PRIVACY.es.md"}
+
+
+def html_to_md(body):
+    """Markdown version of the small HTML subset used in legal.py (h2, p, ul/li, strong, code, a)."""
+    md = re.sub(r'<a href="([^"]+)"[^>]*>(.*?)</a>', r"[\2](\1)", body, flags=re.S)
+    md = re.sub(r"</?strong>", "**", md)
+    md = re.sub(r"</?code>", "`", md)
+    md = re.sub(r'<p class="updated">(.*?)</p>', r"*\1*", md, flags=re.S)
+    md = re.sub(r"<h2>(.*?)</h2>", r"\n## \1\n", md, flags=re.S)
+    md = re.sub(r"<li>(.*?)</li>", lambda m: "- " + m.group(1).replace("\n", "\n  "), md, flags=re.S)
+    md = re.sub(r"</?(p|ul)>", "", md)
+    md = re.sub(r"\n{3,}", "\n\n", md)
+    return html.unescape(md).strip() + "\n"
+
+
+def privacy_md():
+    """PRIVACY.md and PRIVACY.es.md in the repository root: the same policy as the website."""
+    switch = {"en": "**English** · [Español](PRIVACY.es.md)", "es": "[English](PRIVACY.md) · **Español**"}
+    online = {"en": "This policy is also published at", "es": "Esta política también está publicada en"}
+    for lang, name in PRIVACY_MD.items():
+        doc = PRIVACY[lang]
+        url = BASE + path_of(lang, "privacy")
+        text = (f"{switch[lang]}\n\n# {doc['title']} · SuperTube\n\n{html_to_md(doc['body'])}\n"
+                f"{online[lang]} [{url}]({url}).\n")
+        with open(os.path.join(ROOT, name), "w", encoding="utf-8") as f:
+            f.write(text)
+
+
 def llms_txt():
     """llms.txt (llmstxt.org): a plain summary so AI assistants describe and cite the app correctly."""
     s = S["en"]
@@ -655,6 +684,7 @@ def main():
     for lang in LEGAL_LANGS:
         doc_page(lang, "privacy", PRIVACY[lang])
         doc_page(lang, "legal", LEGAL[lang])
+    privacy_md()
     sitemap()
     llms_txt()
     tv_page()

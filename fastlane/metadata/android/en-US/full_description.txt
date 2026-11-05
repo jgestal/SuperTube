@@ -1,1 +1,24 @@
-Browse media content with your own rules on Android TV
+<p><b>SuperTube</b> is an ad-free YouTube client for Android phones and tablets, with a touch-first Material 3 interface. It keeps the engine of SmartTube (by yuliskov) and replaces its TV interface with one designed for touch screens.</p>
+
+<p><b>Touch player</b></p>
+<ul>
+<li>Double tap to seek, press and hold for 2× speed, and a speed button (1× · 1.5× · 2×).</li>
+<li>Brightness and volume gestures, mini player, picture-in-picture and sleep timer.</li>
+<li>Background playback with lock screen and notification controls.</li>
+<li>SponsorBlock segments on the seek bar, and DeArrow.</li>
+</ul>
+
+<p><b>Made for phones and tablets</b></p>
+<ul>
+<li>Bottom bar or navigation rail, and four feed layouts: list, compact list, grid and shelves.</li>
+<li>Favorites with folders, a home screen widget, and JSON export and import.</li>
+<li>Downloads manager for audio and video, with quality picker, Wi‑Fi only mode, and pause and resume.</li>
+<li>Search with recent searches, voice search and filters. Opens YouTube links from other apps.</li>
+<li>20 languages, light and dark themes, dynamic colors.</li>
+</ul>
+
+<p>Optional sign-in for your subscriptions, history and playlists. No ads, no analytics, no crash reports: settings, favorites and downloads stay on your device.</p>
+
+<p>There is also <b>SuperTube for Android TV</b> (a separate app, es.gestal.supertube.tv), with Netflix-style backdrops and a lite mode for slow TVs.</p>
+
+<p>SuperTube is an independent project, not affiliated with YouTube or Google. Website: https://gestal.es/supertube/</p>

@@ -250,8 +250,8 @@ publicidad, ni informes de errores, ni un servidor propio. Los ajustes, favorito
 sesión opcional de Google se quedan en tu dispositivo. Para funcionar, la app se conecta directamente a YouTube/Google,
 SponsorBlock, DeArrow, Return YouTube Dislike y GitHub (comprobación de actualizaciones).
 
-Lee la [política de privacidad](https://gestal.es/supertube/es/privacy/) completa. (`PRIVACY.md` en este repositorio es
-la política original de la versión F-Droid de SmartTube.)
+Lee la [política de privacidad](PRIVACY.es.md) completa, también publicada en
+[gestal.es/supertube/es/privacy](https://gestal.es/supertube/es/privacy/).
 
 ## Compilar el código
 
@@ -353,8 +353,7 @@ Google TV son marcas registradas de Google LLC.
 
 SuperTube está basado en **[SmartTube](https://github.com/yuliskov/SmartTube)** de **yuliskov** y en sus módulos
 [MediaServiceCore](https://github.com/yuliskov/MediaServiceCore) y [SharedModules](https://github.com/yuliskov/SharedModules),
-publicados con licencia MIT. Todo el mérito del motor de YouTube y de las funciones originales es suyo. El README
-original se conserva en [README_SmartTube.md](README_SmartTube.md).
+publicados con licencia MIT. Todo el mérito del motor de YouTube y de las funciones originales es suyo.
 
 SuperTube se publica con [licencia MIT](LICENSE) © 2026 Juan Gestal. ExoPlayer (`exoplayer-amzn-2.10.6`) tiene licencia
 Apache 2.0. El motor de YouTube de `MediaServiceCore` usa [Java Regex](https://github.com/florianingerl/com.florianingerl.util.regex)
