@@ -39,6 +39,7 @@ SuperTube has no server of its own, no analytics and no advertising code. Your s
 - Is it free? Yes. No ads, no subscriptions and no in-app purchases. The source code is on GitHub under the MIT license.
 - Is it an official YouTube app? No. SuperTube is an independent project, not affiliated with Google or YouTube. It is built on SmartTube, an open-source client.
 - Why isn't it on Google Play? Google Play doesn't accept apps like this one, so it is published as an APK on this page and in the GitHub releases, with the signing certificate listed in the README.
+- Why does Android say it may be harmful? Android and Play Protect warn about apps that don't come from Google Play, and Google doesn't like apps that block YouTube ads. SuperTube is open source and signed by its author. The install section explains each message and how to go ahead.
 - Is it legal to use? The app is legal open-source software. YouTube's Terms of Service don't allow third-party clients or ad blocking, and downloading can infringe copyright unless you have the rights or your law allows it. How you use it is your decision and your responsibility.
 - Do I need an account? No. Sign in only if you want your subscriptions, history and playlists. The session is stored on your device.
 - Does it work with Chromecast or Android Auto? No. SuperTube doesn't include Google Play Services, which those features need.

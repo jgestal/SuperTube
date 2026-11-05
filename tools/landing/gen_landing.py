@@ -31,6 +31,8 @@ DIST = os.path.join(ROOT, "dist")  # signed APKs written by tools/release/releas
 # Filled by find_downloads(). "href" (site-relative) when the APK is hosted on this website (landing/apk/),
 # else a GitHub release link. "src" is the local APK to copy.
 PHONE = {"url": DOWNLOAD, "href": "", "name": "", "version": "", "src": "", "mb": 0}
+# Release signing certificate, as in the README. Shown so visitors can check the APK is the original.
+CERT_SHA256 = "f6:fb:28:69:7f:24:d1:bf:21:ff:12:b8:20:e2:64:ca:4a:94:2f:3e:e8:4c:75:f2:01:6d:eb:3c:e6:07:70:41"
 TV = None  # None until there is a TV APK: then the "Coming soon" badges go away
 LANGS = ["en", "es", "fr", "de", "pt", "it"]
 HREFLANG = {"en": "en", "es": "es", "fr": "fr", "de": "de", "pt": "pt-BR", "it": "it"}
@@ -375,6 +377,9 @@ def home(lang):
     steps = "".join(f'<li class="reveal"><h3>{e(h)}</h3><p>{e(p)}</p></li>' for h, p in s["steps"])
     tv_steps = "".join(f'<li class="reveal"><h3>{e(h)}</h3><p>{e(p).replace(TV_URL, f"<b class=url>{TV_URL}</b>")}</p></li>'
                        for h, p in s["tv_steps"])
+    warn_items = "".join(
+        f'<li><span class="w-src">{e(src)}</span><p class="w-msg">{e(msg)}</p>'
+        f'<p>{re.sub(r"[*][*](.+?)[*][*]", lambda m: f"<b>{m[1]}</b>", e(fix))}</p></li>' for src, msg, fix in s["warn_items"])
     faqs = "".join(f"<details class=\"reveal\"><summary>{e(q)}</summary><p>{e(a)}</p></details>" for q, a in s["faqs"])
     priv_pts = "".join(f"<li>{svg('check')}{e(p)}</li>" for p in s["priv_points"])
     ll = lang if lang in LEGAL_LANGS else "en"
@@ -438,6 +443,11 @@ def home(lang):
   <ol class="steps">{steps}</ol>
   <h3 class="steps-h reveal">{svg('tv')}{e(s['inst_tv_h'])}{soon}</h3>
   <ol class="steps">{tv_steps}</ol>
+  <div class="warn card reveal" id="warning">
+    <h3>{svg('shield')}{e(s['warn_h'])}</h3><p class="w-why">{e(s['warn_p'])}</p>
+    <ul class="w-list">{warn_items}</ul>
+    <p class="w-fp">{e(s['warn_fp'])} <code>{CERT_SHA256}</code></p>
+  </div>
 </div></section>
 
 <section id="faq"><div class="wrap narrow">

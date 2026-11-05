@@ -560,3 +560,118 @@ SIM = {
 }
 for _l, _d in SIM.items():
     S[_l].update(_d)
+
+# Install warnings: why Chrome and Play Protect warn, and how to go ahead. **x** = button on the device, in bold.
+WARN = {
+    "en": dict(
+        warn_h="Does Android show a warning? That's expected",
+        warn_p="Chrome and Android warn about every app installed from outside Google Play. Play Protect may also flag "
+               "SuperTube because it blocks YouTube ads and isn't on Google Play, not because it contains anything harmful. "
+               "The code is open on GitHub and every APK is signed by its author.",
+        warn_items=[
+            ("Chrome", "“This type of file can harm your device”", "Tap **Download anyway**."),
+            ("Android", "“Your phone isn't allowed to install unknown apps from this source”",
+             "Tap **Settings**, turn on **Allow from this source** and go back."),
+            ("Play Protect", "“Unsafe app blocked” or “Unknown app”", "Tap **More details**, then **Install anyway**. On the TV, do the same with the remote."),
+            ("Play Protect", "Later it turns the app off or removes it",
+             "In the Play Store: your profile › **Play Protect** › settings › turn off **Scan apps with Play Protect**, and install it again."),
+        ],
+        warn_fp="To check that the APK is the original, its signing certificate (SHA-256) is:",
+        faq_warn=("Why does Android say it may be harmful?",
+                  "Android and Play Protect warn about apps that don't come from Google Play, and Google doesn't like apps that block YouTube ads. "
+                  "SuperTube is open source and signed by its author. The install section explains each message and how to go ahead."),
+    ),
+    "es": dict(
+        warn_h="¿Android muestra un aviso? Es normal",
+        warn_p="Chrome y Android avisan de cualquier app que se instale fuera de Google Play. Play Protect además puede marcar "
+               "SuperTube porque bloquea los anuncios de YouTube y no está en Google Play, no porque tenga nada dañino. "
+               "El código está abierto en GitHub y cada APK está firmado por su autor.",
+        warn_items=[
+            ("Chrome", "«Este tipo de archivo puede dañar tu dispositivo»", "Toca **Descargar de todos modos**."),
+            ("Android", "«Tu teléfono no puede instalar aplicaciones desconocidas de esta fuente»",
+             "Toca **Ajustes**, activa **Permitir de esta fuente** y vuelve atrás."),
+            ("Play Protect", "«Aplicación no segura bloqueada» o «Aplicación desconocida»", "Toca **Más detalles** y luego **Instalar de todos modos**. En la tele, haz lo mismo con el mando."),
+            ("Play Protect", "Más tarde desactiva o elimina la app",
+             "En Play Store: tu perfil › **Play Protect** › ajustes › desactiva **Analizar aplicaciones con Play Protect** y vuelve a instalarla."),
+        ],
+        warn_fp="Para comprobar que el APK es el original, su certificado de firma (SHA-256) es:",
+        faq_warn=("¿Por qué Android dice que puede ser dañina?",
+                  "Android y Play Protect avisan de las apps que no vienen de Google Play, y a Google no le gustan las apps que bloquean los anuncios de YouTube. "
+                  "SuperTube es de código abierto y está firmada por su autor. En la sección de instalación se explica cada aviso y cómo continuar."),
+    ),
+    "fr": dict(
+        warn_h="Android affiche un avertissement ? C'est normal",
+        warn_p="Chrome et Android avertissent pour toute appli installée en dehors de Google Play. Play Protect peut aussi signaler "
+               "SuperTube parce qu'elle bloque les publicités de YouTube et n'est pas sur Google Play, pas parce qu'elle contient quelque chose de dangereux. "
+               "Le code est ouvert sur GitHub et chaque APK est signé par son auteur.",
+        warn_items=[
+            ("Chrome", "« Ce type de fichier peut endommager votre appareil »", "Touchez **Télécharger quand même**."),
+            ("Android", "« Votre téléphone n'est pas autorisé à installer des applis inconnues de cette source »",
+             "Touchez **Paramètres**, activez **Autoriser cette source** et revenez en arrière."),
+            ("Play Protect", "« Appli dangereuse bloquée » ou « Appli inconnue »", "Touchez **Plus de détails**, puis **Installer quand même**. Sur la TV, faites de même avec la télécommande."),
+            ("Play Protect", "Plus tard, il désactive ou supprime l'appli",
+             "Dans le Play Store : votre profil › **Play Protect** › paramètres › désactivez **Analyser les applis avec Play Protect**, puis réinstallez-la."),
+        ],
+        warn_fp="Pour vérifier que l'APK est l'original, son certificat de signature (SHA-256) est :",
+        faq_warn=("Pourquoi Android dit qu'elle peut être dangereuse ?",
+                  "Android et Play Protect avertissent pour les applis qui ne viennent pas de Google Play, et Google n'aime pas les applis qui bloquent les publicités de YouTube. "
+                  "SuperTube est open source et signée par son auteur. La section d'installation explique chaque message et comment continuer."),
+    ),
+    "de": dict(
+        warn_h="Android zeigt eine Warnung? Das ist normal",
+        warn_p="Chrome und Android warnen bei jeder App, die nicht aus Google Play kommt. Play Protect kann SuperTube außerdem markieren, "
+               "weil sie YouTube-Werbung blockiert und nicht in Google Play ist, nicht weil sie etwas Schädliches enthält. "
+               "Der Code ist offen auf GitHub und jede APK ist vom Autor signiert.",
+        warn_items=[
+            ("Chrome", "„Dieser Dateityp kann Ihr Gerät beschädigen“", "Tippe auf **Trotzdem herunterladen**."),
+            ("Android", "„Dein Smartphone darf keine unbekannten Apps aus dieser Quelle installieren“",
+             "Tippe auf **Einstellungen**, aktiviere **Dieser Quelle vertrauen** und geh zurück."),
+            ("Play Protect", "„Unsichere App blockiert“ oder „Unbekannte App“", "Tippe auf **Weitere Details** und dann auf **Trotzdem installieren**. Auf dem Fernseher genauso mit der Fernbedienung."),
+            ("Play Protect", "Später deaktiviert oder entfernt es die App",
+             "Im Play Store: dein Profil › **Play Protect** › Einstellungen › **Apps mit Play Protect scannen** ausschalten und die App neu installieren."),
+        ],
+        warn_fp="Um zu prüfen, dass die APK das Original ist: Ihr Signaturzertifikat (SHA-256) lautet:",
+        faq_warn=("Warum sagt Android, dass sie schädlich sein könnte?",
+                  "Android und Play Protect warnen bei Apps, die nicht aus Google Play kommen, und Google mag keine Apps, die YouTube-Werbung blockieren. "
+                  "SuperTube ist Open Source und vom Autor signiert. Im Abschnitt zur Installation steht, was jede Meldung bedeutet und wie es weitergeht."),
+    ),
+    "pt": dict(
+        warn_h="O Android mostra um aviso? É normal",
+        warn_p="O Chrome e o Android avisam sobre qualquer app instalado fora do Google Play. O Play Protect também pode marcar "
+               "o SuperTube porque ele bloqueia os anúncios do YouTube e não está no Google Play, não porque tenha algo nocivo. "
+               "O código é aberto no GitHub e cada APK é assinado pelo autor.",
+        warn_items=[
+            ("Chrome", "“Esse tipo de arquivo pode danificar o dispositivo”", "Toque em **Fazer o download mesmo assim**."),
+            ("Android", "“Seu smartphone não tem permissão para instalar apps desconhecidos desta fonte”",
+             "Toque em **Configurações**, ative **Permitir desta fonte** e volte."),
+            ("Play Protect", "“App não seguro bloqueado” ou “App desconhecido”", "Toque em **Mais detalhes** e depois em **Instalar mesmo assim**. Na TV, faça o mesmo com o controle remoto."),
+            ("Play Protect", "Depois ele desativa ou remove o app",
+             "Na Play Store: seu perfil › **Play Protect** › configurações › desative **Verificar apps com o Play Protect** e instale de novo."),
+        ],
+        warn_fp="Para conferir que o APK é o original, o certificado de assinatura (SHA-256) é:",
+        faq_warn=("Por que o Android diz que ele pode ser nocivo?",
+                  "O Android e o Play Protect avisam sobre apps que não vêm do Google Play, e o Google não gosta de apps que bloqueiam os anúncios do YouTube. "
+                  "O SuperTube é de código aberto e assinado pelo autor. A seção de instalação explica cada aviso e como continuar."),
+    ),
+    "it": dict(
+        warn_h="Android mostra un avviso? È normale",
+        warn_p="Chrome e Android avvisano per qualsiasi app installata fuori da Google Play. Play Protect può anche segnalare "
+               "SuperTube perché blocca la pubblicità di YouTube e non è su Google Play, non perché contenga qualcosa di dannoso. "
+               "Il codice è aperto su GitHub e ogni APK è firmato dal suo autore.",
+        warn_items=[
+            ("Chrome", "«Questo tipo di file può danneggiare il dispositivo»", "Tocca **Scarica comunque**."),
+            ("Android", "«Il telefono non è autorizzato a installare app sconosciute da questa fonte»",
+             "Tocca **Impostazioni**, attiva **Consenti da questa fonte** e torna indietro."),
+            ("Play Protect", "«App non sicura bloccata» o «App sconosciuta»", "Tocca **Altri dettagli** e poi **Installa comunque**. Sulla TV, fai lo stesso con il telecomando."),
+            ("Play Protect", "Più tardi disattiva o rimuove l'app",
+             "Nel Play Store: il tuo profilo › **Play Protect** › impostazioni › disattiva **Scansiona le app con Play Protect** e reinstallala."),
+        ],
+        warn_fp="Per verificare che l'APK sia l'originale, il suo certificato di firma (SHA-256) è:",
+        faq_warn=("Perché Android dice che potrebbe essere dannosa?",
+                  "Android e Play Protect avvisano per le app che non vengono da Google Play, e a Google non piacciono le app che bloccano la pubblicità di YouTube. "
+                  "SuperTube è open source e firmata dal suo autore. La sezione sull'installazione spiega ogni avviso e come andare avanti."),
+    ),
+}
+for _l, _d in WARN.items():
+    S[_l].update(_d)
+    S[_l]["faqs"].insert(3, S[_l].pop("faq_warn"))

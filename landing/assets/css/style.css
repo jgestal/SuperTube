@@ -344,3 +344,19 @@ section { padding: clamp(56px, 8vw, 100px) 0; }
   .dl-pair .btn { width: 100%; justify-content: center; }
 }
 .steps .url { color: var(--text); white-space: nowrap; }
+
+/* Install warnings (Chrome, Play Protect) and how to go ahead */
+.warn { margin-top: 34px; padding: clamp(22px, 3.5vw, 36px); border-color: rgba(255, 176, 64, .35);
+  background: radial-gradient(520px circle at 0 0, rgba(255, 176, 64, .1), transparent 60%), var(--card); }
+.warn h3 { display: flex; align-items: center; gap: 10px; font-size: 1.3rem; }
+.warn h3 .i { color: #ffb040; width: 1.4em; height: 1.4em; flex: none; }
+.w-why { color: var(--muted); max-width: 72ch; }
+.w-list { list-style: none; padding: 0; margin: 18px 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.w-list li { background: var(--card2); border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; }
+.w-list p { margin: 0; }
+.w-src { display: inline-block; font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #ffb040; margin-bottom: 6px; }
+.w-msg { color: var(--muted); font-style: italic; margin-bottom: 8px !important; }
+.w-list b { color: var(--text); }
+.w-fp { color: var(--muted); font-size: .85rem; margin: 0; }
+.w-fp code { color: var(--text); font-size: .8rem; overflow-wrap: anywhere; }
+@media (max-width: 760px) { .w-list { grid-template-columns: 1fr; } }
