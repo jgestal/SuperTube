@@ -2,6 +2,19 @@
 
 All notable changes to SuperTube. Versions follow the [GitHub releases](https://github.com/jgestal/SuperTube/releases).
 
+## 1.4.2 — 2026-11-05
+
+### Changed
+- Android TV: backups are saved in a `SuperTubeBackup` folder (on the device and in Google Drive) instead of
+  `SmartTubeBackup`. Older backups can still be restored: the Google Drive restore list shows both folders, and
+  local backups are chosen with the file picker as before.
+- The repository no longer carries SmartTube's files: the privacy policy (`PRIVACY.md`, `PRIVACY.es.md`) is
+  SuperTube's, generated from the website, and the store metadata (`fastlane/`) describes SuperTube with its own
+  icon and screenshots. README in English and Spanish (`README.es.md`).
+
+### Removed
+- Unused code that could download SmartTube's voice search bridges and APKs, and SmartTube's Discord link.
+
 ## 1.4.1 — 2026-11-05
 
 ### Added
