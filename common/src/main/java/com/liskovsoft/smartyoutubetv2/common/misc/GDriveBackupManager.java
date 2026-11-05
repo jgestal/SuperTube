@@ -38,13 +38,16 @@ public class GDriveBackupManager {
     private static final String FILES_SUBDIR = "files";
     private static final String SHARED_PREFS_SUBDIR = "shared_prefs";
     private static final String BACKUP_NAME = "backup.zip";
+    // SuperTube: new backups go to SuperTubeBackup; the restore list also shows the old SmartTubeBackup folder
+    // (SuperTube TV 1.4.x and SmartTube backups)
+    private static final String ROOT_BACKUP_DIR = "SuperTubeBackup";
+    private static final String LEGACY_ROOT_BACKUP_DIR = "SmartTubeBackup";
     private final GoogleSignInService mSignInService;
     private final String mRootDir;
     private final String mSharedPrefs;
     private final String mFilesDir;
     private final String[] mDataDirs;
     private final String mBackupDir;
-    private final String mRootBackupDir;
     private final GeneralData mGeneralData;
     private Disposable mBackupAction;
     private Disposable mRestoreAction;
@@ -57,8 +60,7 @@ public class GDriveBackupManager {
         mSharedPrefs = String.format("%s/%s", mRootDir, SHARED_PREFS_SUBDIR);
         mFilesDir = String.format("%s/%s", mRootDir, FILES_SUBDIR);
         mDataDirs = new String[] { mSharedPrefs, mFilesDir };
-        mBackupDir = String.format("SmartTubeBackup/%s", context.getPackageName());
-        mRootBackupDir = "SmartTubeBackup";
+        mBackupDir = String.format("%s/%s", ROOT_BACKUP_DIR, context.getPackageName());
         mSignInService = GoogleSignInService.instance();
     }
 
@@ -275,7 +277,9 @@ public class GDriveBackupManager {
     }
 
     private void showRestoreChooserDialog() {
-        mRestoreAction = DriveService.getFolderList(Uri.parse(mRootBackupDir))
+        mRestoreAction = Observable.concat(getBackupDirs(ROOT_BACKUP_DIR), getBackupDirs(LEGACY_ROOT_BACKUP_DIR))
+                .toList()
+                .map(GDriveBackupManager::flatten)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()) // run subscribe on separate thread
                 .subscribe(
@@ -287,6 +291,30 @@ public class GDriveBackupManager {
                             }
                         }
                 );
+    }
+
+    /**
+     * Backup folders inside {@code rootDir}, as full paths ({@code rootDir/name}). Empty when rootDir doesn't exist.
+     */
+    private static Observable<List<String>> getBackupDirs(String rootDir) {
+        return DriveService.getFolderList(Uri.parse(rootDir))
+                .map(names -> {
+                    List<String> dirs = new ArrayList<>();
+                    for (String name : names) {
+                        if (name != null) {
+                            dirs.add(String.format("%s/%s", rootDir, name));
+                        }
+                    }
+                    return dirs;
+                });
+    }
+
+    private static List<String> flatten(List<List<String>> lists) {
+        List<String> result = new ArrayList<>();
+        for (List<String> list : lists) {
+            result.addAll(list);
+        }
+        return result;
     }
 
     private void showLocalRestoreDialog(List<String> backups) {
@@ -301,10 +329,9 @@ public class GDriveBackupManager {
         AppDialogPresenter dialog = AppDialogPresenter.instance(mContext);
         List<OptionItem> options = new ArrayList<>();
 
-        for (String name : backups) {
-            options.add(UiOptionItem.from(name, optionItem -> {
+        for (String backupDir : backups) {
+            options.add(UiOptionItem.from(backupDir, optionItem -> {
                 AppDialogUtil.showConfirmationDialog(mContext, mContext.getString(R.string.app_restore), () -> {
-                    String backupDir = String.format("%s/%s", mRootBackupDir, name);
                     startRestore(backupDir, () -> startRestoreOld(backupDir, null));
                 });
             }));
