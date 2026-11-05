@@ -50,9 +50,16 @@ jobs:
         uses: crazy-max/ghaction-virustotal@936d8c5c00afe97d3d9a1af26d017cfdf26800a2 # v5.0.0
         with:
           vt_api_key: ${{ secrets.VIRUS_TOTAL_API_KEY }}
-          files: |
-            release_assets/*.apk
+          # On a release event the action scans the release assets, matching their names (regex);
+          # when run by hand it scans the downloaded files (glob).
+          files: ${{ github.event_name == 'release' && '\.apk$' || 'release_assets/*.apk' }}
           request_rate: 4
+
+      - name: Check that the APKs were sent
+        if: steps.vt.outcome == 'success' && steps.vt.outputs.analysis == ''
+        run: |
+          echo "::error::VirusTotal received no APK: check the files input."
+          exit 1
 
       - name: Generate Custom Badge Report
         if: steps.vt.outcome == 'success'
