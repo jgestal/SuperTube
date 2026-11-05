@@ -108,11 +108,87 @@ def publish_apks():
         if app and app.get("src"):
             os.makedirs(os.path.join(OUT, "apk"), exist_ok=True)
             shutil.copy2(app["src"], os.path.join(OUT, app["href"]))
-    # Apache: right type for the APKs (otherwise some browsers save them as .zip) and the 404 page.
-    # Written as _htaccess so it shows up in Finder and FTP clients: rename it to .htaccess on the server.
-    root = "/" + BASE.split("://", 1)[1].split("/", 1)[1]
-    write("_htaccess", "AddType application/vnd.android.package-archive .apk\n"
-                       f"ErrorDocument 404 {root}404.html\n")
+
+
+def server_config():
+    """landing/server/: web server setup (APK type, 404 page, server/ hidden), for Apache and nginx.
+
+    The Apache file is also written as landing/_htaccess. Names without a leading dot so they show up in Finder
+    and FTP clients: rename _htaccess to .htaccess on the server.
+    """
+    root = "/" + BASE.split("://", 1)[1].split("/", 1)[1]  # /supertube/
+    htaccess = (f"# SuperTube website ({root}): APK type, 404 page, and server/ not public\n"
+                "AddType application/vnd.android.package-archive .apk\n"
+                f"ErrorDocument 404 {root}404.html\n"
+                f"RedirectMatch 404 ^{root}server(/|$)\n")
+    nginx = f"""# SuperTube website ({root}): APK type, 404 page, and server/ not public
+location ^~ {root} {{
+    index index.html;
+    error_page 404 {root}404.html;
+
+    location ~* \\.apk$ {{
+        types {{ }}
+        default_type application/vnd.android.package-archive;
+    }}
+    location ^~ {root}server/ {{
+        return 404;
+    }}
+}}
+"""
+    write("_htaccess", htaccess)
+    write("server/apache/_htaccess", htaccess)
+    write("server/nginx/nginx.ssl.conf_supertube", nginx)
+    write("server/README.md", SERVER_README.format(root=root, base=BASE, nginx=nginx))
+
+
+SERVER_README = """# Servidor web de SuperTube
+
+Configuración para servir la web en `{base}`. Hace tres cosas:
+
+- Los `.apk` salen como `application/vnd.android.package-archive`, para que el móvil los reconozca como apps.
+- Las direcciones que no existen muestran `{root}404.html`, la página 404 de SuperTube.
+- Esta carpeta `server/` no se puede abrir desde la web (da 404).
+
+No hace falta subir `server/` al servidor. Si se sube, queda oculta igualmente.
+
+## nginx (HestiaCP)
+
+Este es el que usa gestal.es. nginx no lee `.htaccess`.
+
+Como root, en el servidor (escribe el contenido de `nginx/nginx.ssl.conf_supertube` y recarga nginx):
+
+```bash
+cat > /home/gestal/conf/web/gestal.es/nginx.ssl.conf_supertube <<'EOF'
+{nginx}EOF
+nginx -t && systemctl reload nginx
+```
+
+- Hestia incluye automáticamente cualquier archivo `nginx.ssl.conf_*` de la carpeta del dominio y lo conserva al regenerar las
+  plantillas. Se comprueba con `grep -n "nginx.ssl.conf_" /home/gestal/conf/web/gestal.es/nginx.ssl.conf`.
+- Si `nginx -t` da error, no se recarga y la web sigue como estaba.
+- Si la caché de nginx del dominio está activada en Hestia, vacíala desde el panel.
+- Para quitarlo: `rm /home/gestal/conf/web/gestal.es/nginx.ssl.conf_supertube && nginx -t && systemctl reload nginx`.
+
+Sin Hestia, el bloque `location` de `nginx/nginx.ssl.conf_supertube` va dentro del bloque `server` del dominio
+(`/etc/nginx/sites-available/...`), y luego `nginx -t && systemctl reload nginx`.
+
+## Apache
+
+Sube `apache/_htaccess` (es el mismo archivo que `landing/_htaccess`) a la carpeta de la web, `{root}`, y en el
+servidor renómbralo a `.htaccess`.
+
+- Apache tiene que permitir `.htaccess` en esa carpeta: `AllowOverride FileInfo` (o `All`) en su `<Directory>`.
+- Si no se permite, pon las mismas líneas dentro de `<Directory /ruta/a{root}>` en la configuración del sitio y
+  recarga con `apachectl configtest && systemctl reload apache2`.
+
+## Comprobar
+
+```bash
+curl -sI {base}apk/SuperTube-<versión>.apk | grep -i content-type   # application/vnd.android.package-archive
+curl -s -o /dev/null -w '%{{http_code}}\\n' {base}no-existe            # 404 (página de SuperTube)
+curl -s -o /dev/null -w '%{{http_code}}\\n' {base}server/README.md     # 404
+```
+"""
 
 
 def link(app, here):
@@ -572,6 +648,7 @@ def main():
     os.makedirs(OUT)
     shutil.copytree(os.path.join(HERE, "static"), os.path.join(OUT, "assets"), dirs_exist_ok=True)
     publish_apks()
+    server_config()
     images()
     for lang in LANGS:
         home(lang)

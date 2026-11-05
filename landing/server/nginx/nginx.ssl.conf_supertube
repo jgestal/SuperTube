@@ -1,0 +1,13 @@
+# SuperTube website (/supertube/): APK type, 404 page, and server/ not public
+location ^~ /supertube/ {
+    index index.html;
+    error_page 404 /supertube/404.html;
+
+    location ~* \.apk$ {
+        types { }
+        default_type application/vnd.android.package-archive;
+    }
+    location ^~ /supertube/server/ {
+        return 404;
+    }
+}

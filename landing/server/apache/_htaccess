@@ -1,0 +1,4 @@
+# SuperTube website (/supertube/): APK type, 404 page, and server/ not public
+AddType application/vnd.android.package-archive .apk
+ErrorDocument 404 /supertube/404.html
+RedirectMatch 404 ^/supertube/server(/|$)
