@@ -131,4 +131,36 @@
         <item quantity="one">%d Download läuft</item>
         <item quantity="other">%d Downloads laufen</item>
     </plurals>
+    <!-- Channel groups -->
+    <string name="mobile_groups">Kanalgruppen</string>
+    <string name="mobile_groups_new">Neue Gruppe</string>
+    <string name="mobile_groups_name">Gruppenname</string>
+    <string name="mobile_groups_name_taken">Es gibt bereits eine Gruppe mit diesem Namen</string>
+    <string name="mobile_groups_empty_title">Gruppiere deine Kanäle</string>
+    <string name="mobile_groups_empty_text">Erstelle Gruppen wie „Musik“ oder „Kochen“ und sieh nur die neuesten Videos ihrer Kanäle. Du kannst deine Gruppen auch aus SmartTube oder SuperTube TV übernehmen.</string>
+    <string name="mobile_groups_import">Gruppen importieren</string>
+    <string name="mobile_groups_export">Gruppen exportieren</string>
+    <string name="mobile_groups_import_formats">Sicherung von SmartTube oder SuperTube TV (.zip) oder eine Datei von SuperTube, GrayJay, PocketTube oder NewPipe</string>
+    <string name="mobile_groups_add_channels">Kanäle hinzufügen</string>
+    <string name="mobile_groups_add">Hinzufügen</string>
+    <string name="mobile_groups_add_to_group">Zu Gruppe hinzufügen</string>
+    <string name="mobile_groups_added_to">Zu %1$s hinzugefügt</string>
+    <string name="mobile_groups_delete">Gruppe löschen</string>
+    <string name="mobile_groups_delete_confirm">„%1$s“ löschen? Deine Abos der Kanäle bleiben bestehen.</string>
+    <string name="mobile_groups_remove_channel">Aus Gruppe entfernen</string>
+    <string name="mobile_groups_remove_channel_confirm">%1$s aus „%2$s“ entfernen?</string>
+    <string name="mobile_groups_group_empty">Diese Gruppe hat noch keine Kanäle</string>
+    <string name="mobile_groups_search_channels">Abos durchsuchen oder Kanallink einfügen</string>
+    <string name="mobile_groups_add_link">Diesen Kanal hinzufügen</string>
+    <string name="mobile_groups_no_subscriptions">Keine Abos gefunden. Füge einen Kanallink ein oder nutze die Gruppen-Schaltfläche auf einer Kanalseite.</string>
+    <string name="mobile_groups_import_done">Gruppen erstellt: %1$d · Kanäle hinzugefügt: %2$d</string>
+    <string name="mobile_groups_import_nothing">Nichts Neues zu importieren</string>
+    <string name="mobile_groups_import_error">Diese Datei enthält keine Kanalgruppen</string>
+    <string name="mobile_groups_smarttube_subscriptions">Abos (SmartTube)</string>
+    <plurals name="mobile_groups_channels_count">
+        <item quantity="one">%d Kanal</item>
+        <item quantity="other">%d Kanäle</item>
+    </plurals>
+    <!-- Long press menu: same option as the TV, phone wording -->
+    <string name="add_to_subscriptions_group">Zu Gruppe hinzufügen</string>
 </resources>

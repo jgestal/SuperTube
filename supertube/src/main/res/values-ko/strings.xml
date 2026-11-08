@@ -128,4 +128,35 @@
     <plurals name="mobile_active_downloads">
         <item quantity="other">다운로드 %d개 진행 중</item>
     </plurals>
+    <!-- Channel groups -->
+    <string name="mobile_groups">채널 그룹</string>
+    <string name="mobile_groups_new">새 그룹</string>
+    <string name="mobile_groups_name">그룹 이름</string>
+    <string name="mobile_groups_name_taken">같은 이름의 그룹이 이미 있습니다</string>
+    <string name="mobile_groups_empty_title">채널을 그룹으로 묶기</string>
+    <string name="mobile_groups_empty_text">“음악”이나 “요리” 같은 그룹을 만들어 해당 채널의 최신 동영상만 볼 수 있습니다. SmartTube나 SuperTube TV의 그룹도 가져올 수 있습니다.</string>
+    <string name="mobile_groups_import">그룹 가져오기</string>
+    <string name="mobile_groups_export">그룹 내보내기</string>
+    <string name="mobile_groups_import_formats">SmartTube 또는 SuperTube TV 백업(.zip), 또는 SuperTube·GrayJay·PocketTube·NewPipe 파일</string>
+    <string name="mobile_groups_add_channels">채널 추가</string>
+    <string name="mobile_groups_add">추가</string>
+    <string name="mobile_groups_add_to_group">그룹에 추가</string>
+    <string name="mobile_groups_added_to">%1$s에 추가됨</string>
+    <string name="mobile_groups_delete">그룹 삭제</string>
+    <string name="mobile_groups_delete_confirm">“%1$s” 그룹을 삭제할까요? 채널 구독은 유지됩니다.</string>
+    <string name="mobile_groups_remove_channel">그룹에서 제거</string>
+    <string name="mobile_groups_remove_channel_confirm">%1$s 채널을 “%2$s”에서 제거할까요?</string>
+    <string name="mobile_groups_group_empty">이 그룹에는 아직 채널이 없습니다</string>
+    <string name="mobile_groups_search_channels">구독 채널 검색 또는 채널 링크 붙여넣기</string>
+    <string name="mobile_groups_add_link">이 채널 추가</string>
+    <string name="mobile_groups_no_subscriptions">구독 채널이 없습니다. 채널 링크를 붙여넣거나 채널 페이지의 그룹 버튼을 사용하세요.</string>
+    <string name="mobile_groups_import_done">만든 그룹: %1$d · 추가한 채널: %2$d</string>
+    <string name="mobile_groups_import_nothing">가져올 새 항목이 없습니다</string>
+    <string name="mobile_groups_import_error">이 파일에는 채널 그룹이 없습니다</string>
+    <string name="mobile_groups_smarttube_subscriptions">구독 (SmartTube)</string>
+    <plurals name="mobile_groups_channels_count">
+        <item quantity="other">채널 %d개</item>
+    </plurals>
+    <!-- Long press menu: same option as the TV, phone wording -->
+    <string name="add_to_subscriptions_group">그룹에 추가</string>
 </resources>

@@ -25,7 +25,24 @@ import java.util.Collections;
 import java.util.List;
 
 public class ChannelGroupMenuProvider extends ContextMenuProvider {
+    /**
+     * Replaces the group dialog (the phone app shows its own touch sheet). Receives the item once its channel is known.
+     */
+    public interface GroupPicker {
+        void show(Context context, Video item);
+    }
+
+    private static GroupPicker sGroupPicker;
     private final ChannelGroupServiceWrapper mService;
+
+    public static void setGroupPicker(GroupPicker picker) {
+        sGroupPicker = picker;
+    }
+
+    /** Menu item id of this provider (the menu items are enabled per id in MainUIData) */
+    public static long getProviderId() {
+        return idOf(0); // its index in ContextMenuManager
+    }
 
     public ChannelGroupMenuProvider(@NonNull Context context, int idx) {
         super(context, idx);
@@ -67,6 +84,12 @@ public class ChannelGroupMenuProvider extends ContextMenuProvider {
 
     private void showGroupDialog(Video item, VideoMenuCallback callback) {
         if (item == null || item.channelId == null) {
+            return;
+        }
+
+        if (sGroupPicker != null) {
+            AppDialogPresenter.instance(getContext()).closeDialog();
+            sGroupPicker.show(getContext(), item);
             return;
         }
 

@@ -32,6 +32,8 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import com.liskovsoft.smartyoutubetv2.mobile.ui.favorites.FavoritesScreen
 import com.liskovsoft.smartyoutubetv2.mobile.prefs.FavoritesStore
+import com.liskovsoft.smartyoutubetv2.mobile.channelgroups.ChannelGroupsStore
+import com.liskovsoft.smartyoutubetv2.mobile.ui.channelgroups.ChannelGroupsScreen
 import com.liskovsoft.smartyoutubetv2.mobile.ui.feed.FeedLayoutButton
 import com.liskovsoft.smartyoutubetv2.mobile.ui.feed.FeedView
 import com.liskovsoft.smartyoutubetv2.mobile.prefs.MobilePrefs
@@ -206,7 +208,9 @@ fun BrowseScreen(
                             inSecondarySection -> selected?.title ?: ""
                             else -> stringResource(R.string.mobile_app_name)
                         }
-                        Text(title, fontWeight = FontWeight.Bold, maxLines = 1)
+                        // Long section names ("Grupos de canales") shrink instead of being cut
+                        val titleStyle = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
+                        FitText(title, style = titleStyle, maxFontSize = titleStyle.fontSize, minFontSize = 15.sp)
                     },
                     actions = {
                         if (state.isMoreListShown) {
@@ -283,6 +287,10 @@ internal fun SectionIconView(section: BrowseSection, selected: Boolean) {
 private fun SectionBody(content: SectionContent, isLoading: Boolean, actions: VideoActions, presenter: BrowsePresenter, scrollToTop: ScrollToTopRequest) {
     if (content.section.id == FavoritesStore.SECTION_ID) {
         FavoritesScreen(onLongClick = actions.onLongClick)
+        return
+    }
+    if (content.section.id == ChannelGroupsStore.SECTION_ID) {
+        ChannelGroupsScreen(onLongClick = actions.onLongClick)
         return
     }
     if (content.section.id == DownloadStore.SECTION_ID) {

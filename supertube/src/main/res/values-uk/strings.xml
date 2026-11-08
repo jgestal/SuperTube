@@ -137,4 +137,38 @@
         <item quantity="many">%d завантажень триває</item>
         <item quantity="other">%d завантаження триває</item>
     </plurals>
+    <!-- Channel groups -->
+    <string name="mobile_groups">Групи каналів</string>
+    <string name="mobile_groups_new">Нова група</string>
+    <string name="mobile_groups_name">Назва групи</string>
+    <string name="mobile_groups_name_taken">Група з такою назвою вже є</string>
+    <string name="mobile_groups_empty_title">Згрупуйте канали</string>
+    <string name="mobile_groups_empty_text">Створюйте групи на кшталт «Музика» чи «Кулінарія» й дивіться лише нові відео їхніх каналів. Групи також можна перенести зі SmartTube або SuperTube TV.</string>
+    <string name="mobile_groups_import">Імпорт груп</string>
+    <string name="mobile_groups_export">Експорт груп</string>
+    <string name="mobile_groups_import_formats">Резервна копія SmartTube або SuperTube TV (.zip) чи файл SuperTube, GrayJay, PocketTube або NewPipe</string>
+    <string name="mobile_groups_add_channels">Додати канали</string>
+    <string name="mobile_groups_add">Додати</string>
+    <string name="mobile_groups_add_to_group">Додати до групи</string>
+    <string name="mobile_groups_added_to">Додано до %1$s</string>
+    <string name="mobile_groups_delete">Видалити групу</string>
+    <string name="mobile_groups_delete_confirm">Видалити «%1$s»? Підписки на канали залишаться.</string>
+    <string name="mobile_groups_remove_channel">Прибрати з групи</string>
+    <string name="mobile_groups_remove_channel_confirm">Прибрати %1$s із «%2$s»?</string>
+    <string name="mobile_groups_group_empty">У цій групі ще немає каналів</string>
+    <string name="mobile_groups_search_channels">Пошук у підписках або посилання на канал</string>
+    <string name="mobile_groups_add_link">Додати цей канал</string>
+    <string name="mobile_groups_no_subscriptions">Підписок не знайдено. Вставте посилання на канал або натисніть кнопку груп на сторінці каналу.</string>
+    <string name="mobile_groups_import_done">Створено груп: %1$d · Додано каналів: %2$d</string>
+    <string name="mobile_groups_import_nothing">Нічого нового для імпорту</string>
+    <string name="mobile_groups_import_error">У цьому файлі немає груп каналів</string>
+    <string name="mobile_groups_smarttube_subscriptions">Підписки (SmartTube)</string>
+    <plurals name="mobile_groups_channels_count">
+        <item quantity="one">%d канал</item>
+        <item quantity="few">%d канали</item>
+        <item quantity="many">%d каналів</item>
+        <item quantity="other">%d каналу</item>
+    </plurals>
+    <!-- Long press menu: same option as the TV, phone wording -->
+    <string name="add_to_subscriptions_group">Додати до групи</string>
 </resources>

@@ -143,4 +143,40 @@
         <item quantity="many">%d تنزيلًا جاريًا</item>
         <item quantity="other">%d تنزيل جارٍ</item>
     </plurals>
+    <!-- Channel groups -->
+    <string name="mobile_groups">مجموعات القنوات</string>
+    <string name="mobile_groups_new">مجموعة جديدة</string>
+    <string name="mobile_groups_name">اسم المجموعة</string>
+    <string name="mobile_groups_name_taken">توجد مجموعة بهذا الاسم بالفعل</string>
+    <string name="mobile_groups_empty_title">اجمع قنواتك</string>
+    <string name="mobile_groups_empty_text">أنشئ مجموعات مثل «موسيقى» أو «طبخ» وشاهد أحدث فيديوهات قنواتها فقط. يمكنك أيضًا جلب مجموعاتك من SmartTube أو SuperTube TV.</string>
+    <string name="mobile_groups_import">استيراد المجموعات</string>
+    <string name="mobile_groups_export">تصدير المجموعات</string>
+    <string name="mobile_groups_import_formats">نسخة احتياطية من SmartTube أو SuperTube TV (‎.zip) أو ملف من SuperTube أو GrayJay أو PocketTube أو NewPipe</string>
+    <string name="mobile_groups_add_channels">إضافة قنوات</string>
+    <string name="mobile_groups_add">إضافة</string>
+    <string name="mobile_groups_add_to_group">إضافة إلى مجموعة</string>
+    <string name="mobile_groups_added_to">تمت الإضافة إلى %1$s</string>
+    <string name="mobile_groups_delete">حذف المجموعة</string>
+    <string name="mobile_groups_delete_confirm">حذف «%1$s»؟ ستبقى مشتركًا في قنواتها.</string>
+    <string name="mobile_groups_remove_channel">إزالة من المجموعة</string>
+    <string name="mobile_groups_remove_channel_confirm">إزالة %1$s من «%2$s»؟</string>
+    <string name="mobile_groups_group_empty">لا توجد قنوات في هذه المجموعة بعد</string>
+    <string name="mobile_groups_search_channels">ابحث في اشتراكاتك أو الصق رابط قناة</string>
+    <string name="mobile_groups_add_link">إضافة هذه القناة</string>
+    <string name="mobile_groups_no_subscriptions">لا توجد اشتراكات. الصق رابط قناة أو استخدم زر المجموعات في صفحة القناة.</string>
+    <string name="mobile_groups_import_done">المجموعات المنشأة: %1$d · القنوات المضافة: %2$d</string>
+    <string name="mobile_groups_import_nothing">لا يوجد جديد للاستيراد</string>
+    <string name="mobile_groups_import_error">لا يحتوي هذا الملف على مجموعات قنوات</string>
+    <string name="mobile_groups_smarttube_subscriptions">الاشتراكات (SmartTube)</string>
+    <plurals name="mobile_groups_channels_count">
+        <item quantity="zero">%d قناة</item>
+        <item quantity="one">قناة واحدة</item>
+        <item quantity="two">قناتان</item>
+        <item quantity="few">%d قنوات</item>
+        <item quantity="many">%d قناة</item>
+        <item quantity="other">%d قناة</item>
+    </plurals>
+    <!-- Long press menu: same option as the TV, phone wording -->
+    <string name="add_to_subscriptions_group">إضافة إلى مجموعة</string>
 </resources>

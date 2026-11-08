@@ -18,7 +18,12 @@ public abstract class ContextMenuProvider {
     public ContextMenuProvider(Context context, int idx) {
         // NOTE: We can't use the ApplicationContext because providers often use EditDialog internally
         mContext = new WeakReference<>(context);
-        mId = START_ID << idx;
+        mId = idOf(idx);
+    }
+
+    /** Menu item id of the provider at [idx] (see ContextMenuManager) */
+    public static long idOf(int idx) {
+        return START_ID << idx;
     }
 
     public abstract int getTitleResId();

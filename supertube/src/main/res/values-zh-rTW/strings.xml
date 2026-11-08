@@ -128,4 +128,35 @@
     <plurals name="mobile_active_downloads">
         <item quantity="other">%d 項下載進行中</item>
     </plurals>
+    <!-- Channel groups -->
+    <string name="mobile_groups">頻道群組</string>
+    <string name="mobile_groups_new">新增群組</string>
+    <string name="mobile_groups_name">群組名稱</string>
+    <string name="mobile_groups_name_taken">已有同名群組</string>
+    <string name="mobile_groups_empty_title">將頻道分組</string>
+    <string name="mobile_groups_empty_text">建立「音樂」「料理」等群組，只看這些頻道的最新影片。也可以匯入 SmartTube 或 SuperTube TV 的群組。</string>
+    <string name="mobile_groups_import">匯入群組</string>
+    <string name="mobile_groups_export">匯出群組</string>
+    <string name="mobile_groups_import_formats">SmartTube 或 SuperTube TV 備份（.zip），或 SuperTube、GrayJay、PocketTube、NewPipe 檔案</string>
+    <string name="mobile_groups_add_channels">新增頻道</string>
+    <string name="mobile_groups_add">新增</string>
+    <string name="mobile_groups_add_to_group">加入群組</string>
+    <string name="mobile_groups_added_to">已加入 %1$s</string>
+    <string name="mobile_groups_delete">刪除群組</string>
+    <string name="mobile_groups_delete_confirm">刪除「%1$s」？頻道訂閱不受影響。</string>
+    <string name="mobile_groups_remove_channel">從群組移除</string>
+    <string name="mobile_groups_remove_channel_confirm">從「%2$s」移除 %1$s？</string>
+    <string name="mobile_groups_group_empty">這個群組還沒有頻道</string>
+    <string name="mobile_groups_search_channels">搜尋訂閱或貼上頻道連結</string>
+    <string name="mobile_groups_add_link">新增這個頻道</string>
+    <string name="mobile_groups_no_subscriptions">沒有訂閱。貼上頻道連結，或在頻道頁使用群組按鈕。</string>
+    <string name="mobile_groups_import_done">建立群組：%1$d · 新增頻道：%2$d</string>
+    <string name="mobile_groups_import_nothing">沒有可匯入的新內容</string>
+    <string name="mobile_groups_import_error">這個檔案沒有頻道群組</string>
+    <string name="mobile_groups_smarttube_subscriptions">訂閱（SmartTube）</string>
+    <plurals name="mobile_groups_channels_count">
+        <item quantity="other">%d 個頻道</item>
+    </plurals>
+    <!-- Long press menu: same option as the TV, phone wording -->
+    <string name="add_to_subscriptions_group">加入群組</string>
 </resources>

@@ -136,4 +136,36 @@
         <item quantity="many">%d téléchargements en cours</item>
         <item quantity="other">%d téléchargements en cours</item>
     </plurals>
+    <!-- Channel groups -->
+    <string name="mobile_groups">Groupes de chaînes</string>
+    <string name="mobile_groups_new">Nouveau groupe</string>
+    <string name="mobile_groups_name">Nom du groupe</string>
+    <string name="mobile_groups_name_taken">Un groupe porte déjà ce nom</string>
+    <string name="mobile_groups_empty_title">Regroupez vos chaînes</string>
+    <string name="mobile_groups_empty_text">Créez des groupes comme « Musique » ou « Cuisine » et ne voyez que les dernières vidéos de leurs chaînes. Vous pouvez aussi récupérer vos groupes de SmartTube ou SuperTube TV.</string>
+    <string name="mobile_groups_import">Importer des groupes</string>
+    <string name="mobile_groups_export">Exporter les groupes</string>
+    <string name="mobile_groups_import_formats">Sauvegarde SmartTube ou SuperTube TV (.zip), ou fichier SuperTube, GrayJay, PocketTube ou NewPipe</string>
+    <string name="mobile_groups_add_channels">Ajouter des chaînes</string>
+    <string name="mobile_groups_add">Ajouter</string>
+    <string name="mobile_groups_add_to_group">Ajouter à un groupe</string>
+    <string name="mobile_groups_added_to">Ajoutée à %1$s</string>
+    <string name="mobile_groups_delete">Supprimer le groupe</string>
+    <string name="mobile_groups_delete_confirm">Supprimer « %1$s » ? Vous restez abonné à ses chaînes.</string>
+    <string name="mobile_groups_remove_channel">Retirer du groupe</string>
+    <string name="mobile_groups_remove_channel_confirm">Retirer %1$s de « %2$s » ?</string>
+    <string name="mobile_groups_group_empty">Ce groupe n\'a pas encore de chaînes</string>
+    <string name="mobile_groups_search_channels">Cherchez dans vos abonnements ou collez le lien d\'une chaîne</string>
+    <string name="mobile_groups_add_link">Ajouter cette chaîne</string>
+    <string name="mobile_groups_no_subscriptions">Aucun abonnement. Collez le lien d\'une chaîne ou utilisez le bouton de groupes sur la page d\'une chaîne.</string>
+    <string name="mobile_groups_import_done">Groupes créés : %1$d · Chaînes ajoutées : %2$d</string>
+    <string name="mobile_groups_import_nothing">Rien de nouveau à importer</string>
+    <string name="mobile_groups_import_error">Ce fichier ne contient aucun groupe de chaînes</string>
+    <string name="mobile_groups_smarttube_subscriptions">Abonnements (SmartTube)</string>
+    <plurals name="mobile_groups_channels_count">
+        <item quantity="one">%d chaîne</item>
+        <item quantity="other">%d chaînes</item>
+    </plurals>
+    <!-- Long press menu: same option as the TV, phone wording -->
+    <string name="add_to_subscriptions_group">Ajouter à un groupe</string>
 </resources>

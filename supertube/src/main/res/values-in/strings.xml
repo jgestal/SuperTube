@@ -128,4 +128,35 @@
     <plurals name="mobile_active_downloads">
         <item quantity="other">%d download sedang berlangsung</item>
     </plurals>
+    <!-- Channel groups -->
+    <string name="mobile_groups">Grup channel</string>
+    <string name="mobile_groups_new">Grup baru</string>
+    <string name="mobile_groups_name">Nama grup</string>
+    <string name="mobile_groups_name_taken">Sudah ada grup dengan nama itu</string>
+    <string name="mobile_groups_empty_title">Kelompokkan channel Anda</string>
+    <string name="mobile_groups_empty_text">Buat grup seperti “Musik” atau “Memasak” dan lihat hanya video terbaru dari channel-nya. Anda juga bisa membawa grup dari SmartTube atau SuperTube TV.</string>
+    <string name="mobile_groups_import">Impor grup</string>
+    <string name="mobile_groups_export">Ekspor grup</string>
+    <string name="mobile_groups_import_formats">Cadangan SmartTube atau SuperTube TV (.zip), atau file SuperTube, GrayJay, PocketTube, atau NewPipe</string>
+    <string name="mobile_groups_add_channels">Tambah channel</string>
+    <string name="mobile_groups_add">Tambah</string>
+    <string name="mobile_groups_add_to_group">Tambahkan ke grup</string>
+    <string name="mobile_groups_added_to">Ditambahkan ke %1$s</string>
+    <string name="mobile_groups_delete">Hapus grup</string>
+    <string name="mobile_groups_delete_confirm">Hapus “%1$s”? Anda tetap berlangganan channel-nya.</string>
+    <string name="mobile_groups_remove_channel">Hapus dari grup</string>
+    <string name="mobile_groups_remove_channel_confirm">Hapus %1$s dari “%2$s”?</string>
+    <string name="mobile_groups_group_empty">Grup ini belum punya channel</string>
+    <string name="mobile_groups_search_channels">Cari langganan atau tempel tautan channel</string>
+    <string name="mobile_groups_add_link">Tambahkan channel ini</string>
+    <string name="mobile_groups_no_subscriptions">Tidak ada langganan. Tempel tautan channel atau gunakan tombol grup di halaman channel.</string>
+    <string name="mobile_groups_import_done">Grup dibuat: %1$d · Channel ditambahkan: %2$d</string>
+    <string name="mobile_groups_import_nothing">Tidak ada yang baru untuk diimpor</string>
+    <string name="mobile_groups_import_error">File ini tidak berisi grup channel</string>
+    <string name="mobile_groups_smarttube_subscriptions">Langganan (SmartTube)</string>
+    <plurals name="mobile_groups_channels_count">
+        <item quantity="other">%d channel</item>
+    </plurals>
+    <!-- Long press menu: same option as the TV, phone wording -->
+    <string name="add_to_subscriptions_group">Tambahkan ke grup</string>
 </resources>

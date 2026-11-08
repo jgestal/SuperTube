@@ -132,6 +132,14 @@
             android:theme="@style/Theme.SuperTube.Mobile.Dialog"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation|density|uiMode|keyboardHidden" />
 
+        <!-- "Add to channel group" sheet over any screen (long press menu) -->
+        <activity
+            android:name=".ui.channelgroups.AddToGroupActivity"
+            android:taskAffinity="${applicationId}.dialog"
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.SuperTube.Mobile.Dialog"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation|density|uiMode|keyboardHidden" />
+
         <activity
             android:name=".ui.signin.SignInActivity"
             android:launchMode="singleTask"

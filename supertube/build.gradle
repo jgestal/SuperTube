@@ -146,4 +146,6 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.13.1'
 
     testImplementation 'junit:junit:4.13.2'
+    // Real org.json for the JVM unit tests (android.jar only has stubs)
+    testImplementation 'org.json:json:20180813'
 }

@@ -17,6 +17,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.runtime.remember
+import com.liskovsoft.smartyoutubetv2.mobile.R
+import com.liskovsoft.smartyoutubetv2.mobile.channelgroups.ChannelGroupsStore
+import com.liskovsoft.smartyoutubetv2.mobile.channelgroups.GroupChannel
+import com.liskovsoft.smartyoutubetv2.mobile.ui.channelgroups.AddToGroupSheet
+import com.liskovsoft.smartyoutubetv2.mobile.ui.channelgroups.ChannelGroupButton
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Sort
 import androidx.compose.material3.Icon
@@ -39,6 +45,10 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.liskovsoft.sharedutils.helpers.Helpers
+import com.liskovsoft.youtubeapi.service.YouTubeServiceManager
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import com.liskovsoft.smartyoutubetv2.common.app.models.data.VideoGroup
 import com.liskovsoft.smartyoutubetv2.common.app.presenters.ChannelPresenter
 import com.liskovsoft.smartyoutubetv2.common.app.views.ChannelView
@@ -56,6 +66,13 @@ class ChannelActivity : ScreenActivity(), ChannelView {
     private lateinit var presenter: ChannelPresenter
     private val feed = FeedState()
     private var revision by mutableStateOf(0)
+    /** Name/avatar/subscribers from a video's metadata when the channel was opened by id (links) */
+    private var fallback by mutableStateOf<ChannelInfo?>(null)
+    /** Channel whose info was already requested (the screen is reused for the next channel) */
+    private var fallbackRequestedFor: String? = null
+    private var metadataAction: Disposable? = null
+
+    private class ChannelInfo(val channelId: String, val name: String?, val avatar: String?, val subscribers: String?)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,6 +106,7 @@ class ChannelActivity : ScreenActivity(), ChannelView {
 
     override fun onDestroy() {
         super.onDestroy()
+        metadataAction?.dispose()
         if (presenter.view === this) presenter.onViewDestroyed()
     }
 
@@ -99,7 +117,7 @@ class ChannelActivity : ScreenActivity(), ChannelView {
 
     private fun channelTitle(@Suppress("UNUSED_PARAMETER") revision: Int): String {
         val channel = presenter.channel
-        return channel?.getAuthor() ?: channel?.getTitle() ?: presenter.channelId?.takeIf { Helpers.startsWith(it, "@") } ?: ""
+        return channel?.getAuthor() ?: channel?.getTitle() ?: currentFallback()?.name ?: presenter.channelId?.takeIf { Helpers.startsWith(it, "@") } ?: ""
     }
 
     @Composable
@@ -110,15 +128,16 @@ class ChannelActivity : ScreenActivity(), ChannelView {
 
         Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                RemoteImage(channel?.getCardImageUrl(), Modifier.size(64.dp).clip(CircleShape), width = 256, height = 256)
+                RemoteImage(channel?.getCardImageUrl() ?: currentFallback()?.avatar, Modifier.size(64.dp).clip(CircleShape), width = 256, height = 256)
                 Spacer(Modifier.width(16.dp))
                 Column(Modifier.weight(1f)) {
                     Text(channelTitle(revision), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                    val subs = channel?.subscriberCount
+                    val subs = channel?.subscriberCount ?: currentFallback()?.subscribers
                     if (!subs.isNullOrBlank()) {
                         Text(subs, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 }
+                AddToGroupButton(revision)
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 OutlinedTextField(
@@ -142,11 +161,53 @@ class ChannelActivity : ScreenActivity(), ChannelView {
         }
     }
 
+    /** Channel groups (shared with SuperTube TV / SmartTube): highlighted when the channel is already in one */
+    @Composable
+    private fun AddToGroupButton(revision: Int) {
+        val channelId = presenter.channel?.channelId ?: presenter.channelId?.takeIf { it.startsWith("UC") } ?: return
+        val store = ChannelGroupsStore.instance(this)
+        var showSheet by remember { mutableStateOf(false) }
+        val inGroup = store.groupsWith(channelId).isNotEmpty()
+        ChannelGroupButton(inGroup) { showSheet = true }
+        if (showSheet) {
+            val title = channelTitle(revision).ifBlank { null }
+            AddToGroupSheet(GroupChannel(channelId, title, presenter.channel?.getCardImageUrl() ?: currentFallback()?.avatar)) { showSheet = false }
+        }
+    }
+
     // ChannelView
 
     override fun update(videoGroup: VideoGroup) {
         feed.updateRows(videoGroup)
         revision++ // channel info could be updated together with the content
+        loadFallbackInfo(videoGroup)
+    }
+
+    /** The info for this channel only (the presenter is shared by every channel screen) */
+    private fun currentFallback(): ChannelInfo? = fallback?.takeIf { it.channelId == presenter.channelId }
+
+    /**
+     * A channel opened by id (link, notification) has no item with its name and avatar: take them from the metadata of
+     * one of its videos, once.
+     */
+    private fun loadFallbackInfo(group: VideoGroup) {
+        val channel = presenter.channel
+        if (channel?.getCardImageUrl() != null && (channel.getAuthor() ?: channel.getTitle()) != null) return
+        val channelId = presenter.channelId ?: return
+        if (fallbackRequestedFor == channelId) return
+        val video = group.videos?.firstOrNull { it.videoId != null && (it.channelId == null || it.channelId == channelId) } ?: return
+        fallbackRequestedFor = channelId
+        // Own request: MediaServiceManager.loadMetadata would cancel the other metadata loads in progress
+        metadataAction?.dispose()
+        metadataAction = YouTubeServiceManager.instance().mediaItemService.getMetadataObserve(video.videoId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ metadata ->
+                // Handles ("@name") resolve to the UC id in the metadata
+                if (metadata.channelId == channelId || !channelId.startsWith("UC")) {
+                    fallback = ChannelInfo(channelId, metadata.author, metadata.authorImageUrl, metadata.subscriberCount)
+                }
+            }, { })
     }
 
     override fun setPosition(index: Int) {

@@ -128,4 +128,35 @@
     <plurals name="mobile_active_downloads">
         <item quantity="other">%d 件のダウンロード中</item>
     </plurals>
+    <!-- Channel groups -->
+    <string name="mobile_groups">チャンネルグループ</string>
+    <string name="mobile_groups_new">新しいグループ</string>
+    <string name="mobile_groups_name">グループ名</string>
+    <string name="mobile_groups_name_taken">同じ名前のグループがすでにあります</string>
+    <string name="mobile_groups_empty_title">チャンネルをグループ分け</string>
+    <string name="mobile_groups_empty_text">「音楽」や「料理」などのグループを作り、そのチャンネルの最新動画だけを表示できます。SmartTube や SuperTube TV のグループも取り込めます。</string>
+    <string name="mobile_groups_import">グループをインポート</string>
+    <string name="mobile_groups_export">グループをエクスポート</string>
+    <string name="mobile_groups_import_formats">SmartTube または SuperTube TV のバックアップ（.zip）、または SuperTube・GrayJay・PocketTube・NewPipe のファイル</string>
+    <string name="mobile_groups_add_channels">チャンネルを追加</string>
+    <string name="mobile_groups_add">追加</string>
+    <string name="mobile_groups_add_to_group">グループに追加</string>
+    <string name="mobile_groups_added_to">%1$s に追加しました</string>
+    <string name="mobile_groups_delete">グループを削除</string>
+    <string name="mobile_groups_delete_confirm">「%1$s」を削除しますか？チャンネルの登録はそのままです。</string>
+    <string name="mobile_groups_remove_channel">グループから削除</string>
+    <string name="mobile_groups_remove_channel_confirm">%1$s を「%2$s」から削除しますか？</string>
+    <string name="mobile_groups_group_empty">このグループにはまだチャンネルがありません</string>
+    <string name="mobile_groups_search_channels">登録チャンネルを検索、またはチャンネルのリンクを貼り付け</string>
+    <string name="mobile_groups_add_link">このチャンネルを追加</string>
+    <string name="mobile_groups_no_subscriptions">登録チャンネルがありません。チャンネルのリンクを貼り付けるか、チャンネルページのグループボタンを使ってください。</string>
+    <string name="mobile_groups_import_done">作成したグループ: %1$d · 追加したチャンネル: %2$d</string>
+    <string name="mobile_groups_import_nothing">新しくインポートするものはありません</string>
+    <string name="mobile_groups_import_error">このファイルにはチャンネルグループがありません</string>
+    <string name="mobile_groups_smarttube_subscriptions">登録チャンネル（SmartTube）</string>
+    <plurals name="mobile_groups_channels_count">
+        <item quantity="other">%d チャンネル</item>
+    </plurals>
+    <!-- Long press menu: same option as the TV, phone wording -->
+    <string name="add_to_subscriptions_group">グループに追加</string>
 </resources>

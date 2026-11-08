@@ -1,5 +1,10 @@
 package com.liskovsoft.smartyoutubetv2.mobile.ui.playback
 
+import androidx.compose.material3.IconButton
+import com.liskovsoft.smartyoutubetv2.mobile.channelgroups.ChannelGroupsStore
+import com.liskovsoft.smartyoutubetv2.mobile.channelgroups.GroupChannel
+import com.liskovsoft.smartyoutubetv2.mobile.ui.channelgroups.AddToGroupSheet
+import com.liskovsoft.smartyoutubetv2.mobile.ui.channelgroups.ChannelGroupButton
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.rememberScrollState
@@ -158,6 +163,14 @@ private fun VideoHeader(state: PlayerUiState, presenter: PlaybackPresenter) {
                 RemoteImage(state.channelIconUrl ?: video?.getCardImageUrl()?.takeIf { video.isChannel }, Modifier.size(40.dp).clip(CircleShape), width = 128, height = 128)
                 Spacer(Modifier.width(12.dp))
                 Text(video?.getAuthor() ?: "", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Medium, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            }
+            // Channel groups (shared with SuperTube TV / SmartTube)
+            video?.channelId?.let { id ->
+                val inGroup = ChannelGroupsStore.instance(LocalContext.current).groupsWith(id).isNotEmpty()
+                var showGroups by remember { mutableStateOf(false) }
+                ChannelGroupButton(inGroup) { showGroups = true }
+                Spacer(Modifier.width(8.dp))
+                if (showGroups) AddToGroupSheet(GroupChannel(id, video.getAuthor(), state.channelIconUrl)) { showGroups = false }
             }
             val subscribed = state.buttonState(subscribeId) == PlayerUI.BUTTON_ON
             val label = stringResource(if (subscribed) R.string.mobile_subscribed else R.string.mobile_subscribe)

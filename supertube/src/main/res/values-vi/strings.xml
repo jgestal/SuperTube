@@ -128,4 +128,35 @@
     <plurals name="mobile_active_downloads">
         <item quantity="other">%d tệp đang tải xuống</item>
     </plurals>
+    <!-- Channel groups -->
+    <string name="mobile_groups">Nhóm kênh</string>
+    <string name="mobile_groups_new">Nhóm mới</string>
+    <string name="mobile_groups_name">Tên nhóm</string>
+    <string name="mobile_groups_name_taken">Đã có nhóm trùng tên</string>
+    <string name="mobile_groups_empty_title">Nhóm các kênh của bạn</string>
+    <string name="mobile_groups_empty_text">Tạo nhóm như “Âm nhạc” hoặc “Nấu ăn” và chỉ xem video mới nhất từ các kênh trong nhóm. Bạn cũng có thể mang nhóm từ SmartTube hoặc SuperTube TV sang.</string>
+    <string name="mobile_groups_import">Nhập nhóm</string>
+    <string name="mobile_groups_export">Xuất nhóm</string>
+    <string name="mobile_groups_import_formats">Bản sao lưu SmartTube hoặc SuperTube TV (.zip), hoặc tệp SuperTube, GrayJay, PocketTube hay NewPipe</string>
+    <string name="mobile_groups_add_channels">Thêm kênh</string>
+    <string name="mobile_groups_add">Thêm</string>
+    <string name="mobile_groups_add_to_group">Thêm vào nhóm</string>
+    <string name="mobile_groups_added_to">Đã thêm vào %1$s</string>
+    <string name="mobile_groups_delete">Xóa nhóm</string>
+    <string name="mobile_groups_delete_confirm">Xóa “%1$s”? Bạn vẫn đăng ký các kênh của nhóm.</string>
+    <string name="mobile_groups_remove_channel">Xóa khỏi nhóm</string>
+    <string name="mobile_groups_remove_channel_confirm">Xóa %1$s khỏi “%2$s”?</string>
+    <string name="mobile_groups_group_empty">Nhóm này chưa có kênh nào</string>
+    <string name="mobile_groups_search_channels">Tìm trong kênh đăng ký hoặc dán liên kết kênh</string>
+    <string name="mobile_groups_add_link">Thêm kênh này</string>
+    <string name="mobile_groups_no_subscriptions">Không có kênh đăng ký. Dán liên kết kênh hoặc dùng nút nhóm trên trang kênh.</string>
+    <string name="mobile_groups_import_done">Nhóm đã tạo: %1$d · Kênh đã thêm: %2$d</string>
+    <string name="mobile_groups_import_nothing">Không có gì mới để nhập</string>
+    <string name="mobile_groups_import_error">Tệp này không có nhóm kênh</string>
+    <string name="mobile_groups_smarttube_subscriptions">Kênh đăng ký (SmartTube)</string>
+    <plurals name="mobile_groups_channels_count">
+        <item quantity="other">%d kênh</item>
+    </plurals>
+    <!-- Long press menu: same option as the TV, phone wording -->
+    <string name="add_to_subscriptions_group">Thêm vào nhóm</string>
 </resources>

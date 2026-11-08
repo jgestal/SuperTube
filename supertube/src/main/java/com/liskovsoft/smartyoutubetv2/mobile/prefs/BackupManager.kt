@@ -2,10 +2,14 @@ package com.liskovsoft.smartyoutubetv2.mobile.prefs
 
 import android.content.Context
 import android.net.Uri
+import com.liskovsoft.smartyoutubetv2.mobile.R
+import com.liskovsoft.smartyoutubetv2.mobile.channelgroups.ChannelGroupFormats
+import com.liskovsoft.smartyoutubetv2.mobile.channelgroups.ChannelGroupsStore
+import org.json.JSONArray
 import org.json.JSONObject
 
 /**
- * Export / import of the SuperTube data (favorites and mobile settings) as a JSON file chosen by the user.
+ * Export / import of the SuperTube data (favorites, channel groups and mobile settings) as a JSON file chosen by the user.
  * SmartTube's own settings keep their backup in Settings > Backup/restore.
  */
 object BackupManager {
@@ -18,6 +22,8 @@ object BackupManager {
             put("createdAt", System.currentTimeMillis())
             put("favorites", FavoritesStore.instance(context).exportJson())
             put("settings", MobilePrefs.instance(context).exportJson())
+            // Same layout as the channel groups export (GrayJay compatible)
+            put("channelGroups", JSONArray(ChannelGroupsStore.instance(context).exportJson()))
         }
         context.contentResolver.openOutputStream(uri, "wt")?.use { it.write(json.toString(2).toByteArray()) }
     }
@@ -28,6 +34,9 @@ object BackupManager {
         val json = try { JSONObject(text) } catch (e: Exception) { return -1 }
         if (json.optString("format") != FORMAT) return -1
         json.optJSONObject("settings")?.let { MobilePrefs.instance(context).importJson(it) }
+        if (json.has("channelGroups")) {
+            ChannelGroupFormats.parseJson(text, context.getString(R.string.mobile_groups_newpipe))?.let { ChannelGroupsStore.instance(context).merge(it) }
+        }
         return json.optJSONArray("favorites")?.let { FavoritesStore.instance(context).importJson(it) } ?: 0
     }
 }

@@ -7,6 +7,7 @@ import android.content.Intent
 import com.liskovsoft.smartyoutubetv2.mobile.download.DownloadStore
 import com.liskovsoft.smartyoutubetv2.mobile.R
 import com.liskovsoft.smartyoutubetv2.mobile.prefs.FavoritesStore
+import com.liskovsoft.smartyoutubetv2.mobile.channelgroups.ChannelGroupsStore
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.getValue
@@ -101,6 +102,19 @@ class BrowseActivity : ScreenActivity(), BrowseView {
         REQUEST_IMPORT,
     )
 
+    /** Channel groups: SuperTube/GrayJay JSON or a SmartTube / SuperTube TV backup zip */
+    fun importChannelGroups() = startActivityForResult(
+        Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("*/*")
+            .putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("application/json", "application/zip", "application/x-zip-compressed", "application/octet-stream", "text/plain")),
+        REQUEST_IMPORT_GROUPS,
+    )
+
+    fun exportChannelGroups() = startActivityForResult(
+        Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("application/json")
+            .putExtra(Intent.EXTRA_TITLE, "supertube-channel-groups.json"),
+        REQUEST_EXPORT_GROUPS,
+    )
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val uri = data?.data?.takeIf { resultCode == RESULT_OK } ?: return
@@ -111,6 +125,17 @@ class BrowseActivity : ScreenActivity(), BrowseView {
             REQUEST_IMPORT -> {
                 val added = runCatching { BackupManager.import(this, uri) }.getOrDefault(-1)
                 MessageHelpers.showMessage(this, if (added < 0) getString(R.string.mobile_import_error) else resources.getQuantityString(R.plurals.mobile_import_done, added, added))
+            }
+            REQUEST_EXPORT_GROUPS -> runCatching { ChannelGroupsStore.instance(this).export(uri) }
+                .onSuccess { MessageHelpers.showMessage(this, getString(R.string.mobile_export_done)) }
+                .onFailure { MessageHelpers.showMessage(this, it.message) }
+            REQUEST_IMPORT_GROUPS -> {
+                val result = runCatching { ChannelGroupsStore.instance(this).import(uri) }.getOrNull()
+                MessageHelpers.showLongMessage(this, when {
+                    result == null -> getString(R.string.mobile_groups_import_error)
+                    result.groups == 0 && result.channels == 0 -> getString(R.string.mobile_groups_import_nothing)
+                    else -> getString(R.string.mobile_groups_import_done, result.groups, result.channels)
+                })
             }
         }
     }
@@ -125,6 +150,7 @@ class BrowseActivity : ScreenActivity(), BrowseView {
         state.localSections = listOf(
             BrowseSection(FavoritesStore.SECTION_ID, getString(R.string.mobile_favorites), BrowseSection.TYPE_GRID, -1),
             BrowseSection(DownloadStore.SECTION_ID, getString(R.string.mobile_downloads), BrowseSection.TYPE_GRID, -1),
+            BrowseSection(ChannelGroupsStore.SECTION_ID, getString(R.string.mobile_groups), BrowseSection.TYPE_GRID, -1),
         )
 
         setContent {
@@ -156,6 +182,8 @@ class BrowseActivity : ScreenActivity(), BrowseView {
     companion object {
         private const val REQUEST_EXPORT = 702
         private const val REQUEST_IMPORT = 703
+        private const val REQUEST_EXPORT_GROUPS = 704
+        private const val REQUEST_IMPORT_GROUPS = 705
 
         private var pendingSectionId = 0
 

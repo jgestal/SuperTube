@@ -131,4 +131,36 @@
         <item quantity="one">%d indirme sürüyor</item>
         <item quantity="other">%d indirme sürüyor</item>
     </plurals>
+    <!-- Channel groups -->
+    <string name="mobile_groups">Kanal grupları</string>
+    <string name="mobile_groups_new">Yeni grup</string>
+    <string name="mobile_groups_name">Grup adı</string>
+    <string name="mobile_groups_name_taken">Bu adda bir grup zaten var</string>
+    <string name="mobile_groups_empty_title">Kanallarını grupla</string>
+    <string name="mobile_groups_empty_text">“Müzik” veya “Yemek” gibi gruplar oluştur ve yalnızca kanallarının en yeni videolarını gör. Gruplarını SmartTube veya SuperTube TV’den de getirebilirsin.</string>
+    <string name="mobile_groups_import">Grupları içe aktar</string>
+    <string name="mobile_groups_export">Grupları dışa aktar</string>
+    <string name="mobile_groups_import_formats">SmartTube veya SuperTube TV yedeği (.zip) ya da SuperTube, GrayJay, PocketTube veya NewPipe dosyası</string>
+    <string name="mobile_groups_add_channels">Kanal ekle</string>
+    <string name="mobile_groups_add">Ekle</string>
+    <string name="mobile_groups_add_to_group">Gruba ekle</string>
+    <string name="mobile_groups_added_to">%1$s grubuna eklendi</string>
+    <string name="mobile_groups_delete">Grubu sil</string>
+    <string name="mobile_groups_delete_confirm">“%1$s” silinsin mi? Kanallara aboneliğin sürer.</string>
+    <string name="mobile_groups_remove_channel">Gruptan çıkar</string>
+    <string name="mobile_groups_remove_channel_confirm">%1$s, “%2$s” grubundan çıkarılsın mı?</string>
+    <string name="mobile_groups_group_empty">Bu grupta henüz kanal yok</string>
+    <string name="mobile_groups_search_channels">Aboneliklerde ara veya kanal bağlantısı yapıştır</string>
+    <string name="mobile_groups_add_link">Bu kanalı ekle</string>
+    <string name="mobile_groups_no_subscriptions">Abonelik bulunamadı. Bir kanal bağlantısı yapıştır veya kanal sayfasındaki grup düğmesini kullan.</string>
+    <string name="mobile_groups_import_done">Oluşturulan grup: %1$d · Eklenen kanal: %2$d</string>
+    <string name="mobile_groups_import_nothing">İçe aktarılacak yeni bir şey yok</string>
+    <string name="mobile_groups_import_error">Bu dosyada kanal grubu yok</string>
+    <string name="mobile_groups_smarttube_subscriptions">Abonelikler (SmartTube)</string>
+    <plurals name="mobile_groups_channels_count">
+        <item quantity="one">%d kanal</item>
+        <item quantity="other">%d kanal</item>
+    </plurals>
+    <!-- Long press menu: same option as the TV, phone wording -->
+    <string name="add_to_subscriptions_group">Gruba ekle</string>
 </resources>

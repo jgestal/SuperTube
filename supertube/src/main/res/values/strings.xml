@@ -135,4 +135,37 @@
     <string name="mobile_about_licenses">Open source licenses</string>
     <string name="mobile_about_disclaimer">SuperTube is not affiliated with YouTube, Google or the SmartTube project.</string>
     <string name="mobile_close">Close</string>
+    <!-- Channel groups -->
+    <string name="mobile_groups">Channel groups</string>
+    <string name="mobile_groups_new">New group</string>
+    <string name="mobile_groups_name">Group name</string>
+    <string name="mobile_groups_name_taken">There is already a group with that name</string>
+    <string name="mobile_groups_empty_title">Group your channels</string>
+    <string name="mobile_groups_empty_text">Make groups like “Music” or “Cooking” and see only the latest videos of their channels. You can also bring your groups from SmartTube or SuperTube TV.</string>
+    <string name="mobile_groups_import">Import groups</string>
+    <string name="mobile_groups_export">Export groups</string>
+    <string name="mobile_groups_import_formats">SmartTube or SuperTube TV backup (.zip), or a SuperTube, GrayJay, PocketTube or NewPipe file</string>
+    <string name="mobile_groups_add_channels">Add channels</string>
+    <string name="mobile_groups_add">Add</string>
+    <string name="mobile_groups_add_to_group">Add to group</string>
+    <string name="mobile_groups_added_to">Added to %1$s</string>
+    <string name="mobile_groups_delete">Delete group</string>
+    <string name="mobile_groups_delete_confirm">Delete “%1$s”? You stay subscribed to its channels.</string>
+    <string name="mobile_groups_remove_channel">Remove from group</string>
+    <string name="mobile_groups_remove_channel_confirm">Remove %1$s from “%2$s”?</string>
+    <string name="mobile_groups_group_empty">This group has no channels yet</string>
+    <string name="mobile_groups_search_channels">Search subscriptions or paste a channel link</string>
+    <string name="mobile_groups_add_link">Add this channel</string>
+    <string name="mobile_groups_no_subscriptions">No subscriptions found. Paste a channel link, or use the group button on a channel page.</string>
+    <string name="mobile_groups_import_done">Groups created: %1$d · Channels added: %2$d</string>
+    <string name="mobile_groups_import_nothing">Nothing new to import</string>
+    <string name="mobile_groups_import_error">This file has no channel groups</string>
+    <string name="mobile_groups_smarttube_subscriptions">Subscriptions (SmartTube)</string>
+    <string name="mobile_groups_newpipe" translatable="false">NewPipe</string>
+    <plurals name="mobile_groups_channels_count">
+        <item quantity="one">%d channel</item>
+        <item quantity="other">%d channels</item>
+    </plurals>
+    <!-- Long press menu: same option as the TV, phone wording -->
+    <string name="add_to_subscriptions_group">Add to group</string>
 </resources>

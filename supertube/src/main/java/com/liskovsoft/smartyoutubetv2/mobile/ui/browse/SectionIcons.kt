@@ -6,6 +6,9 @@ import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.filled.Favorite
 import com.liskovsoft.smartyoutubetv2.mobile.prefs.FavoritesStore
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FolderShared
+import androidx.compose.material.icons.outlined.FolderShared
+import com.liskovsoft.smartyoutubetv2.mobile.channelgroups.ChannelGroupsStore
 import androidx.compose.material.icons.automirrored.outlined.PlaylistPlay
 import androidx.compose.material.icons.automirrored.outlined.QueueMusic
 import androidx.compose.material.icons.filled.Home
@@ -53,6 +56,7 @@ fun sectionIcon(sectionId: Int, selected: Boolean = false): ImageVector = when (
     MediaGroup.TYPE_SETTINGS -> Icons.Outlined.Settings
     DownloadStore.SECTION_ID -> Icons.Outlined.Download
     FavoritesStore.SECTION_ID -> if (selected) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder
+    ChannelGroupsStore.SECTION_ID -> if (selected) Icons.Filled.FolderShared else Icons.Outlined.FolderShared
     else -> Icons.Outlined.Folder
 }
 

@@ -128,4 +128,35 @@
     <plurals name="mobile_active_downloads">
         <item quantity="other">กำลังดาวน์โหลด %d รายการ</item>
     </plurals>
+    <!-- Channel groups -->
+    <string name="mobile_groups">กลุ่มช่อง</string>
+    <string name="mobile_groups_new">กลุ่มใหม่</string>
+    <string name="mobile_groups_name">ชื่อกลุ่ม</string>
+    <string name="mobile_groups_name_taken">มีกลุ่มชื่อนี้อยู่แล้ว</string>
+    <string name="mobile_groups_empty_title">จัดกลุ่มช่องของคุณ</string>
+    <string name="mobile_groups_empty_text">สร้างกลุ่มเช่น “เพลง” หรือ “ทำอาหาร” แล้วดูเฉพาะวิดีโอล่าสุดจากช่องในกลุ่ม คุณยังนำกลุ่มจาก SmartTube หรือ SuperTube TV มาได้ด้วย</string>
+    <string name="mobile_groups_import">นำเข้ากลุ่ม</string>
+    <string name="mobile_groups_export">ส่งออกกลุ่ม</string>
+    <string name="mobile_groups_import_formats">ไฟล์สำรองของ SmartTube หรือ SuperTube TV (.zip) หรือไฟล์ของ SuperTube, GrayJay, PocketTube หรือ NewPipe</string>
+    <string name="mobile_groups_add_channels">เพิ่มช่อง</string>
+    <string name="mobile_groups_add">เพิ่ม</string>
+    <string name="mobile_groups_add_to_group">เพิ่มลงในกลุ่ม</string>
+    <string name="mobile_groups_added_to">เพิ่มลงใน %1$s แล้ว</string>
+    <string name="mobile_groups_delete">ลบกลุ่ม</string>
+    <string name="mobile_groups_delete_confirm">ลบ “%1$s” ไหม คุณยังติดตามช่องเหล่านั้นอยู่</string>
+    <string name="mobile_groups_remove_channel">นำออกจากกลุ่ม</string>
+    <string name="mobile_groups_remove_channel_confirm">นำ %1$s ออกจาก “%2$s” ไหม</string>
+    <string name="mobile_groups_group_empty">กลุ่มนี้ยังไม่มีช่อง</string>
+    <string name="mobile_groups_search_channels">ค้นหาในการติดตาม หรือวางลิงก์ช่อง</string>
+    <string name="mobile_groups_add_link">เพิ่มช่องนี้</string>
+    <string name="mobile_groups_no_subscriptions">ไม่พบการติดตาม วางลิงก์ช่อง หรือใช้ปุ่มกลุ่มในหน้าช่อง</string>
+    <string name="mobile_groups_import_done">สร้างกลุ่ม: %1$d · เพิ่มช่อง: %2$d</string>
+    <string name="mobile_groups_import_nothing">ไม่มีอะไรใหม่ให้นำเข้า</string>
+    <string name="mobile_groups_import_error">ไฟล์นี้ไม่มีกลุ่มช่อง</string>
+    <string name="mobile_groups_smarttube_subscriptions">การติดตาม (SmartTube)</string>
+    <plurals name="mobile_groups_channels_count">
+        <item quantity="other">%d ช่อง</item>
+    </plurals>
+    <!-- Long press menu: same option as the TV, phone wording -->
+    <string name="add_to_subscriptions_group">เพิ่มลงในกลุ่ม</string>
 </resources>

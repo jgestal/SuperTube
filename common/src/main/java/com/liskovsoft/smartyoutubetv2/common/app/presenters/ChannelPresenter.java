@@ -153,6 +153,11 @@ public class ChannelPresenter extends BasePresenter<ChannelView> implements Vide
 
         disposeActions();
 
+        // Opened by id (links, other screens): drop the item of a previous channel, its name/avatar aren't this one's
+        if (mChannel != null && !channelId.equals(mChannel.channelId)) {
+            mChannel = null;
+        }
+
         mChannelId = channelId;
 
         if (getView() != null) {

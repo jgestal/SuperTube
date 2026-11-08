@@ -131,4 +131,36 @@
         <item quantity="one">%d download bezig</item>
         <item quantity="other">%d downloads bezig</item>
     </plurals>
+    <!-- Channel groups -->
+    <string name="mobile_groups">Kanaalgroepen</string>
+    <string name="mobile_groups_new">Nieuwe groep</string>
+    <string name="mobile_groups_name">Groepsnaam</string>
+    <string name="mobile_groups_name_taken">Er bestaat al een groep met die naam</string>
+    <string name="mobile_groups_empty_title">Groepeer je kanalen</string>
+    <string name="mobile_groups_empty_text">Maak groepen zoals ‘Muziek’ of ‘Koken’ en zie alleen de nieuwste video\'s van hun kanalen. Je kunt je groepen ook uit SmartTube of SuperTube TV meenemen.</string>
+    <string name="mobile_groups_import">Groepen importeren</string>
+    <string name="mobile_groups_export">Groepen exporteren</string>
+    <string name="mobile_groups_import_formats">Back-up van SmartTube of SuperTube TV (.zip), of een bestand van SuperTube, GrayJay, PocketTube of NewPipe</string>
+    <string name="mobile_groups_add_channels">Kanalen toevoegen</string>
+    <string name="mobile_groups_add">Toevoegen</string>
+    <string name="mobile_groups_add_to_group">Aan groep toevoegen</string>
+    <string name="mobile_groups_added_to">Toegevoegd aan %1$s</string>
+    <string name="mobile_groups_delete">Groep verwijderen</string>
+    <string name="mobile_groups_delete_confirm">‘%1$s’ verwijderen? Je blijft geabonneerd op de kanalen.</string>
+    <string name="mobile_groups_remove_channel">Uit groep verwijderen</string>
+    <string name="mobile_groups_remove_channel_confirm">%1$s uit ‘%2$s’ verwijderen?</string>
+    <string name="mobile_groups_group_empty">Deze groep heeft nog geen kanalen</string>
+    <string name="mobile_groups_search_channels">Zoek in je abonnementen of plak een kanaallink</string>
+    <string name="mobile_groups_add_link">Dit kanaal toevoegen</string>
+    <string name="mobile_groups_no_subscriptions">Geen abonnementen gevonden. Plak een kanaallink of gebruik de groepsknop op een kanaalpagina.</string>
+    <string name="mobile_groups_import_done">Groepen gemaakt: %1$d · Kanalen toegevoegd: %2$d</string>
+    <string name="mobile_groups_import_nothing">Niets nieuws om te importeren</string>
+    <string name="mobile_groups_import_error">Dit bestand bevat geen kanaalgroepen</string>
+    <string name="mobile_groups_smarttube_subscriptions">Abonnementen (SmartTube)</string>
+    <plurals name="mobile_groups_channels_count">
+        <item quantity="one">%d kanaal</item>
+        <item quantity="other">%d kanalen</item>
+    </plurals>
+    <!-- Long press menu: same option as the TV, phone wording -->
+    <string name="add_to_subscriptions_group">Aan groep toevoegen</string>
 </resources>

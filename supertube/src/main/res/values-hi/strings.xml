@@ -131,4 +131,36 @@
         <item quantity="one">%d डाउनलोड जारी है</item>
         <item quantity="other">%d डाउनलोड जारी हैं</item>
     </plurals>
+    <!-- Channel groups -->
+    <string name="mobile_groups">चैनल समूह</string>
+    <string name="mobile_groups_new">नया समूह</string>
+    <string name="mobile_groups_name">समूह का नाम</string>
+    <string name="mobile_groups_name_taken">इस नाम का समूह पहले से है</string>
+    <string name="mobile_groups_empty_title">अपने चैनल समूहों में रखें</string>
+    <string name="mobile_groups_empty_text">“संगीत” या “खाना पकाना” जैसे समूह बनाएँ और सिर्फ़ उनके चैनलों के नए वीडियो देखें। आप SmartTube या SuperTube TV से भी अपने समूह ला सकते हैं।</string>
+    <string name="mobile_groups_import">समूह आयात करें</string>
+    <string name="mobile_groups_export">समूह निर्यात करें</string>
+    <string name="mobile_groups_import_formats">SmartTube या SuperTube TV बैकअप (.zip), या SuperTube, GrayJay, PocketTube या NewPipe फ़ाइल</string>
+    <string name="mobile_groups_add_channels">चैनल जोड़ें</string>
+    <string name="mobile_groups_add">जोड़ें</string>
+    <string name="mobile_groups_add_to_group">समूह में जोड़ें</string>
+    <string name="mobile_groups_added_to">%1$s में जोड़ा गया</string>
+    <string name="mobile_groups_delete">समूह हटाएँ</string>
+    <string name="mobile_groups_delete_confirm">“%1$s” हटाएँ? आप इसके चैनलों के सदस्य बने रहेंगे।</string>
+    <string name="mobile_groups_remove_channel">समूह से हटाएँ</string>
+    <string name="mobile_groups_remove_channel_confirm">%1$s को “%2$s” से हटाएँ?</string>
+    <string name="mobile_groups_group_empty">इस समूह में अभी कोई चैनल नहीं है</string>
+    <string name="mobile_groups_search_channels">सदस्यताओं में खोजें या चैनल का लिंक चिपकाएँ</string>
+    <string name="mobile_groups_add_link">यह चैनल जोड़ें</string>
+    <string name="mobile_groups_no_subscriptions">कोई सदस्यता नहीं मिली। चैनल का लिंक चिपकाएँ या चैनल पेज पर समूह बटन इस्तेमाल करें।</string>
+    <string name="mobile_groups_import_done">बने समूह: %1$d · जोड़े गए चैनल: %2$d</string>
+    <string name="mobile_groups_import_nothing">आयात करने के लिए कुछ नया नहीं</string>
+    <string name="mobile_groups_import_error">इस फ़ाइल में कोई चैनल समूह नहीं है</string>
+    <string name="mobile_groups_smarttube_subscriptions">सदस्यताएँ (SmartTube)</string>
+    <plurals name="mobile_groups_channels_count">
+        <item quantity="one">%d चैनल</item>
+        <item quantity="other">%d चैनल</item>
+    </plurals>
+    <!-- Long press menu: same option as the TV, phone wording -->
+    <string name="add_to_subscriptions_group">समूह में जोड़ें</string>
 </resources>

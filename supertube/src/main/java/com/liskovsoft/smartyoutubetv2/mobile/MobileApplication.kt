@@ -1,5 +1,8 @@
 package com.liskovsoft.smartyoutubetv2.mobile
 
+import com.liskovsoft.smartyoutubetv2.common.prefs.MainUIData
+import com.liskovsoft.smartyoutubetv2.common.app.presenters.dialogs.menu.providers.channelgroup.ChannelGroupMenuProvider
+import com.liskovsoft.smartyoutubetv2.mobile.ui.channelgroups.AddToGroupActivity
 import com.liskovsoft.smartyoutubetv2.mobile.widget.FavoritesWidgetProvider
 import com.liskovsoft.smartyoutubetv2.mobile.prefs.FavoritesStore
 import com.liskovsoft.smartyoutubetv2.mobile.prefs.MobilePrefs
@@ -65,7 +68,9 @@ class MobileApplication : MultiDexApplication(), Configuration.Provider {
         setupGlobalExceptionHandler()
         setupViewManager()
         persistSettingsInBackground()
-        MobilePrefs.instance(this).applyMobileDefaults(PlayerData.instance(this))
+        MobilePrefs.instance(this).applyMobileDefaults(PlayerData.instance(this), MainUIData.instance(this), ChannelGroupMenuProvider.getProviderId())
+        // "Add to channel group" from the long press menu opens the touch sheet instead of the TV dialog
+        ChannelGroupMenuProvider.setGroupPicker { context, item -> AddToGroupActivity.start(context, item) }
         // Keep the home screen widget in sync with the favorites
         FavoritesStore.onChanged = { FavoritesWidgetProvider.refresh(this) }
     }
