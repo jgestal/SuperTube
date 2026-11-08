@@ -61,6 +61,14 @@ public class ExoMediaSourceFactory {
     //private static ExoMediaSourceFactory sInstance;
     private static final int MAX_SEGMENTS_PER_LOAD = 1; // default - 1 (1-5)
     private static final int SABR_READ_TIMEOUT_MS = 4_000;
+    /**
+     * DASH/HLS media reads. A node that stops sending (stalled cache node, Wi-Fi to mobile data switch) used to hold
+     * the load for the 20 s default before the retry, longer than the buffer left after a start or a seek.
+     * Healthy chunk reads never wait this long for the next bytes.
+     */
+    private static final int MEDIA_READ_TIMEOUT_MS = 8_000;
+    /** Cronet delivers its callbacks here. One for the app: a new executor per factory leaked a thread per video. */
+    private static java.util.concurrent.ExecutorService sCronetExecutor;
     private static final String USER_AGENT = DefaultHeaders.APP_USER_AGENT;
     @SuppressLint("StaticFieldLeak")
     private static final DefaultBandwidthMeter BANDWIDTH_METER = new DefaultBandwidthMeter();
@@ -116,7 +124,7 @@ public class ExoMediaSourceFactory {
      * @return A new DataSource factory.
      */
     private DataSource.Factory buildDataSourceFactory(boolean useBandwidthMeter) {
-        return buildDataSourceFactory(useBandwidthMeter, (int) OkHttpManager.getReadTimeoutMs());
+        return buildDataSourceFactory(useBandwidthMeter, MEDIA_READ_TIMEOUT_MS);
     }
 
     private DataSource.Factory buildDataSourceFactory(boolean useBandwidthMeter, int readTimeoutMs) {
@@ -294,11 +302,23 @@ public class ExoMediaSourceFactory {
         return dataSourceFactory;
     }
 
+    private static synchronized java.util.concurrent.ExecutorService getCronetExecutor() {
+        if (sCronetExecutor == null) {
+            sCronetExecutor = Executors.newSingleThreadExecutor(runnable -> {
+                Thread thread = new Thread(runnable, "CronetDataSource");
+                thread.setDaemon(true);
+                return thread;
+            });
+        }
+
+        return sCronetExecutor;
+    }
+
     private HttpDataSource.Factory buildCronetDataSourceFactory(DefaultBandwidthMeter bandwidthMeter, int readTimeoutMs) {
         CronetDataSourceFactory dataSourceFactory =
                 new CronetDataSourceFactory(
                         new CronetEngineWrapper(CronetManager.getEngine(mContext)),
-                        Executors.newSingleThreadExecutor(),
+                        getCronetExecutor(),
                         null,
                         bandwidthMeter,
                         (int) OkHttpManager.getConnectTimeoutMs(),

@@ -11,6 +11,9 @@ import androidx.compose.runtime.setValue
 import com.liskovsoft.mediaserviceinterfaces.data.MediaGroup
 import com.liskovsoft.smartyoutubetv2.common.prefs.PlayerData
 import com.liskovsoft.smartyoutubetv2.common.prefs.MainUIData
+import com.liskovsoft.smartyoutubetv2.common.exoplayer.selector.ExoFormatItem
+import com.liskovsoft.smartyoutubetv2.common.exoplayer.selector.FormatItem
+import com.liskovsoft.sharedutils.helpers.DeviceHelpers
 
 /** How video lists are drawn. The user picks one from the top bar. */
 enum class FeedLayout {
@@ -115,7 +118,7 @@ class MobilePrefs private constructor(context: Context) {
      * replaces values the user never changed, so a later choice in the settings is kept.
      */
     /** One-time mobile defaults over the SmartTube ones. Each version runs once, so later user changes are kept. */
-    fun applyMobileDefaults(playerData: PlayerData, mainUIData: MainUIData, groupsMenuItemId: Long) {
+    fun applyMobileDefaults(playerData: PlayerData, mainUIData: MainUIData, groupsMenuItemId: Long, screenFitHeight: Int) {
         val version = prefs.getInt(KEY_DEFAULTS_VERSION, 0)
         if (version >= DEFAULTS_VERSION) return
         if (version < 1) {
@@ -127,6 +130,15 @@ class MobilePrefs private constructor(context: Context) {
         if (version < 2) {
             // "Add to channel group" in the long press menu of videos and channels (off by default on TV)
             mainUIData.setMenuItemEnabled(groupsMenuItemId)
+        }
+        if (version < 3) {
+            // Quality that fits the screen instead of the TV default (4K60 when the decoder can): same picture on a
+            // phone, far less data and no stalls on mobile networks. Lower qualities chosen by the user are kept.
+            val current = playerData.getFormat(FormatItem.TYPE_VIDEO)
+            if (current == null || current.height > screenFitHeight) { // "Auto" (-1) is already adaptive
+                val codec = if (DeviceHelpers.isVP9ResolutionSupported(screenFitHeight)) "vp9" else "avc"
+                playerData.setFormat(ExoFormatItem.fromVideoSpec("${screenFitHeight * 16 / 9},$screenFitHeight,60,$codec", false))
+            }
         }
         prefs.edit().putInt(KEY_DEFAULTS_VERSION, DEFAULTS_VERSION).apply()
     }
@@ -151,7 +163,7 @@ class MobilePrefs private constructor(context: Context) {
         private const val KEY_RECENT_SEARCHES = "recent_searches"
         private const val KEY_WIFI_ONLY = "wifi_only_downloads"
         private const val KEY_DEFAULTS_VERSION = "mobile_defaults_version"
-        private const val DEFAULTS_VERSION = 2
+        private const val DEFAULTS_VERSION = 3
         private const val SEPARATOR = "\u001F"
         private const val MAX_RECENT_SEARCHES = 20
 

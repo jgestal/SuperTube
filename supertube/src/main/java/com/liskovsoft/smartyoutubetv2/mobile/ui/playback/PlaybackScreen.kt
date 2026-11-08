@@ -24,7 +24,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.movableContentOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -66,14 +65,6 @@ fun PlaybackScreen(
         )
     }
 
-    // Moved (not recreated) between the portrait, fullscreen and PIP layouts: recreating the ExoPlayer view
-    // swaps the video surface (black flash, stall) and loses subtitles visibility, zoom and resize mode.
-    val playerArea = remember {
-        movableContentOf { isFullscreen: Boolean, modifier: Modifier ->
-            PlayerArea(state, presenter, engine, onCreateExoView, onToggleFullscreen, onBack, isFullscreen, modifier)
-        }
-    }
-
     BoxWithConstraints(Modifier.fillMaxSize().background(Color.Black)) {
         val isFullscreen = maxWidth > maxHeight || state.isInPip || state.isPortraitFullscreen
 
@@ -82,20 +73,28 @@ fun PlaybackScreen(
         // Portrait: back collapses the player into the mini player (like YouTube)
         BackHandler(enabled = !isFullscreen && !state.isInPip) { onBack() }
 
-        if (isFullscreen) {
-            playerArea(true, Modifier.fillMaxSize())
-            if (state.isSuggestionsShown && state.isOverlayShown && !state.isInPip) {
-                FullscreenSuggestions(state, suggestionActions, Modifier.align(Alignment.BottomCenter))
-            }
-        } else {
-            // Surface (not a plain background) so the text gets the right content color
-            Surface(color = MaterialTheme.colorScheme.background, modifier = Modifier.fillMaxSize()) { Column(Modifier.fillMaxSize()) {
+        // The player keeps the same place in the tree in every layout (portrait, fullscreen, PIP): only its size
+        // changes. Moving it to another parent (movableContentOf) detached the SurfaceView, and ExoPlayer released
+        // and re-created the video decoder on every rotation: ~3 s frozen picture while the audio went on.
+        Column(Modifier.fillMaxSize()) {
+            if (!isFullscreen) {
                 Spacer(Modifier.windowInsetsPadding(WindowInsets.statusBars).background(Color.Black).fillMaxWidth())
-                // Vertical videos get more room, but never more than a square
-                val aspect = state.videoAspect.coerceIn(1f, 16f / 9f)
-                playerArea(false, Modifier.fillMaxWidth().aspectRatio(aspect))
-                WatchDetails(state, presenter, suggestionActions)
-            } }
+            }
+            // Vertical videos get more room, but never more than a square
+            val aspect = state.videoAspect.coerceIn(1f, 16f / 9f)
+            PlayerArea(
+                state, presenter, engine, onCreateExoView, onToggleFullscreen, onBack, isFullscreen,
+                if (isFullscreen) Modifier.fillMaxWidth().weight(1f) else Modifier.fillMaxWidth().aspectRatio(aspect),
+            )
+            if (!isFullscreen) {
+                // Surface (not a plain background) so the text gets the right content color
+                Surface(color = MaterialTheme.colorScheme.background, modifier = Modifier.fillMaxWidth().weight(1f)) {
+                    Column(Modifier.fillMaxSize()) { WatchDetails(state, presenter, suggestionActions) }
+                }
+            }
+        }
+        if (isFullscreen && state.isSuggestionsShown && state.isOverlayShown && !state.isInPip) {
+            FullscreenSuggestions(state, suggestionActions, Modifier.align(Alignment.BottomCenter))
         }
     }
 }
