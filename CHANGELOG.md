@@ -2,6 +2,31 @@
 
 All notable changes to SuperTube. Versions follow the [GitHub releases](https://github.com/jgestal/SuperTube/releases).
 
+## 1.5.0 — 2026-11-08
+
+### Added
+- Phone: **channel groups**. Group channels (e.g. "Music", "Cooking") and see only the latest videos of each group,
+  with play all and shuffle. New "Channel groups" section in More. Add channels from your subscriptions (with
+  search, or by pasting a channel link), from the channel page, from the player (button next to Subscribe) and
+  from the long press menu of any video or channel ("Add to group").
+- Phone: the groups are the same data SuperTube TV and SmartTube use. Import a SmartTube or SuperTube TV backup
+  (`.zip`), or a SuperTube, GrayJay, PocketTube or NewPipe file; groups with the same name are merged. Export them
+  to a file that SmartTube and SuperTube TV import as is ("Import (GrayJay/PocketTube/NewPipe)"). The phone backup
+  includes the groups.
+
+### Changed
+- Phone: the default video quality fits the screen (1080p60 on most phones) instead of 4K60: the same picture with
+  far less data, and fewer stalls on mobile networks. A lower quality or "Auto" chosen by you is kept.
+
+### Fixed
+- Phone: the picture froze for about 3 seconds (with the audio going on) on every rotation, and when entering or
+  leaving fullscreen or picture-in-picture.
+- Phone: a channel opened from a link showed no name or picture, or those of the previous channel.
+- "Highest" video buffer could use more memory than the app is allowed on phones with lots of RAM (stutters,
+  crashes). Phone and TV.
+- A video server that stops sending held playback for 20 seconds before retrying (now 8). A background thread was
+  left behind for every video played. Phone and TV.
+
 ## 1.4.2 — 2026-11-05
 
 ### Changed
