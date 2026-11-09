@@ -15,10 +15,11 @@
   --font: "Avenir Next", "Segoe UI", Roboto, "Helvetica Neue", system-ui, -apple-system, sans-serif;
 }
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+/* clip (not hidden): no horizontal panning on mobile, and no new scroll container that would break the sticky header */
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: hidden; overflow-x: clip; }
 body {
   margin: 0; background: var(--bg); color: var(--text); font: 17px/1.6 var(--font);
-  overflow-x: hidden; -webkit-font-smoothing: antialiased;
+  overflow-x: hidden; overflow-x: clip; -webkit-font-smoothing: antialiased;
 }
 img { max-width: 100%; height: auto; display: block; }
 [hidden] { display: none !important; }
@@ -65,7 +66,7 @@ p { margin: 0 0 1em; }
 .lang li a[aria-current] { color: #ff8a7a; }
 
 /* Buttons */
-.btn { display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px; border-radius: 999px; font-weight: 700; text-decoration: none;
+.btn { display: inline-flex; align-items: center; gap: 10px; max-width: 100%; padding: 12px 22px; border-radius: 999px; font-weight: 700; text-decoration: none;
   border: 1px solid var(--line); transition: transform .2s, box-shadow .3s, background .2s; cursor: pointer; }
 .btn:hover { transform: translateY(-2px); }
 .btn.primary { position: relative; background: var(--grad); border-color: transparent; color: #fff; box-shadow: 0 10px 30px rgba(229, 36, 94, .35); isolation: isolate; }
@@ -73,8 +74,8 @@ p { margin: 0 0 1em; }
 .btn.primary:hover::after { opacity: .9; }
 .btn.big { padding: 14px 26px 14px 22px; }
 .btn.big .i { width: 1.5em; height: 1.5em; }
-.btn.big span { display: flex; flex-direction: column; line-height: 1.2; text-align: left; }
-.btn.big small { font-weight: 500; opacity: .85; font-size: .78rem; }
+.btn.big span { display: flex; flex-direction: column; line-height: 1.2; text-align: left; min-width: 0; }
+.btn.big small { font-weight: 500; opacity: .85; font-size: .78rem; overflow-wrap: anywhere; }
 .btn.small { padding: 8px 16px; font-size: .88rem; }
 .btn.ghost { background: var(--card); }
 .btn.ghost:hover { background: var(--card2); }
@@ -211,7 +212,7 @@ section { padding: clamp(56px, 8vw, 100px) 0; }
 .doc h2 { font-size: 1.35rem; margin-top: 1.8em; }
 .doc p, .doc li { color: #ddd3d9; }
 .doc a { color: #ff8a7a; }
-.doc code { background: var(--card2); padding: 1px 6px; border-radius: 6px; font-size: .9em; }
+.doc code { background: var(--card2); padding: 1px 6px; border-radius: 6px; font-size: .9em; overflow-wrap: anywhere; }
 .doc .updated { color: var(--muted); }
 .doc .license { white-space: pre-wrap; background: #120f17; border: 1px solid var(--line); border-radius: 14px; padding: 18px; font-size: .82rem; line-height: 1.5; overflow-x: auto; }
 .doc .libs { columns: 2; column-gap: 32px; }
