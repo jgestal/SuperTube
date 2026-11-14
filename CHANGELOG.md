@@ -2,7 +2,7 @@
 
 All notable changes to SuperTube. Versions follow the [GitHub releases](https://github.com/jgestal/SuperTube/releases).
 
-## Unreleased
+## 1.5.1 — 2026-11-14
 
 ### Changed
 - Phone: the volume is normalized like YouTube in a browser: loud videos are turned down and the rest play at full
