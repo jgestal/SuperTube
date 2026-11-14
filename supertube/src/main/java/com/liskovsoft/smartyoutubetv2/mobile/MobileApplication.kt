@@ -27,6 +27,7 @@ import com.liskovsoft.smartyoutubetv2.common.app.views.WebBrowserView
 import com.liskovsoft.smartyoutubetv2.common.prefs.NetworkData
 import com.liskovsoft.smartyoutubetv2.common.prefs.PlayerData
 import com.liskovsoft.smartyoutubetv2.common.utils.Utils
+import com.liskovsoft.smartyoutubetv2.common.exoplayer.other.VolumeNormalization
 import com.liskovsoft.smartyoutubetv2.mobile.ui.browse.BrowseActivity
 import com.liskovsoft.smartyoutubetv2.mobile.ui.channel.ChannelActivity
 import com.liskovsoft.smartyoutubetv2.mobile.ui.channel.ChannelUploadsActivity
@@ -66,6 +67,8 @@ class MobileApplication : MultiDexApplication(), Configuration.Provider {
             }
         }
 
+        // Loudness normalization like YouTube in a browser: the TV one (half volume + system booster) sounded quieter
+        VolumeNormalization.setWebStyle(true)
         setupGlobalExceptionHandler()
         setupViewManager()
         persistSettingsInBackground()

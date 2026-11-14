@@ -4,6 +4,7 @@ import com.liskovsoft.mediaserviceinterfaces.data.MediaItemMetadata;
 import com.liskovsoft.sharedutils.helpers.Helpers;
 import com.liskovsoft.sharedutils.mylogger.Log;
 import com.liskovsoft.smartyoutubetv2.common.R;
+import com.liskovsoft.smartyoutubetv2.common.exoplayer.other.VolumeNormalization;
 import com.liskovsoft.smartyoutubetv2.common.app.models.data.Playlist;
 import com.liskovsoft.smartyoutubetv2.common.app.models.data.Video;
 import com.liskovsoft.smartyoutubetv2.common.app.models.playback.BasePlayerController;
@@ -658,23 +659,8 @@ public class VideoStateController extends BasePlayerController {
             return;
         }
 
-        float newVolume = getPlayerData().getPlayerVolume();
-
-        if (getPlayerTweaksData().isPlayerAutoVolumeEnabled()) {
-            //newVolume *= getVideo().volume;
-            //newVolume = getVideo().volume;
-            if (newVolume < 1f) {
-                newVolume *= getVideo().volume;
-            } else {
-                newVolume = getVideo().volume;
-            }
-        }
-
-        if (getVideo().isShorts) {
-            newVolume /= 2;
-        }
-
-        getPlayer().setVolume(newVolume);
+        getPlayer().setVolume(VolumeNormalization.playerVolume(getPlayerData().getPlayerVolume(),
+                getPlayerTweaksData().isPlayerAutoVolumeEnabled(), getVideo().volume, getVideo().isShorts));
     }
 
     private void restorePitch() {

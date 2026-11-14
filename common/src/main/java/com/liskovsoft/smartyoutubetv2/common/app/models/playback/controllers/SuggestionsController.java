@@ -44,6 +44,12 @@ public class SuggestionsController extends BasePlayerController {
     private ContentService mContentService;
     private BrowseProcessorManager mBrowseProcessor;
     private Video mNextSectionVideo;
+    /**
+     * Strong reference to the list the current video was opened from. Video keeps it in a WeakReference, and on phones
+     * the screen showing the list (e.g. Watch later) is often refreshed or gone while the playlist plays: the list was
+     * collected and the next video fell back to YouTube autoplay after a couple of videos.
+     */
+    private VideoGroup mSectionGroup;
     private int mFocusCount;
     private int mNextRetryCount;
     private List<ChapterItem> mChapters;
@@ -71,7 +77,7 @@ public class SuggestionsController extends BasePlayerController {
         // Remote control fix. Slow network fix. Suggestions may still be loading.
         // This could lead to changing current video info (title, id etc) to wrong one.
         disposeActions();
-        //mCurrentGroup = video.getGroup(); // disable garbage collected
+        mSectionGroup = video != null ? video.getGroup() : null;
         //appendNextSectionVideoIfNeeded(video); // ConcurrentModificationException error
     }
 

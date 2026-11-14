@@ -140,6 +140,10 @@ class MobilePrefs private constructor(context: Context) {
                 playerData.setFormat(ExoFormatItem.fromVideoSpec("${screenFitHeight * 16 / 9},$screenFitHeight,60,$codec", false))
             }
         }
+        if (version < 4) {
+            // One tap "Add to / Remove from Watch later" in the long press menu (on TV it's buried in "Add to playlist")
+            mainUIData.setMenuItemEnabled(MainUIData.MENU_ITEM_ADD_TO_WATCH_LATER)
+        }
         prefs.edit().putInt(KEY_DEFAULTS_VERSION, DEFAULTS_VERSION).apply()
     }
 
@@ -163,7 +167,7 @@ class MobilePrefs private constructor(context: Context) {
         private const val KEY_RECENT_SEARCHES = "recent_searches"
         private const val KEY_WIFI_ONLY = "wifi_only_downloads"
         private const val KEY_DEFAULTS_VERSION = "mobile_defaults_version"
-        private const val DEFAULTS_VERSION = 3
+        private const val DEFAULTS_VERSION = 4
         private const val SEPARATOR = "\u001F"
         private const val MAX_RECENT_SEARCHES = 20
 

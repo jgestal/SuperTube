@@ -44,6 +44,7 @@ import java.util.Map;
 
 public class VideoMenuPresenter extends BaseMenuPresenter {
     private static final String TAG = VideoMenuPresenter.class.getSimpleName();
+    private static final String WATCH_LATER_PLAYLIST_ID = "WL";
     private final MediaItemService mMediaItemService;
     private final AppDialogPresenter mDialogPresenter;
     private final MediaServiceManager mServiceManager;
@@ -226,14 +227,27 @@ public class VideoMenuPresenter extends BaseMenuPresenter {
             return;
         }
 
+        // Toggle: videos of the Watch later list offer the removal (YouTube doesn't say if other videos are in it)
+        Video video = mVideo;
+        boolean isAdd = !isWatchLaterItem(video);
+        Context context = getContext();
+
         mDialogPresenter.appendSingleButton(
                 UiOptionItem.from(
-                        getContext().getString(R.string.add_video_to_watch_later),
+                        context.getString(isAdd ? R.string.add_video_to_watch_later : R.string.remove_video_to_watch_later),
                         optionItem -> {
-                            MediaServiceManager.instance().addToWatchLaterPlaylist(mVideo);
+                            if (!isAdd && mCallback != null) {
+                                mCallback.onItemAction(video, VideoMenuCallback.ACTION_REMOVE_FROM_PLAYLIST);
+                            }
+                            MediaServiceManager.instance().addRemoveFromWatchLaterPlaylist(video, isAdd, title ->
+                                    MessageHelpers.showMessage(context, context.getString(isAdd ? R.string.added_to : R.string.removed_from, title)));
                             mDialogPresenter.closeDialog();
                         }
                 ));
+    }
+
+    public static boolean isWatchLaterItem(Video video) {
+        return video != null && WATCH_LATER_PLAYLIST_ID.equals(video.playlistId);
     }
 
     private void appendAddToPlaylistButton() {

@@ -2,6 +2,19 @@
 
 All notable changes to SuperTube. Versions follow the [GitHub releases](https://github.com/jgestal/SuperTube/releases).
 
+## Unreleased
+
+### Changed
+- Phone: the volume is normalized like YouTube in a browser: loud videos are turned down and the rest play at full
+  volume. Before, the TV method (half volume plus a system booster) made videos sound quieter than in the browser.
+- Phone: "Add to Watch later" is now one tap in the long press menu (no longer buried in "Add to playlist").
+- The "Add to Watch later" button becomes "Remove from Watch later" on videos of the Watch later list (the video
+  leaves the list at once), and a message confirms the change. Phone and TV (the button is optional on TV).
+
+### Fixed
+- A playlist (e.g. Watch later) played from its list could switch to unrelated videos (YouTube autoplay) after a
+  couple of videos: the list could be released from memory while it played. Phone and TV.
+
 ## 1.5.0 — 2026-11-08
 
 ### Added

@@ -90,6 +90,10 @@ public class MediaServiceManager implements OnAccountChange {
         void onAccountChanged(Account account);
     }
 
+    public interface OnPlaylistEdited {
+        void onPlaylistEdited(String playlistTitle);
+    }
+
     public interface OnError {
         void onError(Throwable error);
     }
@@ -410,6 +414,13 @@ public class MediaServiceManager implements OnAccountChange {
     }
 
     public void addRemoveFromWatchLaterPlaylist(Video video, boolean isAdd) {
+        addRemoveFromWatchLaterPlaylist(video, isAdd, null);
+    }
+
+    /**
+     * @param onDone called after the change with the localized title of the playlist
+     */
+    public void addRemoveFromWatchLaterPlaylist(Video video, boolean isAdd, OnPlaylistEdited onDone) {
         if (video == null || !mSignInService.isSigned()) {
             return;
         }
@@ -427,7 +438,12 @@ public class MediaServiceManager implements OnAccountChange {
                             Observable<Void> editObserve = isAdd ? mItemService.addToPlaylistObserve(watchLater.getPlaylistId(), video.videoId)
                                    : mItemService.removeFromPlaylistObserve(watchLater.getPlaylistId(), video.videoId);
 
-                            RxHelper.execute(editObserve);
+                            RxHelper.execute(editObserve, error -> Log.e(TAG, "Watch later edit error: %s", error.getMessage()),
+                                    () -> {
+                                        if (onDone != null) {
+                                            onDone.onPlaylistEdited(watchLater.getTitle());
+                                        }
+                                    });
                         },
                         error -> {
                             // Fallback to something on error
