@@ -16,10 +16,8 @@ import android.graphics.drawable.Drawable
 import android.media.AudioManager
 import android.os.Build
 import android.os.Bundle
-import android.os.ResultReceiver
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
-import android.support.v4.media.session.PlaybackStateCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
@@ -27,7 +25,6 @@ import androidx.media.app.NotificationCompat.MediaStyle
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import com.google.android.exoplayer2.ControlDispatcher
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
@@ -103,17 +100,12 @@ class PlaybackMediaSession(
             return null
         }
         connector.setMediaMetadataProvider { buildMetadata() }
-        connector.setQueueNavigator(object : MediaSessionConnector.QueueNavigator {
-            override fun getSupportedQueueNavigatorActions(player: Player?): Long =
-                PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS or PlaybackStateCompat.ACTION_SKIP_TO_NEXT
-            override fun onTimelineChanged(player: Player?) {}
-            override fun onCurrentWindowIndexChanged(player: Player?) {}
-            override fun getActiveQueueItemId(player: Player?): Long = 0
-            override fun onSkipToPrevious(player: Player?, controlDispatcher: ControlDispatcher?) = commands.previous()
-            override fun onSkipToQueueItem(player: Player?, controlDispatcher: ControlDispatcher?, id: Long) {}
-            override fun onSkipToNext(player: Player?, controlDispatcher: ControlDispatcher?) = commands.next()
-            override fun onCommand(player: Player?, controlDispatcher: ControlDispatcher?, command: String?, extras: Bundle?, cb: ResultReceiver?): Boolean = false
-        })
+        // Previous/next video instead of "back/forward 10 s" (Android Auto, cars, headsets): see SessionControls
+        connector.setEnabledPlaybackActions(SessionControls.ENABLED_PLAYBACK_ACTIONS)
+        connector.setRewindIncrementMs(0)
+        connector.setFastForwardIncrementMs(0)
+        connector.setQueueNavigator(SkipQueueNavigator(commands))
+        session.setExtras(Bundle().apply { SessionControls.SLOT_RESERVATION_KEYS.forEach { putBoolean(it, true) } })
         return connector
     }
 

@@ -12,6 +12,8 @@ android {
     compileSdkVersion project.properties.compileSdkVersion
     buildToolsVersion project.properties.buildToolsVersion
     testOptions.unitTests.includeAndroidResources = true
+    // Plain JUnit tests of the player controllers touch Utils (main thread Handler) and Playlist
+    testOptions.unitTests.returnDefaultValues = true
 
     defaultConfig {
         minSdkVersion project.properties.minSdkVersion
@@ -57,6 +59,8 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:' + appCompatXVersion
     testImplementation 'junit:junit:' + junitVersion
     testImplementation 'org.robolectric:robolectric:' + robolectricVersion
+    // Fake players in plain JUnit tests (a java.lang.reflect.Proxy of PlaybackView initializes FormatItem, which needs Android)
+    testImplementation 'org.mockito:mockito-core:4.11.0'
 
     implementation project(':sharedutils')
     implementation project(':fragment-1.1.0')

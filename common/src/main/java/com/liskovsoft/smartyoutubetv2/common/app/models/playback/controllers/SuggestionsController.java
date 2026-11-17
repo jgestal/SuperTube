@@ -293,7 +293,7 @@ public class SuggestionsController extends BasePlayerController {
                 Helpers.startsWith(getVideo().getPlaylistId(), "RD") &&
                 getVideo().hasNextPlaylist()) {
             result = Video.from(getVideo().nextMediaItem);
-        } else if (mNextSectionVideo != null && !getVideo().isShuffled) {
+        } else if (mNextSectionVideo != null && !getVideo().isShuffled && getVideo().belongsToOrderedList()) {
             result = mNextSectionVideo;
         } else if (getVideo().nextMediaItem != null) {
             result = Video.from(getVideo().nextMediaItem);
@@ -307,7 +307,8 @@ public class SuggestionsController extends BasePlayerController {
             return null;
         }
 
-        Video result = getPreviousFromGroup(getVideo());
+        // The previous card of a feed (Home, Search, suggestions...) was never played: go back in the history instead
+        Video result = getVideo().belongsToOrderedList() ? getPreviousFromGroup(getVideo()) : null;
 
         if (result == null) {
             Video previous = Playlist.instance().getPrevious();

@@ -33,6 +33,11 @@ public class VideoLoaderController extends BasePlayerController {
     private static final int MIN_SHUFFLE_SIZE = 30;
     private final Playlist mPlaylist;
     private Video mPendingVideo;
+    /**
+     * Next pressed while the related videos of the current one were still loading (e.g. skipping twice in a row from
+     * the car or the headset): the skip is done as soon as they arrive instead of being lost.
+     */
+    private boolean mIsNextPending;
     private SuggestionsController mSuggestionsController;
     private ErrorFixerController mErrorFixerController;
     private Disposable mFormatInfoAction;
@@ -78,6 +83,7 @@ public class VideoLoaderController extends BasePlayerController {
         }
 
         item.isShuffled = false;
+        mIsNextPending = false;
 
         if (!item.fromQueue && !item.belongsToPlaybackQueue()) {
             mPlaylist.add(item);
@@ -143,9 +149,16 @@ public class VideoLoaderController extends BasePlayerController {
             return;
         }
 
-        openVideoInt(mSuggestionsController.getPrevious());
+        Video previous = mSuggestionsController.getPrevious();
 
-        if (getPlayerTweaksData().isPlayerUiOnNextEnabled()) {
+        if (previous != null) {
+            openVideoInt(previous);
+        } else {
+            // Nothing played before this one: start it again, like music players do
+            getPlayer().setPositionMs(0);
+        }
+
+        if (isPlayerUiOnNextEnabled()) {
             getPlayer().showOverlay(true);
         }
     }
@@ -163,9 +176,13 @@ public class VideoLoaderController extends BasePlayerController {
             waitMetadataSync(getVideo(), true);
         }
 
-        if (getPlayerTweaksData().isPlayerUiOnNextEnabled()) {
+        if (isPlayerUiOnNextEnabled()) {
             getPlayer().showOverlay(true);
         }
+    }
+
+    protected boolean isPlayerUiOnNextEnabled() {
+        return getPlayerTweaksData().isPlayerUiOnNextEnabled();
     }
 
     @Override
@@ -236,6 +253,7 @@ public class VideoLoaderController extends BasePlayerController {
             // Wait in a loop while suggestions have been loaded...
             if (showLoadingMsg) {
                 MessageHelpers.showMessage(getContext(), R.string.wait_data_loading);
+                mIsNextPending = true; // done in onMetadata
             }
             // Short videos next fix (suggestions aren't loaded yet)
             boolean isEnded = getPlayer() != null && Math.abs(getPlayer().getDurationMs() - getPlayer().getPositionMs()) < 100;
@@ -536,6 +554,11 @@ public class VideoLoaderController extends BasePlayerController {
     @Override
     public void onMetadata(MediaItemMetadata metadata) {
         initRandomNext();
+
+        if (mIsNextPending) {
+            mIsNextPending = false;
+            loadNext();
+        }
     }
 
     private void initRandomNext() {

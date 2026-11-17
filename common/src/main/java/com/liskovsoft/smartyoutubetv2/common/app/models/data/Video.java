@@ -633,6 +633,31 @@ public final class Video {
         return playlist1 != null && playlist2 != null && Helpers.equals(playlist1, playlist2);
     }
 
+    /**
+     * Whether next/previous may follow the list the video was opened from: only lists with an order of their own
+     * (a playlist such as Watch later, a channel's videos, the Shorts feed). In feeds (Home, Music, Search,
+     * Subscriptions, History...) the next card has nothing to do with the current video, so the player continues with
+     * YouTube's related video instead (a song is followed by related music).
+     */
+    public boolean belongsToOrderedList() {
+        VideoGroup group = getGroup();
+
+        if (group == null) {
+            return false;
+        }
+
+        switch (group.getType()) {
+            case MediaGroup.TYPE_USER_PLAYLISTS:
+            case MediaGroup.TYPE_CHANNEL:
+            case MediaGroup.TYPE_CHANNEL_UPLOADS:
+            case MediaGroup.TYPE_MY_VIDEOS:
+            case MediaGroup.TYPE_SHORTS:
+                return true;
+        }
+
+        return belongsToShortsGroup() || belongsToSamePlaylistGroup();
+    }
+
     private boolean checkAllVideosHasPlaylist() {
         if (getGroup() == null || getGroup().getSize() < 2) {
             return false;
@@ -948,7 +973,8 @@ public final class Video {
      * The section playlist intended (as a backup replacement) for cases when regular playlist not available
      */
     public boolean isSectionPlaylistEnabled(Context context) {
-        return PlayerTweaksData.instance(context).isSectionPlaylistEnabled() && !belongsToSuggestions() && !belongsToPlaybackQueue()
+        return PlayerTweaksData.instance(context).isSectionPlaylistEnabled() && belongsToOrderedList()
+                && !belongsToSuggestions() && !belongsToPlaybackQueue()
                 && (!checkAllVideosHasPlaylist() || nextMediaItem == null || !isMix()) // skip hidden playlists (music videos usually)
                 && (!isRemote || remotePlaylistId == null);
     }

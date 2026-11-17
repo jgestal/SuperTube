@@ -23,6 +23,7 @@ import com.liskovsoft.sharedutils.helpers.Helpers
 import com.liskovsoft.sharedutils.helpers.MessageHelpers
 import com.liskovsoft.smartyoutubetv2.common.app.models.data.Video
 import com.liskovsoft.smartyoutubetv2.common.app.models.data.VideoGroup
+import com.liskovsoft.smartyoutubetv2.common.app.models.playback.controllers.VideoLoaderController
 import com.liskovsoft.smartyoutubetv2.common.app.models.playback.manager.PlayerEngine
 import com.liskovsoft.smartyoutubetv2.common.app.models.playback.manager.PlayerUI
 import com.liskovsoft.smartyoutubetv2.common.app.models.playback.ui.ChatReceiver
@@ -81,7 +82,11 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
         override fun play() { presenter.onPlayClicked(); playWhenReady = true }
         override fun pause() { presenter.onPauseClicked(); playWhenReady = false }
         override fun next() { presenter.onNextClicked() }
-        override fun previous() { presenter.onPreviousClicked() }
+        // Car, headset, lock screen: always the previous video (restarts it only when nothing came before).
+        // The player's own button first restarts a video that played more than 10 s: in the car that looked like a seek.
+        override fun previous() {
+            presenter.getController(VideoLoaderController::class.java)?.loadPrevious() ?: presenter.onPreviousClicked()
+        }
         override fun stop() { presenter.forceFinish() }
     }
 
