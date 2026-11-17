@@ -1,25 +1,24 @@
 {
   "package": {
     "downloadUrlList_armeabi-v7a": [
-      "https://github.com/jgestal/SuperTube/releases/download/v1.5.1/SuperTubeTV_stable_1.5.1_armeabi-v7a.apk"
+      "https://github.com/jgestal/SuperTube/releases/download/v1.5.2/SuperTubeTV_stable_1.5.2_armeabi-v7a.apk"
     ],
     "downloadUrlList_arm64-v8a": [
-      "https://github.com/jgestal/SuperTube/releases/download/v1.5.1/SuperTubeTV_stable_1.5.1_arm64-v8a.apk"
+      "https://github.com/jgestal/SuperTube/releases/download/v1.5.2/SuperTubeTV_stable_1.5.2_arm64-v8a.apk"
     ],
     "downloadUrlList_x86": [
-      "https://github.com/jgestal/SuperTube/releases/download/v1.5.1/SuperTubeTV_stable_1.5.1_x86.apk"
+      "https://github.com/jgestal/SuperTube/releases/download/v1.5.2/SuperTubeTV_stable_1.5.2_x86.apk"
     ],
     "downloadUrlList": [
-      "https://github.com/jgestal/SuperTube/releases/download/v1.5.1/SuperTubeTV_stable_1.5.1_universal.apk"
+      "https://github.com/jgestal/SuperTube/releases/download/v1.5.2/SuperTubeTV_stable_1.5.2_universal.apk"
     ]
   },
-  "1.5.1": {
-    "versionCode": 2462,
+  "1.5.2": {
+    "versionCode": 2463,
     "changelog": [
-      "Phone: the volume is normalized like YouTube in a browser: loud videos are turned down and the rest play at full volume. Before, the TV method (half volume plus a system booster) made videos sound quieter than in the browser.",
-      "Phone: \"Add to Watch later\" is now one tap in the long press menu (no longer buried in \"Add to playlist\").",
-      "The \"Add to Watch later\" button becomes \"Remove from Watch later\" on videos of the Watch later list (the video leaves the list at once), and a message confirms the change. Phone and TV (the button is optional on TV).",
-      "A playlist (e.g. Watch later) played from its list could switch to unrelated videos (YouTube autoplay) after a couple of videos: the list could be released from memory while it played. Phone and TV."
+      "Phone: in Android Auto (and on car head units and headsets) the buttons next to play/pause went back and forward 10 seconds inside the video. They now go to the previous and the next video. \"Previous\" from the car always goes to the video played before (it restarts the video only when nothing was played before it).",
+      "Phone: skipping again from the car while the next video was still loading was lost; now it skips as soon as the video is ready.",
+      "A song opened from a feed (Home, Music, Search, Subscriptions, History...) continued with the next card of that feed, often unrelated music. It now continues with YouTube's related video, like YouTube. Lists with an order of their own (playlists such as Watch later, a channel's videos, Shorts) still play one after another. \"Previous\" goes back to the video played before instead of the previous card of the feed. Phone and TV."
     ]
   }
 }
