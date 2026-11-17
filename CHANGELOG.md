@@ -2,6 +2,19 @@
 
 All notable changes to SuperTube. Versions follow the [GitHub releases](https://github.com/jgestal/SuperTube/releases).
 
+## 1.5.2 — 2026-11-17
+
+### Fixed
+- Phone: in Android Auto (and on car head units and headsets) the buttons next to play/pause went back and forward
+  10 seconds inside the video. They now go to the previous and the next video. "Previous" from the car always goes
+  to the video played before (it restarts the video only when nothing was played before it).
+- Phone: skipping again from the car while the next video was still loading was lost; now it skips as soon as the
+  video is ready.
+- A song opened from a feed (Home, Music, Search, Subscriptions, History...) continued with the next card of that
+  feed, often unrelated music. It now continues with YouTube's related video, like YouTube. Lists with an order of
+  their own (playlists such as Watch later, a channel's videos, Shorts) still play one after another. "Previous"
+  goes back to the video played before instead of the previous card of the feed. Phone and TV.
+
 ## 1.5.1 — 2026-11-14
 
 ### Changed
