@@ -2,6 +2,13 @@
 
 All notable changes to SuperTube. Versions follow the [GitHub releases](https://github.com/jgestal/SuperTube/releases).
 
+## 1.5.3 — 2026-11-18
+
+### Added
+- Phone: Watch later shows the last saved video first, so what you just saved is at the top. The sort button at the
+  top of the list switches between "newer first" and "older first" (YouTube's own order). Playing the list follows
+  the order shown.
+
 ## 1.5.2 — 2026-11-17
 
 ### Fixed
