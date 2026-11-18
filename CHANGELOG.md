@@ -2,6 +2,13 @@
 
 All notable changes to SuperTube. Versions follow the [GitHub releases](https://github.com/jgestal/SuperTube/releases).
 
+## 1.5.4 — 2026-11-18
+
+### Fixed
+- Phone: in Android Auto the previous/next buttons stayed greyed out. SuperTube now tells Android Auto it's a media
+  app, so the car gets play/pause and previous/next for the video playing on the phone. As SuperTube isn't on Google
+  Play, Android Auto needs "Unknown sources" turned on once in its developer settings.
+
 ## 1.5.3 — 2026-11-18
 
 ### Added
