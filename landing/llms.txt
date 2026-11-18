@@ -42,15 +42,15 @@ SuperTube has no server of its own, no analytics and no advertising code. Your s
 - Why does Android say it may be harmful? Android and Play Protect warn about apps that don't come from Google Play, and Google doesn't like apps that block YouTube ads. SuperTube is open source and signed by its author. The install section explains each message and how to go ahead.
 - Is it legal to use? The app is legal open-source software. YouTube's Terms of Service don't allow third-party clients or ad blocking, and downloading can infringe copyright unless you have the rights or your law allows it. How you use it is your decision and your responsibility.
 - Do I need an account? No. Sign in only if you want your subscriptions, history and playlists. The session is stored on your device.
-- Does it work with Chromecast or Android Auto? No. SuperTube doesn't include Google Play Services, which those features need.
+- Does it work with Chromecast or Android Auto? Android Auto, yes: the sound plays in the car, with play/pause and previous/next on its screen. As SuperTube isn't on Google Play, turn on Android Auto's developer settings once (tap the version in its settings several times) and enable "Unknown sources". Chromecast, no: it needs Google Play Services, which SuperTube doesn't include.
 - Is there an iPhone version? No. SuperTube is for Android 8.0 or newer, on phones, tablets and Android TV.
 - Which file is for my TV? The “For Android TV” button and the address gestal.es/supertube/tv give you the universal TV APK, which works on every TV. Each release also has smaller files per processor: arm64-v8a for recent TVs and armeabi-v7a for older ones. The phone APK isn't made for a remote, and the TV one isn't made for touch screens.
 
 ## Links
 
 - [Website](https://gestal.es/supertube/): [English](https://gestal.es/supertube/), [Español](https://gestal.es/supertube/es/), [Français](https://gestal.es/supertube/fr/), [Deutsch](https://gestal.es/supertube/de/), [Português](https://gestal.es/supertube/pt/), [Italiano](https://gestal.es/supertube/it/)
-- [Download for phones and tablets](https://gestal.es/supertube/apk/SuperTube-1.5.3.apk) (SuperTube-1.5.3.apk)
-- [Download for Android TV](https://gestal.es/supertube/apk/SuperTubeTV_stable_1.5.3_universal.apk) (SuperTubeTV_stable_1.5.3_universal.apk), or type gestal.es/supertube/tv in the Downloader app on the TV
+- [Download for phones and tablets](https://gestal.es/supertube/apk/SuperTube-1.5.4.apk) (SuperTube-1.5.4.apk)
+- [Download for Android TV](https://gestal.es/supertube/apk/SuperTubeTV_stable_1.5.4_universal.apk) (SuperTubeTV_stable_1.5.4_universal.apk), or type gestal.es/supertube/tv in the Downloader app on the TV
 - [All releases](https://github.com/jgestal/SuperTube/releases/latest)
 - [Source code and changelog](https://github.com/jgestal/SuperTube)
 - [Privacy policy](https://gestal.es/supertube/privacy/)
