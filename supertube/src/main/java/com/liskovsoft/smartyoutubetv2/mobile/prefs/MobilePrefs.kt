@@ -94,6 +94,7 @@ class MobilePrefs private constructor(context: Context) {
         put("sectionOrder", org.json.JSONArray(sectionOrder.toList()))
         put("recentSearches", org.json.JSONArray(recentSearches.toList()))
         put("wifiOnlyDownloads", wifiOnlyDownloads)
+        put("watchLaterNewestFirst", watchLaterNewestFirst)
     }
 
     fun importJson(json: org.json.JSONObject) {
@@ -103,6 +104,7 @@ class MobilePrefs private constructor(context: Context) {
             (0 until a.length()).map { a.getString(it) }.reversed().forEach(::addRecentSearch)
         }
         if (json.has("wifiOnlyDownloads")) updateWifiOnlyDownloads(json.getBoolean("wifiOnlyDownloads"))
+        if (json.has("watchLaterNewestFirst")) updateWatchLaterNewestFirst(json.getBoolean("watchLaterNewestFirst"))
     }
 
     var wifiOnlyDownloads by mutableStateOf(prefs.getBoolean(KEY_WIFI_ONLY, false))
@@ -111,6 +113,15 @@ class MobilePrefs private constructor(context: Context) {
     fun updateWifiOnlyDownloads(enabled: Boolean) {
         wifiOnlyDownloads = enabled
         prefs.edit().putBoolean(KEY_WIFI_ONLY, enabled).apply()
+    }
+
+    /** Watch later shows the last saved video first (YouTube's own order puts it at the end) */
+    var watchLaterNewestFirst by mutableStateOf(prefs.getBoolean(KEY_WATCH_LATER_NEWEST_FIRST, true))
+        private set
+
+    fun updateWatchLaterNewestFirst(enabled: Boolean) {
+        watchLaterNewestFirst = enabled
+        prefs.edit().putBoolean(KEY_WATCH_LATER_NEWEST_FIRST, enabled).apply()
     }
 
     /**
@@ -166,6 +177,7 @@ class MobilePrefs private constructor(context: Context) {
         private const val KEY_SECTION_ORDER = "section_order"
         private const val KEY_RECENT_SEARCHES = "recent_searches"
         private const val KEY_WIFI_ONLY = "wifi_only_downloads"
+        private const val KEY_WATCH_LATER_NEWEST_FIRST = "watch_later_newest_first"
         private const val KEY_DEFAULTS_VERSION = "mobile_defaults_version"
         private const val DEFAULTS_VERSION = 4
         private const val SEPARATOR = "\u001F"

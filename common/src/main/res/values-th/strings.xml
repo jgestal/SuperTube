@@ -326,4 +326,7 @@
     <string name="video_backdrop">ภาพพื้นหลังจากวิดีโอที่เลือก</string>
     <string name="lite_mode">โหมดเบา (ทีวีที่ช้า)</string>
     <string name="lite_mode_desc">ปิดภาพพื้นหลัง ตัวอย่างวิดีโอบนการ์ด ชื่อที่เลื่อน และภาพย่อขณะเลื่อนหา พร้อมลดบัฟเฟอร์วิดีโอ</string>
+    <string name="playlist_order">เรียงเพลย์ลิสต์</string>
+    <string name="playlist_order_added_date_newer_first">วันที่เพิ่ม (ใหม่สุดก่อน)</string>
+    <string name="playlist_order_added_date_older_first">วันที่เพิ่ม (เก่าสุดก่อน)</string>
 </resources>

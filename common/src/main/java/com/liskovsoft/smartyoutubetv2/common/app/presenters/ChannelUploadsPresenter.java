@@ -15,6 +15,7 @@ import com.liskovsoft.smartyoutubetv2.common.R;
 import com.liskovsoft.smartyoutubetv2.common.app.models.data.SimpleMediaItem;
 import com.liskovsoft.smartyoutubetv2.common.app.models.data.Video;
 import com.liskovsoft.smartyoutubetv2.common.app.models.data.VideoGroup;
+import com.liskovsoft.smartyoutubetv2.common.app.models.data.WatchLaterOrder;
 import com.liskovsoft.smartyoutubetv2.common.app.presenters.base.BasePresenter;
 import com.liskovsoft.smartyoutubetv2.common.app.presenters.dialogs.VideoActionPresenter;
 import com.liskovsoft.smartyoutubetv2.common.app.presenters.dialogs.menu.VideoMenuPresenter;
@@ -26,9 +27,12 @@ import com.liskovsoft.smartyoutubetv2.common.misc.MediaServiceManager;
 import com.liskovsoft.smartyoutubetv2.common.misc.MediaServiceManager.OnComplete;
 import com.liskovsoft.smartyoutubetv2.common.misc.MediaServiceManager.OnError;
 import com.liskovsoft.smartyoutubetv2.common.misc.MediaServiceManager.OnMediaGroup;
+import com.liskovsoft.smartyoutubetv2.common.prefs.GeneralData;
 
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 import java.util.List;
 
@@ -39,6 +43,9 @@ public class ChannelUploadsPresenter extends BasePresenter<ChannelUploadsView> i
     private final BrowseProcessorManager mBrowseProcessor;
     private Disposable mUpdateAction;
     private Disposable mScrollAction;
+    private Disposable mReverseAction;
+    /** Watch later newest first: the whole list is loading or shown */
+    private boolean mIsReversing;
     private Video mChannel;
     private MediaGroup mPendingGroup;
     private VideoGroup mBaseGroup;
@@ -69,6 +76,7 @@ public class ChannelUploadsPresenter extends BasePresenter<ChannelUploadsView> i
     public void onViewDestroyed() {
         super.onViewDestroyed();
         disposeActions();
+        mIsReversing = false;
     }
 
     @Override
@@ -81,6 +89,7 @@ public class ChannelUploadsPresenter extends BasePresenter<ChannelUploadsView> i
         mChannel = null;
         mPendingGroup = null;
         mBaseGroup = null;
+        mIsReversing = false;
     }
 
     @Override
@@ -115,6 +124,10 @@ public class ChannelUploadsPresenter extends BasePresenter<ChannelUploadsView> i
 
         if (group == null) {
             Log.e(TAG, "Can't scroll. VideoGroup is null.");
+            return;
+        }
+
+        if (group.getMediaGroup() == null) { // the whole list is already shown (e.g. Watch later newest first)
             return;
         }
 
@@ -187,7 +200,7 @@ public class ChannelUploadsPresenter extends BasePresenter<ChannelUploadsView> i
     }
 
     private void disposeActions() {
-        RxHelper.disposeActions(mUpdateAction, mScrollAction);
+        RxHelper.disposeActions(mUpdateAction, mScrollAction, mReverseAction);
         MediaServiceManager.instance().disposeActions();
         mBrowseProcessor.dispose();
     }
@@ -241,6 +254,47 @@ public class ChannelUploadsPresenter extends BasePresenter<ChannelUploadsView> i
         }
     }
 
+    private boolean isReversedWatchLater(Video item) {
+        Boolean newestFirst = getView() != null ? getView().isWatchLaterNewestFirst() : null;
+        return newestFirst != null && WatchLaterOrder.isWatchLater(item) && WatchLaterOrder.shouldReverse(
+                newestFirst, GeneralData.instance(getContext()).getPlaylistOrder(WatchLaterOrder.PLAYLIST_ID));
+    }
+
+    /**
+     * The newest video is on YouTube's last page: load the whole list from its first page, then show it the other way
+     * round. Pages that arrive later the usual way are already in it.
+     */
+    private void updateReversed(MediaGroup firstPage) {
+        if (mIsReversing) {
+            return;
+        }
+
+        mIsReversing = true;
+        getView().showProgressBar(true);
+        String title = mChannel != null ? mChannel.getTitle() : null;
+
+        mReverseAction = Observable.just(firstPage)
+                .observeOn(Schedulers.io())
+                .map(first -> WatchLaterOrder.reversed(WatchLaterOrder.loadAll(first, page -> getContentService().continueGroup(page)), title))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        group -> {
+                            mBaseGroup = group;
+                            update(group);
+                            if (getView() != null) {
+                                getView().showProgressBar(false);
+                            }
+                        },
+                        error -> {
+                            Log.e(TAG, "updateReversed error: %s", error.getMessage());
+                            mIsReversing = false;
+                            if (getView() != null) {
+                                getView().showProgressBar(false);
+                            }
+                        }
+                );
+    }
+
     private void update(Observable<MediaGroup> group) {
         Log.d(TAG, "update: Start loading a group...");
 
@@ -255,7 +309,7 @@ public class ChannelUploadsPresenter extends BasePresenter<ChannelUploadsView> i
                             Log.e(TAG, "update error: %s", error.getMessage());
                             getView().showProgressBar(false);
                         },
-                        () -> getView().showProgressBar(false)
+                        () -> getView().showProgressBar(RxHelper.isAnyActionRunning(mReverseAction))
                 );
     }
 
@@ -265,6 +319,11 @@ public class ChannelUploadsPresenter extends BasePresenter<ChannelUploadsView> i
 
         if (getView() == null) { // starting from outside (e.g. MediaServiceManager)
             mPendingGroup = mediaGroup; // start loading from this group
+            return;
+        }
+
+        if (isReversedWatchLater(mChannel)) {
+            updateReversed(mediaGroup);
             return;
         }
 
@@ -340,6 +399,7 @@ public class ChannelUploadsPresenter extends BasePresenter<ChannelUploadsView> i
         mChannel = null;
         mPendingGroup = null;
         mBaseGroup = null;
+        mIsReversing = false;
     }
 
     public void refresh() {
@@ -349,9 +409,13 @@ public class ChannelUploadsPresenter extends BasePresenter<ChannelUploadsView> i
 
         if (mPendingGroup != null) {
             getView().clear();
+            mBaseGroup = null; // the list is loaded again from the start
+            mIsReversing = false;
             update(mPendingGroup);
         } else if (mChannel != null) {
             getView().clear();
+            mBaseGroup = null;
+            mIsReversing = false;
             update(mChannel);
         }
     }
