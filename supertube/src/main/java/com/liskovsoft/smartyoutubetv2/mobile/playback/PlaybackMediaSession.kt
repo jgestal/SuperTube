@@ -15,7 +15,6 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.media.AudioManager
 import android.os.Build
-import android.os.Bundle
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import androidx.core.app.NotificationCompat
@@ -34,7 +33,7 @@ import com.liskovsoft.smartyoutubetv2.mobile.R
 import com.liskovsoft.smartyoutubetv2.mobile.download.Downloads
 
 /**
- * Everything the system sees of the player: the media session (lock screen, Bluetooth and headset buttons,
+ * Everything the system sees of the player: the media session (Android Auto, lock screen, Bluetooth and headset buttons,
  * Android 13+ media controls), the playback notification with its foreground service, and the
  * "audio becoming noisy" pause (headphones unplugged). Created with the engine, released with it.
  */
@@ -64,7 +63,8 @@ class PlaybackMediaSession(
     }
 
     init {
-        session = if (withSession) MediaSessionCompat(context, context.packageName).apply { isActive = true } else null
+        // The app's session, the one Android Auto is connected to (CarMediaService): this player takes it over
+        session = if (withSession) SharedMediaSession.get(context).also { SharedMediaSession.claim(this); it.isActive = true } else null
         connector = session?.let(::createConnector)
         player.addListener(playerListener)
         ContextCompat.registerReceiver(context, noisyReceiver, IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY), ContextCompat.RECEIVER_NOT_EXPORTED)
@@ -85,9 +85,11 @@ class PlaybackMediaSession(
         player.removeListener(playerListener)
         runCatching { context.unregisterReceiver(noisyReceiver) }
         artworkTarget?.let { Glide.with(context).clear(it) }
-        connector?.setPlayer(null)
-        session?.isActive = false
-        session?.release()
+        // The session stays for the next player; switched off only if no other player took it in the meantime
+        if (session != null && SharedMediaSession.release(this)) {
+            connector?.setPlayer(null)
+            session.isActive = false
+        }
         if (PlaybackService.commands === commands) PlaybackService.commands = null
         PlaybackService.stop(context)
     }
@@ -105,7 +107,6 @@ class PlaybackMediaSession(
         connector.setRewindIncrementMs(0)
         connector.setFastForwardIncrementMs(0)
         connector.setQueueNavigator(SkipQueueNavigator(commands))
-        session.setExtras(Bundle().apply { SessionControls.SLOT_RESERVATION_KEYS.forEach { putBoolean(it, true) } })
         return connector
     }
 

@@ -191,6 +191,18 @@
             android:name=".download.DownloadService"
             android:exported="false"
             android:foregroundServiceType="dataSync" />
+        <!-- Android Auto: SuperTube is a media app of the car, so the car gets the play/pause and previous/next
+             buttons. Without it the car showed the video as a foreign app with the skip buttons greyed out. -->
+        <meta-data
+            android:name="com.google.android.gms.car.application"
+            android:resource="@xml/automotive_app_desc" />
+        <service
+            android:name=".playback.CarMediaService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.media.browse.MediaBrowserService" />
+            </intent-filter>
+        </service>
         <!-- Keeps background / screen off / mini player playback alive and shows the media notification -->
         <service
             android:name=".playback.PlaybackService"

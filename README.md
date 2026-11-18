@@ -225,7 +225,9 @@ on your device.
 <details>
 <summary><b>Does it work with Chromecast or Android Auto?</b></summary>
 
-No. SuperTube doesn't include Google Play Services, which those features need.
+Android Auto, yes: the sound plays in the car, with play/pause and previous/next on its screen. As SuperTube isn't on
+Google Play, turn on Android Auto's developer settings once (tap the version in its settings several times) and enable
+"Unknown sources". Chromecast, no: it needs Google Play Services, which SuperTube doesn't include.
 </details>
 
 <details>
