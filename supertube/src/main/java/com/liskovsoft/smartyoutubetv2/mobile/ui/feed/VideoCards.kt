@@ -39,6 +39,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.Dp
 import com.liskovsoft.smartyoutubetv2.common.app.models.data.Video
 import com.liskovsoft.smartyoutubetv2.mobile.R
 import com.liskovsoft.smartyoutubetv2.mobile.ui.components.RemoteImage
@@ -180,31 +182,39 @@ fun ShortsCard(video: Video, actions: VideoActions, modifier: Modifier = Modifie
 }
 
 @Composable
-fun ChannelCard(video: Video, actions: VideoActions, modifier: Modifier = Modifier, selected: Boolean = false) {
+fun ChannelCard(
+    video: Video,
+    actions: VideoActions,
+    modifier: Modifier = Modifier,
+    selected: Boolean = false,
+    avatarSize: Dp = 72.dp,
+    textStyle: TextStyle = MaterialTheme.typography.labelMedium,
+) {
+    val small = avatarSize < 72.dp
     Column(
         modifier
             .clip(RoundedCornerShape(12.dp))
             .videoClickable(video, actions)
-            .padding(8.dp),
+            .padding(if (small) 4.dp else 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(6.dp),
+        verticalArrangement = Arrangement.spacedBy(if (small) 4.dp else 6.dp),
     ) {
         Box {
             RemoteImage(
                 video.getCardImageUrl(),
                 Modifier
-                    .size(72.dp)
+                    .size(avatarSize)
                     .clip(CircleShape)
                     .then(if (selected) Modifier.background(MaterialTheme.colorScheme.primary) else Modifier),
                 width = 240, height = 240,
             )
             if (video.hasNewContent) {
-                Box(Modifier.align(Alignment.TopEnd).size(12.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primary))
+                Box(Modifier.align(Alignment.TopEnd).size(if (small) 10.dp else 12.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primary))
             }
         }
         Text(
             video.getTitle() ?: "",
-            style = MaterialTheme.typography.labelMedium,
+            style = textStyle,
             fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
             color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
             maxLines = 2,

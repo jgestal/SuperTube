@@ -333,12 +333,19 @@ private fun ChannelsStrip(content: SectionContent, presenter: BrowsePresenter) {
     )
     LazyRow(
         contentPadding = PaddingValues(horizontal = 4.dp),
-        horizontalArrangement = Arrangement.spacedBy(4.dp),
-        modifier = Modifier.padding(bottom = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(2.dp),
+        modifier = Modifier.padding(bottom = 4.dp),
     ) {
         items(channels.size) { index ->
             val channel = channels[index]
-            ChannelCard(channel, channelActions, Modifier.width(96.dp), selected = channel == content.selectedChannel)
+            ChannelCard(
+                channel,
+                channelActions,
+                Modifier.width(68.dp),
+                selected = channel == content.selectedChannel,
+                avatarSize = 48.dp,
+                textStyle = MaterialTheme.typography.labelSmall,
+            )
         }
     }
 }
