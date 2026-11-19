@@ -2,6 +2,16 @@
 
 All notable changes to SuperTube. Versions follow the [GitHub releases](https://github.com/jgestal/SuperTube/releases).
 
+## 1.5.5 — 2026-11-19
+
+### Fixed
+- Phone: with the three Android navigation buttons, videos and lists were drawn under the buttons and showed
+  through them. The screens now stop above the buttons, which get a solid bar. Gesture navigation is unchanged.
+
+### Known issues
+- Phone: SuperTube can show up twice in Recents (the player keeps its own task for the mini player). Both entries
+  work; see [docs/PENDING.md](docs/PENDING.md).
+
 ## 1.5.4 — 2026-11-18
 
 ### Fixed
