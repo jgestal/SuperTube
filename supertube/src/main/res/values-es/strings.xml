@@ -166,4 +166,13 @@
     </plurals>
     <!-- Long press menu: same option as the TV, phone wording -->
     <string name="add_to_subscriptions_group">Añadir a grupo</string>
+    <string name="mobile_tv_play">Ver en la TV</string>
+    <string name="mobile_tv_link">Vincular TV</string>
+    <string name="mobile_tv_link_help">En la TV, abre SuperTube TV o SmartTube › Ajustes › Control remoto › Añadir dispositivo y escribe el código que aparece. Mantén pulsado el botón de la TV para cambiar de TV.</string>
+    <string name="mobile_tv_code">Código de la TV (12 dígitos)</string>
+    <string name="mobile_tv_link_action">Vincular</string>
+    <string name="mobile_tv_unlink">Desvincular</string>
+    <string name="mobile_tv_linked_to">Vinculada a %1$s</string>
+    <string name="mobile_tv_sent">Reproduciendo en %1$s</string>
+    <string name="mobile_tv_error">No se pudo conectar con la TV: %1$s</string>
 </resources>

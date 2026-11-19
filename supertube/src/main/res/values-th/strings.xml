@@ -159,4 +159,13 @@
     </plurals>
     <!-- Long press menu: same option as the TV, phone wording -->
     <string name="add_to_subscriptions_group">เพิ่มลงในกลุ่ม</string>
+    <string name="mobile_tv_play">ดูบนทีวี</string>
+    <string name="mobile_tv_link">เชื่อมต่อทีวี</string>
+    <string name="mobile_tv_link_help">บนทีวี เปิด SuperTube TV หรือ SmartTube › การตั้งค่า › การควบคุมระยะไกล › เพิ่มอุปกรณ์ แล้วพิมพ์รหัสที่แสดง กดปุ่มทีวีค้างไว้เพื่อเปลี่ยนทีวี</string>
+    <string name="mobile_tv_code">รหัสทีวี (12 หลัก)</string>
+    <string name="mobile_tv_link_action">เชื่อมต่อ</string>
+    <string name="mobile_tv_unlink">ยกเลิกการเชื่อมต่อ</string>
+    <string name="mobile_tv_linked_to">เชื่อมต่อกับ %1$s แล้ว</string>
+    <string name="mobile_tv_sent">กำลังเล่นบน %1$s</string>
+    <string name="mobile_tv_error">ติดต่อทีวีไม่ได้: %1$s</string>
 </resources>

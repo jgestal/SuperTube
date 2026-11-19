@@ -163,4 +163,13 @@
     </plurals>
     <!-- Long press menu: same option as the TV, phone wording -->
     <string name="add_to_subscriptions_group">Aan groep toevoegen</string>
+    <string name="mobile_tv_play">Bekijken op tv</string>
+    <string name="mobile_tv_link">Tv koppelen</string>
+    <string name="mobile_tv_link_help">Open op de tv SuperTube TV of SmartTube › Instellingen › Afstandsbediening › Apparaat toevoegen en typ de code die verschijnt. Houd de tv-knop ingedrukt om van tv te wisselen.</string>
+    <string name="mobile_tv_code">Tv-code (12 cijfers)</string>
+    <string name="mobile_tv_link_action">Koppelen</string>
+    <string name="mobile_tv_unlink">Ontkoppelen</string>
+    <string name="mobile_tv_linked_to">Gekoppeld aan %1$s</string>
+    <string name="mobile_tv_sent">Speelt af op %1$s</string>
+    <string name="mobile_tv_error">Tv niet bereikbaar: %1$s</string>
 </resources>

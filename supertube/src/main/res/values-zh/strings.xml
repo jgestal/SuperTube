@@ -159,4 +159,13 @@
     </plurals>
     <!-- Long press menu: same option as the TV, phone wording -->
     <string name="add_to_subscriptions_group">添加到分组</string>
+    <string name="mobile_tv_play">在电视上观看</string>
+    <string name="mobile_tv_link">关联电视</string>
+    <string name="mobile_tv_link_help">在电视上打开 SuperTube TV 或 SmartTube › 设置 › 遥控 › 添加设备，然后输入显示的代码。长按电视按钮可更换电视。</string>
+    <string name="mobile_tv_code">电视代码（12 位数字）</string>
+    <string name="mobile_tv_link_action">关联</string>
+    <string name="mobile_tv_unlink">取消关联</string>
+    <string name="mobile_tv_linked_to">已关联到 %1$s</string>
+    <string name="mobile_tv_sent">正在 %1$s 上播放</string>
+    <string name="mobile_tv_error">无法连接电视：%1$s</string>
 </resources>

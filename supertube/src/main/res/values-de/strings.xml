@@ -163,4 +163,13 @@
     </plurals>
     <!-- Long press menu: same option as the TV, phone wording -->
     <string name="add_to_subscriptions_group">Zu Gruppe hinzufügen</string>
+    <string name="mobile_tv_play">Auf dem Fernseher ansehen</string>
+    <string name="mobile_tv_link">Fernseher verbinden</string>
+    <string name="mobile_tv_link_help">Öffne auf dem Fernseher SuperTube TV oder SmartTube › Einstellungen › Fernsteuerung › Gerät hinzufügen und gib den angezeigten Code ein. Halte die TV-Taste gedrückt, um den Fernseher zu wechseln.</string>
+    <string name="mobile_tv_code">TV-Code (12 Ziffern)</string>
+    <string name="mobile_tv_link_action">Verbinden</string>
+    <string name="mobile_tv_unlink">Trennen</string>
+    <string name="mobile_tv_linked_to">Verbunden mit %1$s</string>
+    <string name="mobile_tv_sent">Wird auf %1$s abgespielt</string>
+    <string name="mobile_tv_error">Fernseher nicht erreichbar: %1$s</string>
 </resources>
