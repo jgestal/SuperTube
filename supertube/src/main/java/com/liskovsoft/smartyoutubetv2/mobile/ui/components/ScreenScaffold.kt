@@ -46,32 +46,34 @@ fun ScreenScaffold(
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val context = LocalContext.current
 
-    Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        contentWindowInsets = WindowInsets(0, 0, 0, 0),
-        topBar = {
-            TopAppBar(
-                scrollBehavior = scrollBehavior,
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.mobile_back))
-                    }
-                },
-                title = { Text(title, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis) },
-                actions = actions,
-            )
-        },
-    ) { padding ->
-        Box(
-            Modifier
-                .padding(padding)
-                .windowInsetsPadding(WindowInsets.navigationBars.only(WindowInsetsSides.Horizontal))
-                .fillMaxSize()
-        ) {
-            content()
-            Column(Modifier.align(Alignment.BottomCenter).fillMaxWidth().windowInsetsPadding(WindowInsets.navigationBars), horizontalAlignment = Alignment.End) {
-                DownloadIndicator(onClick = { BrowseActivity.openDownloads(context) }, modifier = Modifier.padding(16.dp))
-                MiniPlayerBar()
+    NavButtonsSafeArea {
+        Scaffold(
+            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+            contentWindowInsets = WindowInsets(0, 0, 0, 0),
+            topBar = {
+                TopAppBar(
+                    scrollBehavior = scrollBehavior,
+                    navigationIcon = {
+                        IconButton(onClick = onBack) {
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.mobile_back))
+                        }
+                    },
+                    title = { Text(title, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                    actions = actions,
+                )
+            },
+        ) { padding ->
+            Box(
+                Modifier
+                    .padding(padding)
+                    .windowInsetsPadding(WindowInsets.navigationBars.only(WindowInsetsSides.Horizontal))
+                    .fillMaxSize()
+            ) {
+                content()
+                Column(Modifier.align(Alignment.BottomCenter).fillMaxWidth().windowInsetsPadding(WindowInsets.navigationBars), horizontalAlignment = Alignment.End) {
+                    DownloadIndicator(onClick = { BrowseActivity.openDownloads(context) }, modifier = Modifier.padding(16.dp))
+                    MiniPlayerBar()
+                }
             }
         }
     }

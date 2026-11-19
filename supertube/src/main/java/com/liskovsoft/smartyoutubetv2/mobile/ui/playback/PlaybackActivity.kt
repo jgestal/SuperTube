@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.OrientationEventListener
 import androidx.activity.compose.setContent
+import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -43,6 +44,7 @@ import com.liskovsoft.smartyoutubetv2.mobile.R
 import com.liskovsoft.smartyoutubetv2.mobile.playback.PlaybackCommands
 import com.liskovsoft.smartyoutubetv2.mobile.playback.PlaybackMediaSession
 import com.liskovsoft.smartyoutubetv2.mobile.ui.base.ScreenActivity
+import com.liskovsoft.smartyoutubetv2.mobile.ui.components.NavButtonsSafeArea
 import com.liskovsoft.smartyoutubetv2.mobile.ui.theme.SuperTubeTheme
 import java.io.InputStream
 
@@ -99,6 +101,7 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
     }
 
     override val themeResId: Int = R.style.Theme_SuperTube_Mobile_Player
+    override val hasDarkSystemBars: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,14 +114,16 @@ class PlaybackActivity : ScreenActivity(), PlaybackView {
 
         setContent {
             SuperTubeTheme(darkTheme = true) {
-                PlaybackScreen(
-                    state = state,
-                    presenter = presenter,
-                    engine = this,
-                    onCreateExoView = { view -> exoView = view; view.player = player },
-                    onToggleFullscreen = ::toggleFullscreen,
-                    onBack = ::minimize,
-                )
+                NavButtonsSafeArea(color = Color.Black) {
+                    PlaybackScreen(
+                        state = state,
+                        presenter = presenter,
+                        engine = this,
+                        onCreateExoView = { view -> exoView = view; view.player = player },
+                        onToggleFullscreen = ::toggleFullscreen,
+                        onBack = ::minimize,
+                    )
+                }
             }
         }
 

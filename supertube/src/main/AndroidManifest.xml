@@ -113,6 +113,8 @@
             android:launchMode="singleTask"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation|density|uiMode|keyboardHidden" />
 
+        <!-- Own task: keeps playing in the mini player while the browsing screens are in front. Side effect: two
+             Recents entries. Don't hide either task from Recents, Android destroys hidden tasks (see docs/PENDING.md). -->
         <activity
             android:name=".ui.playback.PlaybackActivity"
             android:launchMode="singleTask"

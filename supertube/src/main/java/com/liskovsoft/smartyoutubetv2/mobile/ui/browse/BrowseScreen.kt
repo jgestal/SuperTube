@@ -1,5 +1,7 @@
 package com.liskovsoft.smartyoutubetv2.mobile.ui.browse
 
+import androidx.compose.material3.NavigationBarDefaults
+import com.liskovsoft.smartyoutubetv2.mobile.ui.components.NavButtonsSafeArea
 import com.liskovsoft.smartyoutubetv2.mobile.ui.playback.MiniPlayerBar
 import com.liskovsoft.smartyoutubetv2.mobile.BuildConfig
 import androidx.compose.material.icons.outlined.FileDownload
@@ -167,94 +169,96 @@ fun BrowseScreen(
         NavigationSuiteType.NavigationBar
     }
 
-    NavigationSuiteScaffold(
-        layoutType = navigationType,
-        navigationSuiteItems = {
-            primaries.forEach { section ->
-                val isSelected = currentDestination == section.id
+    NavButtonsSafeArea(color = if (navigationType == NavigationSuiteType.NavigationBar) NavigationBarDefaults.containerColor else MaterialTheme.colorScheme.background) {
+        NavigationSuiteScaffold(
+            layoutType = navigationType,
+            navigationSuiteItems = {
+                primaries.forEach { section ->
+                    val isSelected = currentDestination == section.id
+                    item(
+                        selected = isSelected,
+                        onClick = { if (isSelected) retaps++ else onSelectSection(section.id) },
+                        icon = { SectionIconView(section, isSelected) },
+                        label = { NavLabel(section.title ?: "") },
+                    )
+                }
                 item(
-                    selected = isSelected,
-                    onClick = { if (isSelected) retaps++ else onSelectSection(section.id) },
-                    icon = { SectionIconView(section, isSelected) },
-                    label = { NavLabel(section.title ?: "") },
+                    selected = currentDestination == MORE_DESTINATION,
+                    onClick = onShowMore,
+                    icon = { Icon(Icons.Default.Menu, contentDescription = null) },
+                    label = { NavLabel(stringResource(R.string.mobile_more)) },
                 )
             }
-            item(
-                selected = currentDestination == MORE_DESTINATION,
-                onClick = onShowMore,
-                icon = { Icon(Icons.Default.Menu, contentDescription = null) },
-                label = { NavLabel(stringResource(R.string.mobile_more)) },
-            )
-        }
-    ) {
-        val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+        ) {
+            val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
-        Scaffold(
-            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-            contentWindowInsets = WindowInsets(0, 0, 0, 0),
-            topBar = {
-                TopAppBar(
-                    scrollBehavior = scrollBehavior,
-                    navigationIcon = {
-                        if (inSecondarySection) {
-                            IconButton(onClick = onShowMore) {
-                                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.mobile_back))
-                            }
-                        }
-                    },
-                    title = {
-                        val title = when {
-                            state.isMoreListShown -> stringResource(R.string.mobile_more)
-                            inSecondarySection -> selected?.title ?: ""
-                            else -> stringResource(R.string.mobile_app_name)
-                        }
-                        // Long section names ("Grupos de canales") shrink instead of being cut
-                        val titleStyle = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
-                        FitText(title, style = titleStyle, maxFontSize = titleStyle.fontSize, minFontSize = 15.sp)
-                    },
-                    actions = {
-                        if (state.isMoreListShown) {
-                            IconButton(onClick = { isReordering = !isReordering }) {
-                                if (isReordering) {
-                                    Icon(Icons.Default.Check, contentDescription = stringResource(R.string.mobile_done))
-                                } else {
-                                    Icon(Icons.Outlined.SwapVert, contentDescription = stringResource(R.string.mobile_reorder))
+            Scaffold(
+                modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+                contentWindowInsets = WindowInsets(0, 0, 0, 0),
+                topBar = {
+                    TopAppBar(
+                        scrollBehavior = scrollBehavior,
+                        navigationIcon = {
+                            if (inSecondarySection) {
+                                IconButton(onClick = onShowMore) {
+                                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.mobile_back))
                                 }
                             }
-                        }
-                        if (showsVideos) FeedLayoutButton()
-                        IconButton(onClick = { SearchPresenter.instance(context).startSearch(null) }) {
-                            Icon(Icons.Outlined.Search, contentDescription = stringResource(com.liskovsoft.smartyoutubetv2.common.R.string.action_search))
-                        }
-                        IconButton(onClick = { AccountSettingsPresenter.instance(context).show() }) {
-                            Icon(Icons.Outlined.AccountCircle, contentDescription = null)
-                        }
-                    },
-                )
-            },
-        ) { padding ->
-            // Landscape: keep the content away from the system navigation buttons / camera cutout
-            // (the rail already handles the start side)
-            val sides = if (navigationType == NavigationSuiteType.NavigationRail) WindowInsetsSides.End else WindowInsetsSides.Horizontal
-            Box(Modifier.padding(padding).windowInsetsPadding(WindowInsets.safeDrawing.only(sides)).fillMaxSize()) {
-                if (state.isMoreListShown || selected == null) {
-                    MoreList(
-                        sections = orderSections(state.secondarySections, prefs.sectionOrder),
-                        isReordering = isReordering,
-                        onClick = { onSelectSection(it.id) },
-                        onLongClick = { presenter.onSectionLongPressed(it.id) },
-                        // Keep the position of the sections that aren't listed right now (disabled, signed out...)
-                        onOrderChanged = { ids -> prefs.setSectionOrder(ids + prefs.sectionOrder.filter { it !in ids }) },
+                        },
+                        title = {
+                            val title = when {
+                                state.isMoreListShown -> stringResource(R.string.mobile_more)
+                                inSecondarySection -> selected?.title ?: ""
+                                else -> stringResource(R.string.mobile_app_name)
+                            }
+                            // Long section names ("Grupos de canales") shrink instead of being cut
+                            val titleStyle = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
+                            FitText(title, style = titleStyle, maxFontSize = titleStyle.fontSize, minFontSize = 15.sp)
+                        },
+                        actions = {
+                            if (state.isMoreListShown) {
+                                IconButton(onClick = { isReordering = !isReordering }) {
+                                    if (isReordering) {
+                                        Icon(Icons.Default.Check, contentDescription = stringResource(R.string.mobile_done))
+                                    } else {
+                                        Icon(Icons.Outlined.SwapVert, contentDescription = stringResource(R.string.mobile_reorder))
+                                    }
+                                }
+                            }
+                            if (showsVideos) FeedLayoutButton()
+                            IconButton(onClick = { SearchPresenter.instance(context).startSearch(null) }) {
+                                Icon(Icons.Outlined.Search, contentDescription = stringResource(com.liskovsoft.smartyoutubetv2.common.R.string.action_search))
+                            }
+                            IconButton(onClick = { AccountSettingsPresenter.instance(context).show() }) {
+                                Icon(Icons.Outlined.AccountCircle, contentDescription = null)
+                            }
+                        },
                     )
-                } else {
-                    SectionBody(state.contentOf(selected), state.isLoading, actions, presenter, scrollToTop)
-                }
-                // Bottom overlays: downloads progress pill and the mini player
-                Column(Modifier.align(Alignment.BottomCenter).fillMaxWidth(), horizontalAlignment = Alignment.End) {
-                    if (selected?.id != DownloadStore.SECTION_ID) {
-                        DownloadIndicator(onClick = { onSelectSection(DownloadStore.SECTION_ID) }, modifier = Modifier.padding(16.dp))
+                },
+            ) { padding ->
+                // Landscape: keep the content away from the system navigation buttons / camera cutout
+                // (the rail already handles the start side)
+                val sides = if (navigationType == NavigationSuiteType.NavigationRail) WindowInsetsSides.End else WindowInsetsSides.Horizontal
+                Box(Modifier.padding(padding).windowInsetsPadding(WindowInsets.safeDrawing.only(sides)).fillMaxSize()) {
+                    if (state.isMoreListShown || selected == null) {
+                        MoreList(
+                            sections = orderSections(state.secondarySections, prefs.sectionOrder),
+                            isReordering = isReordering,
+                            onClick = { onSelectSection(it.id) },
+                            onLongClick = { presenter.onSectionLongPressed(it.id) },
+                            // Keep the position of the sections that aren't listed right now (disabled, signed out...)
+                            onOrderChanged = { ids -> prefs.setSectionOrder(ids + prefs.sectionOrder.filter { it !in ids }) },
+                        )
+                    } else {
+                        SectionBody(state.contentOf(selected), state.isLoading, actions, presenter, scrollToTop)
                     }
-                    MiniPlayerBar()
+                    // Bottom overlays: downloads progress pill and the mini player
+                    Column(Modifier.align(Alignment.BottomCenter).fillMaxWidth(), horizontalAlignment = Alignment.End) {
+                        if (selected?.id != DownloadStore.SECTION_ID) {
+                            DownloadIndicator(onClick = { onSelectSection(DownloadStore.SECTION_ID) }, modifier = Modifier.padding(16.dp))
+                        }
+                        MiniPlayerBar()
+                    }
                 }
             }
         }

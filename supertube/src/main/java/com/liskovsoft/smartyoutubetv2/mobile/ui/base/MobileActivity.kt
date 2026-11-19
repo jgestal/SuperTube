@@ -1,6 +1,8 @@
 package com.liskovsoft.smartyoutubetv2.mobile.ui.base
 
 import android.os.Bundle
+import android.graphics.Color
+import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import com.liskovsoft.smartyoutubetv2.common.misc.MotherActivity
 import com.liskovsoft.smartyoutubetv2.mobile.R
@@ -19,9 +21,17 @@ abstract class MobileActivity : MotherActivity() {
 
     protected open val themeResId: Int = R.style.Theme_SuperTube_Mobile
 
+    /** Always light system bar icons (black screens like the player), whatever the system theme */
+    protected open val hasDarkSystemBars: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         // Draw behind the system bars. Compose insets are applied by every screen.
-        enableEdgeToEdge()
+        if (hasDarkSystemBars) {
+            val dark = SystemBarStyle.dark(Color.TRANSPARENT)
+            enableEdgeToEdge(statusBarStyle = dark, navigationBarStyle = dark)
+        } else {
+            enableEdgeToEdge()
+        }
         super.onCreate(savedInstanceState)
     }
 }
