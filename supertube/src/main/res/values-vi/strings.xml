@@ -159,4 +159,13 @@
     </plurals>
     <!-- Long press menu: same option as the TV, phone wording -->
     <string name="add_to_subscriptions_group">Thêm vào nhóm</string>
+    <string name="mobile_tv_play">Xem trên TV</string>
+    <string name="mobile_tv_link">Liên kết TV</string>
+    <string name="mobile_tv_link_help">Trên TV, mở SuperTube TV hoặc SmartTube › Cài đặt › Điều khiển từ xa › Thêm thiết bị và nhập mã hiển thị. Nhấn giữ nút TV để đổi TV.</string>
+    <string name="mobile_tv_code">Mã TV (12 chữ số)</string>
+    <string name="mobile_tv_link_action">Liên kết</string>
+    <string name="mobile_tv_unlink">Hủy liên kết</string>
+    <string name="mobile_tv_linked_to">Đã liên kết với %1$s</string>
+    <string name="mobile_tv_sent">Đang phát trên %1$s</string>
+    <string name="mobile_tv_error">Không kết nối được với TV: %1$s</string>
 </resources>

@@ -163,4 +163,13 @@
     </plurals>
     <!-- Long press menu: same option as the TV, phone wording -->
     <string name="add_to_subscriptions_group">समूह में जोड़ें</string>
+    <string name="mobile_tv_play">टीवी पर देखें</string>
+    <string name="mobile_tv_link">टीवी जोड़ें</string>
+    <string name="mobile_tv_link_help">टीवी पर SuperTube TV या SmartTube › सेटिंग्स › रिमोट कंट्रोल › उपकरण जोड़े खोलें और दिखाया गया कोड लिखें। टीवी बदलने के लिए टीवी बटन को देर तक दबाएँ।</string>
+    <string name="mobile_tv_code">टीवी कोड (12 अंक)</string>
+    <string name="mobile_tv_link_action">जोड़ें</string>
+    <string name="mobile_tv_unlink">हटाएँ</string>
+    <string name="mobile_tv_linked_to">%1$s से जुड़ा है</string>
+    <string name="mobile_tv_sent">%1$s पर चल रहा है</string>
+    <string name="mobile_tv_error">टीवी तक नहीं पहुँच सके: %1$s</string>
 </resources>

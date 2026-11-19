@@ -159,4 +159,13 @@
     </plurals>
     <!-- Long press menu: same option as the TV, phone wording -->
     <string name="add_to_subscriptions_group">グループに追加</string>
+    <string name="mobile_tv_play">テレビで見る</string>
+    <string name="mobile_tv_link">テレビとリンク</string>
+    <string name="mobile_tv_link_help">テレビで SuperTube TV または SmartTube › 設定 › キャスト › デバイスを追加 を開き、表示されたコードを入力してください。テレビを変更するにはテレビボタンを長押しします。</string>
+    <string name="mobile_tv_code">テレビコード（12桁）</string>
+    <string name="mobile_tv_link_action">リンク</string>
+    <string name="mobile_tv_unlink">リンク解除</string>
+    <string name="mobile_tv_linked_to">%1$s とリンク済み</string>
+    <string name="mobile_tv_sent">%1$s で再生中</string>
+    <string name="mobile_tv_error">テレビに接続できません: %1$s</string>
 </resources>

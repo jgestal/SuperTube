@@ -159,4 +159,13 @@
     </plurals>
     <!-- Long press menu: same option as the TV, phone wording -->
     <string name="add_to_subscriptions_group">Tambahkan ke grup</string>
+    <string name="mobile_tv_play">Tonton di TV</string>
+    <string name="mobile_tv_link">Tautkan TV</string>
+    <string name="mobile_tv_link_help">Di TV, buka SuperTube TV atau SmartTube › Setelan › Remot kontrol › Tambahkan perangkat lalu ketik kode yang muncul. Tekan lama tombol TV untuk mengganti TV.</string>
+    <string name="mobile_tv_code">Kode TV (12 digit)</string>
+    <string name="mobile_tv_link_action">Tautkan</string>
+    <string name="mobile_tv_unlink">Lepaskan</string>
+    <string name="mobile_tv_linked_to">Tertaut ke %1$s</string>
+    <string name="mobile_tv_sent">Diputar di %1$s</string>
+    <string name="mobile_tv_error">Tidak dapat menjangkau TV: %1$s</string>
 </resources>

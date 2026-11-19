@@ -168,4 +168,13 @@
     </plurals>
     <!-- Long press menu: same option as the TV, phone wording -->
     <string name="add_to_subscriptions_group">Add to group</string>
+    <string name="mobile_tv_play">Play on TV</string>
+    <string name="mobile_tv_link">Link TV</string>
+    <string name="mobile_tv_link_help">On the TV, open SuperTube TV or SmartTube › Settings › Remote control › Add device and type the code it shows. Long press the TV button to change the TV.</string>
+    <string name="mobile_tv_code">TV code (12 digits)</string>
+    <string name="mobile_tv_link_action">Link</string>
+    <string name="mobile_tv_unlink">Unlink</string>
+    <string name="mobile_tv_linked_to">Linked to %1$s</string>
+    <string name="mobile_tv_sent">Playing on %1$s</string>
+    <string name="mobile_tv_error">Couldn\'t reach the TV: %1$s</string>
 </resources>

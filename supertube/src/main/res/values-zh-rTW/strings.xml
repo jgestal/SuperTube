@@ -159,4 +159,13 @@
     </plurals>
     <!-- Long press menu: same option as the TV, phone wording -->
     <string name="add_to_subscriptions_group">加入群組</string>
+    <string name="mobile_tv_play">在電視上觀看</string>
+    <string name="mobile_tv_link">連結電視</string>
+    <string name="mobile_tv_link_help">在電視上開啟 SuperTube TV 或 SmartTube › 設定 › 遙控器 › 新增裝置，然後輸入顯示的代碼。長按電視按鈕即可更換電視。</string>
+    <string name="mobile_tv_code">電視代碼（12 位數）</string>
+    <string name="mobile_tv_link_action">連結</string>
+    <string name="mobile_tv_unlink">取消連結</string>
+    <string name="mobile_tv_linked_to">已連結至 %1$s</string>
+    <string name="mobile_tv_sent">正在 %1$s 上播放</string>
+    <string name="mobile_tv_error">無法連線至電視：%1$s</string>
 </resources>

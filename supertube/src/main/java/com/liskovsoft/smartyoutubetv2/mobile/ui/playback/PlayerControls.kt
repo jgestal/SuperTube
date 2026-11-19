@@ -93,6 +93,7 @@ internal fun PlayerControls(
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.weight(1f),
             )
+            TvCastButton(state, presenter, engine)
             SpeedButton(state, presenter, engine)
             val ccId = CommonR.id.lb_control_closed_captioning
             IconButton(onClick = { presenter.onButtonClicked(ccId, state.buttonState(ccId)) }) {

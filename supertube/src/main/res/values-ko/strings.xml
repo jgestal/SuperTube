@@ -159,4 +159,13 @@
     </plurals>
     <!-- Long press menu: same option as the TV, phone wording -->
     <string name="add_to_subscriptions_group">그룹에 추가</string>
+    <string name="mobile_tv_play">TV에서 보기</string>
+    <string name="mobile_tv_link">TV 연결</string>
+    <string name="mobile_tv_link_help">TV에서 SuperTube TV 또는 SmartTube › 설정 › 원격 제어 › 장치 추가를 열고 표시된 코드를 입력하세요. TV를 바꾸려면 TV 버튼을 길게 누르세요.</string>
+    <string name="mobile_tv_code">TV 코드(12자리)</string>
+    <string name="mobile_tv_link_action">연결</string>
+    <string name="mobile_tv_unlink">연결 해제</string>
+    <string name="mobile_tv_linked_to">%1$s에 연결됨</string>
+    <string name="mobile_tv_sent">%1$s에서 재생 중</string>
+    <string name="mobile_tv_error">TV에 연결할 수 없음: %1$s</string>
 </resources>

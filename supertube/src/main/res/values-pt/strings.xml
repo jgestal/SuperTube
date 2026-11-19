@@ -168,4 +168,13 @@
     </plurals>
     <!-- Long press menu: same option as the TV, phone wording -->
     <string name="add_to_subscriptions_group">Adicionar ao grupo</string>
+    <string name="mobile_tv_play">Assistir na TV</string>
+    <string name="mobile_tv_link">Conectar TV</string>
+    <string name="mobile_tv_link_help">Na TV, abra o SuperTube TV ou SmartTube › Configurações › Controle remoto › Adicionar dispositivo e digite o código exibido. Toque e segure o botão da TV para trocar de TV.</string>
+    <string name="mobile_tv_code">Código da TV (12 dígitos)</string>
+    <string name="mobile_tv_link_action">Conectar</string>
+    <string name="mobile_tv_unlink">Desconectar</string>
+    <string name="mobile_tv_linked_to">Conectada a %1$s</string>
+    <string name="mobile_tv_sent">Reproduzindo em %1$s</string>
+    <string name="mobile_tv_error">Não foi possível acessar a TV: %1$s</string>
 </resources>

@@ -179,4 +179,13 @@
     </plurals>
     <!-- Long press menu: same option as the TV, phone wording -->
     <string name="add_to_subscriptions_group">إضافة إلى مجموعة</string>
+    <string name="mobile_tv_play">المشاهدة على التلفزيون</string>
+    <string name="mobile_tv_link">ربط التلفزيون</string>
+    <string name="mobile_tv_link_help">على التلفزيون، افتح SuperTube TV أو SmartTube › الإعدادات › التحكم بالهاتف › إضافة جهاز واكتب الرمز الظاهر. اضغط مطولاً على زر التلفزيون لتغييره.</string>
+    <string name="mobile_tv_code">رمز التلفزيون (12 رقمًا)</string>
+    <string name="mobile_tv_link_action">ربط</string>
+    <string name="mobile_tv_unlink">إلغاء الربط</string>
+    <string name="mobile_tv_linked_to">مرتبط بـ %1$s</string>
+    <string name="mobile_tv_sent">قيد التشغيل على %1$s</string>
+    <string name="mobile_tv_error">تعذّر الوصول إلى التلفزيون: %1$s</string>
 </resources>
