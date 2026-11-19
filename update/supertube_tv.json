@@ -16,8 +16,7 @@
   "1.5.5": {
     "versionCode": 2466,
     "changelog": [
-      "Phone: with the three Android navigation buttons, videos and lists were drawn under the buttons and showed through them. The screens now stop above the buttons, which get a solid bar. Gesture navigation is unchanged.",
-      "Phone: SuperTube can show up twice in Recents (the player keeps its own task for the mini player). Both entries work; see docs/PENDING.md."
+      "Phone: with the three Android navigation buttons, videos and lists were drawn under the buttons and showed through them. The screens now stop above the buttons, which get a solid bar. Gesture navigation is unchanged."
     ]
   }
 }
