@@ -11,6 +11,7 @@ import androidx.compose.material.icons.outlined.FolderShared
 import com.liskovsoft.smartyoutubetv2.mobile.channelgroups.ChannelGroupsStore
 import androidx.compose.material.icons.automirrored.outlined.PlaylistPlay
 import androidx.compose.material.icons.automirrored.outlined.QueueMusic
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Subscriptions
 import androidx.compose.material.icons.outlined.AccountBox
@@ -47,7 +48,7 @@ fun sectionIcon(sectionId: Int, selected: Boolean = false): ImageVector = when (
     MediaGroup.TYPE_GAMING -> Icons.Outlined.SportsEsports
     MediaGroup.TYPE_NEWS -> Icons.Outlined.Newspaper
     MediaGroup.TYPE_MUSIC -> Icons.Outlined.MusicNote
-    MediaGroup.TYPE_CHANNEL_UPLOADS -> Icons.Outlined.AccountBox
+    MediaGroup.TYPE_CHANNEL_UPLOADS -> if (selected) Icons.Filled.AccountBox else Icons.Outlined.AccountBox
     MediaGroup.TYPE_HISTORY -> Icons.Outlined.History
     MediaGroup.TYPE_BLOCKED_CHANNELS -> Icons.Outlined.Block
     MediaGroup.TYPE_USER_PLAYLISTS -> Icons.AutoMirrored.Outlined.PlaylistPlay
@@ -61,4 +62,4 @@ fun sectionIcon(sectionId: Int, selected: Boolean = false): ImageVector = when (
 }
 
 /** Sections promoted to the bottom bar / rail. Everything else lives in the "More" destination. */
-val PRIMARY_SECTIONS = listOf(MediaGroup.TYPE_HOME, MediaGroup.TYPE_SHORTS, MediaGroup.TYPE_SUBSCRIPTIONS)
+val PRIMARY_SECTIONS = listOf(MediaGroup.TYPE_HOME, MediaGroup.TYPE_SHORTS, MediaGroup.TYPE_SUBSCRIPTIONS, MediaGroup.TYPE_CHANNEL_UPLOADS)
